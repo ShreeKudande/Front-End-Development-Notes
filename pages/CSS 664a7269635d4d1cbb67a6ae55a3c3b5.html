@@ -1,0 +1,1020 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>CSS</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="664a7269-635d-4d1c-bb67-a6ae55a3c3b5" class="page sans" data-notion-page-icon="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3fb2f99a-45ee-42e6-821e-84565ef5f93e/css-3.png"><header><div class="page-header-icon undefined"><img class="icon" src="css-3.png"/></div><h1 class="page-title" dir="auto">CSS</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><p id="d33c797c-495d-4f6f-b16a-72ef9838ce8f" class="" dir="auto">Table of Content :-)</p><nav id="7775fff5-284b-4a84-81a4-5a46d0a0e8e1" class="block-color-gray table_of_contents" data-notion-highlight="gray" data-notion-toc="" dir="ltr"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b58c5919-7f36-4981-807b-9d0cf87cc5ef">CSS (Styling)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#30377145-a2ae-4558-b0cc-cc8c0b03e9c2"><span style="border-bottom:0.05em solid">Overview</span></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5d0e559c-0784-424d-b2b4-84d3ddaa54f3"><span style="border-bottom:0.05em solid">Syntax</span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3ea8cc78-4cfa-4a51-97d8-39bfbd04d18d">Introduction</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0e5a3b0d-f7de-4527-91ef-2a8f5eabcbca">The Type Selectors </a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#928c5160-7ca3-476e-9c06-f2eed4ba3971">The Universal Selectors </a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#73f3fef7-6c0d-4bd7-91c1-c1cfce94e6b8">The Descendant Selectors </a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f2ba3eb1-e92a-4d0a-a507-257df0d6632d">The Class Selectors </a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#94035b78-e451-4171-ade2-aaf8e672d407">The ID Selectors </a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#df8fac00-aa21-4b18-a20d-b674a78a8541">The Child Selectors </a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4158efbc-d6cc-47a3-be0f-286554cee3bf"> The Attribute Selectors </a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#5a94f623-cf58-463b-9f3a-06839e2ccb8e">Multiple Style Rules </a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#bcaa8560-2ea3-4591-af65-c0d8e5a66b9d">Grouping Selectors </a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#53794240-1ad5-454a-95f0-8de0cf5fb7b2">Selector’s priority &amp; Combining Selectors</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#502aa15b-7c32-4bba-a2ae-51bf34ab5472"><span style="border-bottom:0.05em solid">Inclusion</span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7d3c9344-aec5-48fd-b249-15a3ecf2fa8d">Introduction</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9da332fe-7914-4a23-b425-13155a43c9f9">Embedded CSS - The &lt;style&gt; Element</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ea6f349d-c6b0-4dda-8876-7dea7cd3c4eb">Inline CSS - The style Attribute</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#8e260bb8-35ed-453b-9489-a293b6c16fc2">External CSS - The &lt;link&gt; Element</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#effb2118-0c6c-4d2c-b6d0-e9c8f9ee1235">CSS Rules Overriding</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#6a47e38a-3704-4176-9048-20961fbde8aa">CSS Comments</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c6faecca-f1bd-4245-b370-e491404e6f22"><span style="border-bottom:0.05em solid">Colors in CSS</span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ff4e1af5-5be2-4c80-92fb-a6cfd8baffd3">RGB Value</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#08807938-6e4f-4412-b8f1-94b4034b96b4">RGBA Value</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#db71760a-73b0-4143-b27f-f1d5449ff3ad"><strong>HEX Value</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f00cdf04-e720-4354-b397-2fe5b5c1528d"><strong>3 Digit HEX Value</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#120f24f9-6168-4fbf-8637-89a7f15d372b"><strong>HSL Value</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e072389f-1900-4ae2-98c5-15418ec66c02"><strong>HSLA Value</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ea4a01a5-74ea-4e46-b1ad-de2f6911fedd"><span style="border-bottom:0.05em solid">CSS Background Property</span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#151e3086-e0a7-4f70-8bfd-ef744369f8be"><strong>CSS background-color</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4190aaf9-bf48-4b3c-8bc0-135bb7d93592"><strong>CSS background-image</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#5f7abe52-d8eb-4f5b-9f0a-d8ab03721921"><strong>CSS background-repeat</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ea20e964-ae6d-4441-9fe6-262af4c400e9"><strong>CSS background-repeat: no-repeat</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#fd1b5d5c-9e2f-4df2-b7e9-4f392687c8c9"><strong>CSS background-position</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#37872e0a-db10-45d2-876f-8b0a4c5527cc"><strong>CSS background-attachment</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#481879a9-d46a-478f-beeb-1029117ed82f"><strong>CSS background - Shorthand property</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2d062c4d-77fe-4d29-b4b4-f3b622326471"><strong>CSS background-size Property</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#410290ae-dd9d-40af-a852-e7cb209126b3"><span style="border-bottom:0.05em solid">CSS Box Model</span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1bef8d48-7dab-4b7f-9fec-c6bae8bcf8fc">Introduction</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#720e4628-34e2-40fb-84ac-eceb2f3683c2">Setting Width &amp; Height</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#fc6b67b8-612d-4b2b-917c-f5138ef0874e"><strong>Setting Margin &amp; Padding</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4c7ccb20-a7af-4a07-8eff-414604a00923"><strong>Setting Borders</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#25fb79db-fe89-4432-bb55-713fee5f9859"><strong>Border Radius</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#68370229-2a5a-4fa6-a058-6f2c6f98de58"><strong>Margin Collapse</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7b72f378-baf1-44bf-9d4e-f6de265e5a19"><strong>Box Sizing</strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cf2bfb24-dd63-41d6-806a-40ac7fa5a0d0"><span style="border-bottom:0.05em solid">CSS Fonts</span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#88c977d1-a9f5-4063-b50e-8e77c4c755c4">Introduction</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#057db51b-7098-49fa-a7be-60beccb9f435">Generic font families in CSS</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#992dc426-fda9-4338-ae2d-9774b6f7cce7"><strong>text-align property</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1e00db19-3683-4408-9bfa-66074162450b"><strong>text-decoration property</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#ee9a365f-734d-4576-8935-0843c92c6fec"><strong>text-transform property</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4ae83476-9ace-4433-b4e8-2b20146dfab8">line-height property</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c585c896-b145-4df7-a9ef-9d12cf9eaec7">Font-family</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e24a31f6-7f1e-4d93-bb19-414e0c386bf1"><strong>Other Font Properties</strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9ea01bac-0418-4b29-96fb-4ff133a3058d">Web Safe fonts</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9eda770e-b0ca-45d9-8862-618b7cd282c1">Safe fonts/embedding fonts</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#cdfac2bd-f017-40ce-9c2c-225fc6d3cdfb">How to Embed Google fonts</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#676685d2-800b-4657-8cad-398cc887b142"><span style="border-bottom:0.05em solid">CSS Measurement Units</span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b11368a4-1871-48bd-9d79-1fff5abbfc0e">What is the difference between absolute and relative units of measurement?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#594a5c23-19c2-49fd-9911-2b34bdb69bb4">Why are relative units preferred over absolute units in CSS?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#f46b2c44-2fab-45a8-b0d6-36a6a6256d18">Units in depth</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7b345ded-3aa9-4319-9d5b-0a9734692cbd"><span style="border-bottom:0.05em solid">CSS Font Sizing (rendering)</span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#060c0a26-b476-4917-a603-fe69e61ee3b0">Rendering of CSS units</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#94f3a304-3f47-449a-9c89-a6839d8e1cbd">Useful tool’s</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#627abd70-dd59-4d32-912c-62fb201d3b51"><span style="border-bottom:0.05em solid">CSS Display property</span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#43b765f7-4504-4081-b0dc-8e43026a212a">📺Animated example:-</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b68d56cf-e364-4a3c-92f2-097a809f7f0a"><span style="border-bottom:0.05em solid">CSS Position Property</span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#970ec796-29dd-45b8-8142-228956e32047">Static Position Property</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#fc104709-83d1-49b6-85b0-5fc880082a6e">Relative Position Property</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2536d598-2743-4334-981c-d640fd06d15d">Absolute Position Property</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#455f1444-b2f8-4b91-a202-0c9fb03fd8fd">Fixed Position Property</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#98bc21ed-c489-4e44-b536-9d2cbd9ca792">Sticky Position Property</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5f509869-5d6c-4d63-9337-868c48f7f462"><span style="border-bottom:0.05em solid">CSS Z-index and stacking order.</span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3fd96b19-95b4-4f46-aade-d8ae8f3df06c">Overview</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e0175d09-2c84-43c3-9cc3-8b1308c299ab">Key Notes:- </a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2b933a82-7059-423b-a986-13f0cd5b754d">z-index demonstration</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a5a3aba1-f3d4-446c-b366-e2d2a6d98f9b">Which One is on top? </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4776788b-c5a7-4fa3-8f33-fc17e2a05c63"><span style="border-bottom:0.05em solid">CSS Float Property</span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7d0f037e-a276-42c5-9dfb-5d4f962f2c02">What is CSS float property?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#01b2b1a6-d2e0-4003-b11a-f34b60fab1c1"><code>Float: left;</code> Property</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#fddc0fa7-6945-4cca-a350-87852ac289b5"><code>Float: right;</code> Property</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#9466ecf4-f09e-446d-81ed-1cf1c8e21c81">Use case of both <code>left</code> &amp; <code>right</code> property’s</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0d56df8a-577a-47ef-b63f-0fb627c6921b">CSS <code>Clear</code> property</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3aca8c6c-74e9-4ba3-b34f-e615c4721468">CSS <code>Clear: both;</code> property</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1c12c801-9e28-4d94-8e6e-a5d03ba3bed3">Conclusion:-</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#c349c463-3c60-4fb0-a0c1-2e5bd0c764fe">Thing’s not to do🚫</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5625ddad-d7a8-4b67-8cd2-292267be7ca5"><span style="border-bottom:0.05em solid">How to Create Responsive Websites</span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#0d010e5c-30eb-462a-8096-6c793dad7fe8">What is responsiveness?</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#5b96f1da-15f8-481e-bec9-bb922097707b">There are four main ways of making website responsive.</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#065d06d8-b6d4-4823-ac86-4765a0413469">Deep dive in all of the four topics🏊‍♂️</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#3b10e9f2-9f8a-4706-85b6-3a1b5889251c"><strong><span style="border-bottom:0.05em solid">CSS Media Queries</span></strong></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#81dd795c-22c8-4bee-9950-9a50eb5741d8"><span style="border-bottom:0.05em solid"><strong>CSS Flexbox</strong></span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#455d9508-f3c6-441e-add8-daec1fe3323f"><span style="border-bottom:0.05em solid"><strong>CSS Grid</strong></span></a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#39a91262-806a-444c-8429-dff8f6bb0eb6"><strong><span style="border-bottom:0.05em solid">External Frameworks e.g. Bootstrap</span></strong></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f0c9095c-465d-468e-90a6-f8109524c261"><span style="border-bottom:0.05em solid">Advanced CSS</span>:- Transitions/Transform/Animation…</a></div></nav><h1 id="b58c5919-7f36-4981-807b-9d0cf87cc5ef" class="" dir="auto">CSS (Styling)</h1><h2 id="30377145-a2ae-4558-b0cc-cc8c0b03e9c2" class="" dir="auto"><span style="border-bottom:0.05em solid">Overview</span></h2><ul id="f2d99450-54bd-4eb3-a38a-32bb6aaff3a0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Cascading Style Sheets, fondly referred to as CSS, is a simple design language intended to simplify the process of making web pages presentable.</li></ul><ul id="88647624-39de-4129-9385-c3c80b6dffaa" class="bulleted-list" dir="auto"><li style="list-style-type:disc">CSS handles the look and feel part of a web page, using CSS, you can control the color of the text, the style of fonts, the spacing between paragraphs, how columns are sized and laid out, what background images or colours are used, as well as  a variety of other effects.</li></ul><ul id="dfe84490-5f6c-4a45-911e-0b49c2511e10" class="bulleted-list" dir="auto"><li style="list-style-type:disc">CSS is easy to learn and understand but it provides a powerful control over the presentation of an HTML document. Most commonly, CSS is combined with the markup language HTML or XHTML.</li></ul><hr id="f0ce361d-9647-4dfa-ba40-8950f9628812" dir="auto"/><h2 id="5d0e559c-0784-424d-b2b4-84d3ddaa54f3" class="" dir="auto"><span style="border-bottom:0.05em solid">Syntax</span></h2><h3 id="3ea8cc78-4cfa-4a51-97d8-39bfbd04d18d" class="" dir="auto">Introduction</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="/icons/snippet_gray.svg" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="f52324eb-2789-4bcf-a626-f0b221431a1b" dir="ltr"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/snippet_gray.svg"/></div><div style="width:100%">A CSS comprises of style rules that are interpreted by the browser and then applied to the corresponding elements in your document. A style rule is made of three parts: </div></aside><ul id="ef244b15-db17-4274-8bb5-a6b840f26ca4" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">Selector</span>: A selector is an HTML tag at which a style will be applied. This could be any tag like &lt;h1&gt; or &lt;table&gt; etc. </li></ul><ul id="ab10baf9-5130-4c38-a975-ba64b0175a99" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">Property</span>: A property is a type of attribute of HTML tag. Put simply, all the HTML attributes are converted into CSS properties. They could be color, border, etc. </li></ul><ul id="7cffc4d4-d3bc-4f96-842a-a9dfb4d06032" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">Value</span>: Values are assigned to properties. For example, color property can have the value either red or #F1F1F1 etc. </li></ul><p id="0039b8cd-9395-469c-9f19-7fdbb6493624" class="" dir="auto"><span style="border-bottom:0.05em solid">You can put CSS Style Rule Syntax as follows: </span></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f8fd6dc9-4357-408c-baba-b156f171a908" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">selector { property: value } </code></pre><p id="19b347c7-6f61-472d-9423-c67341ed23e6" class="" dir="auto">Example: You can define a table border as follows: </p><pre id="1681dd16-c3a0-49b0-8a42-e7828b8b9bf0" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">table{ border :1px solid #C00; } </code></pre><p id="9aa80272-83ab-4462-afdc-25f3b6ca76f7" class="" dir="auto">Here table is a selector and border is a property and the given value 1px solid #C00 is the value of that property. </p><p id="2f9e6edc-c455-480c-b1a6-697f90e01ba8" class="" dir="auto"><span style="border-bottom:0.05em solid">You can define selectors in various simple ways based on your comfort. Let me put these selectors one by one.</span></p><h3 id="0e5a3b0d-f7de-4527-91ef-2a8f5eabcbca" class="" dir="auto">The Type Selectors </h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="/icons/snippet_gray.svg" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="0961d76e-deea-4f54-80bd-b4dad44632d8" dir="ltr"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/snippet_gray.svg"/></div><div style="width:100%">This is the same selector we have seen above. Again, one more example to give a color to all level 1 headings: </div></aside><pre id="dc236df4-35ac-431d-803c-1eb69a85aba7" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">h1 { 
+color: #36CFFF; 
+}  </code></pre><h3 id="928c5160-7ca3-476e-9c06-f2eed4ba3971" class="" dir="auto">The Universal Selectors </h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="/icons/snippet_gray.svg" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="c45d77c9-ec81-4c32-a195-5e1ad013ca8b" dir="ltr"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/snippet_gray.svg"/></div><div style="width:100%">Rather than selecting elements of a specific type, the universal selector quite simply matches the name of any element type: </div></aside><pre id="91b7d86e-846c-4243-b564-93bb6d66a551" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">* { 
+color: #000000; 
+} </code></pre><p id="83e4f57b-5489-4fab-bd0f-517876e7d586" class="" dir="auto">This rule renders the content of every element in our document in black. </p><h3 id="73f3fef7-6c0d-4bd7-91c1-c1cfce94e6b8" class="" dir="auto">The Descendant Selectors </h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="/icons/snippet_gray.svg" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="03dfa1f2-3392-451f-858c-a3f0bc0ae614" dir="ltr"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/snippet_gray.svg"/></div><div style="width:100%">Suppose you want to apply a style rule to a particular element only when it lies inside a particular element. As given in the following example, the style rule will apply to &lt;em&gt; element only when it lies inside the &lt;ul&gt; tag. </div></aside><pre id="24bc996e-b0c6-4585-849a-341dd7d83354" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">ul em { 
+color: #000000; 
+} </code></pre><h3 id="f2ba3eb1-e92a-4d0a-a507-257df0d6632d" class="" dir="auto">The Class Selectors </h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="/icons/snippet_gray.svg" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="30bc110a-8b97-4314-90bf-0c89e339f51e" dir="ltr"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/snippet_gray.svg"/></div><div style="width:100%">You can define style rules based on the class attribute of the elements. All the elements having that class will be formatted according to the defined rule. </div></aside><pre id="fec8dc33-64bd-4498-842d-7d4d92d28422" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">.black { 
+color: #000000; 
+} </code></pre><p id="fab2e853-b02d-4626-9868-4ec4140eeb6b" class="" dir="auto">This rule renders the content in black for every element with class attribute set to black in our document. You can make it a bit more particular. For example: </p><pre id="c9c7e446-40dd-4efb-ab61-9cbe98be3381" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">h1.black { 
+color: #000000; 
+} </code></pre><p id="305584e6-2960-4bb8-839d-a288c91b20b5" class="" dir="auto">This rule renders the content in black for only &lt;h1&gt; elements with class attribute set to black.   </p><p id="89bd9719-6534-457e-b602-b52a8da63150" class="" dir="auto">You can apply more than one class selectors to a given element. Consider the following example: </p><pre id="ed7425ba-5cea-490c-88c6-27be1641c8af" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;p class=&quot;center bold&quot;&gt; 
+This para will be styled by the classes center and bold. 
+&lt;/p&gt;</code></pre><h3 id="94035b78-e451-4171-ade2-aaf8e672d407" class="" dir="auto">The ID Selectors </h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="/icons/snippet_gray.svg" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="f1c43b34-771d-405c-9d5a-b606fc9636ba" dir="ltr"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/snippet_gray.svg"/></div><div style="width:100%">You can define style rules based on the id attribute of the elements. All the elements having that id will be formatted according to the defined rule.</div></aside><pre id="e04bb766-d2de-4a33-8a45-4b7cbc18f040" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">#black { 
+color: #000000; 
+} </code></pre><p id="dd041c23-ca68-4d86-a5c0-ee9f0aaf7044" class="" dir="auto">This rule renders the content in black for every element with id attribute set to black in our document. You can make it a bit more particular. For example:</p><pre id="3dd9323a-67d4-4c03-9a4c-e3c4674fd2cf" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all"> h1#black { 
+color: #000000; 
+} </code></pre><p id="70ab65e6-b6f4-4fe8-b5c0-43e11449a3a7" class="" dir="auto">This rule renders the content in black for only &lt;h1&gt; elements with id attribute set to black. </p><p id="471ade80-515d-4489-b991-f03864c372c3" class="" dir="auto">The true power of id selectors is when they are used as the foundation for descendant selectors. For example: </p><pre id="38c459b7-1fb5-4cef-9bfd-654f59bf0f72" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">#black h2 { 
+color: #000000; 
+} </code></pre><p id="ab8f177c-cf10-4975-a288-4f333603b8fe" class="" dir="auto">In this example, all level 2 headings will be displayed in black color when those headings will lie within tags having id attribute set to black. </p><h3 id="df8fac00-aa21-4b18-a20d-b674a78a8541" class="" dir="auto">The Child Selectors </h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="/icons/snippet_gray.svg" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="48e02fbe-dbaf-4900-840d-ab9d644f6508" dir="ltr"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/snippet_gray.svg"/></div><div style="width:100%">You have seen the descendant selectors. There is one more type of selector, which is very similar to descendants but have different functionality. Consider the following example: </div></aside><pre id="f8e16bdc-6b7c-459b-bcc9-68c52af95571" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">body &gt; p { 
+color: #000000; 
+} </code></pre><p id="ed6c7f0d-f8bc-47fe-ab54-6277186917e6" class="" dir="auto">This rule will render all the paragraphs in black if they are a direct child of the &lt;body&gt; element. Other paragraphs put inside other elements like &lt;div&gt; or &lt;td&gt; would not have any effect of this rule.</p><h3 id="4158efbc-d6cc-47a3-be0f-286554cee3bf" class="" dir="auto"> The Attribute Selectors </h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="/icons/snippet_gray.svg" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="bbfa63ca-8bc2-49e4-ba30-6e0c873f0079" dir="ltr"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/snippet_gray.svg"/></div><div style="width:100%">You can also apply styles to HTML elements with particular attributes. The style rule below will match all the input elements having a type attribute with a value of text: </div></aside><pre id="d30e967c-e47d-4f69-b74a-692c254c7e1f" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">input[type=&quot;text&quot;]{ 
+  color: #000000; 
+} </code></pre><p id="3db5d376-ca50-4247-a372-350d68c1431b" class="" dir="auto">The advantage to this method is that the &lt;input type=&quot;submit&quot; /&gt; element is unaffected, and the color applied only to the desired text fields. </p><p id="d9949ce3-6ff8-417d-9dbb-eed0dd778307" class="" dir="auto"><span style="border-bottom:0.05em solid">There are following rules applied to attribute selector. </span></p><ul id="bcab7a80-e6e6-4c11-8b81-acff3f231c78" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">p[lang]</span> - Selects all paragraph elements with a lang attribute. </li></ul><ul id="68570a34-4b90-4975-83c4-398e013415bf" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">p[lang=&quot;fr&quot;]</span> - Selects all paragraph elements whose lang attribute has a value of exactly &quot;fr&quot;. </li></ul><ul id="15542b6f-cd2e-4036-ae2f-3f79ab2004c8" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">p[lang~=&quot;fr&quot;]</span> - Selects all paragraph elements whose lang attribute contains the word &quot;fr&quot;. </li></ul><ul id="48f35134-b17f-4fc1-834e-badd5ddccf75" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid">p[lang|=&quot;en&quot;]</span> - Selects all paragraph elements whose lang attribute contains values that are exactly &quot;en&quot;, or begin with &quot;en-&quot;. </li></ul><h3 id="5a94f623-cf58-463b-9f3a-06839e2ccb8e" class="" dir="auto">Multiple Style Rules </h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="/icons/snippet_gray.svg" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="48b05a96-0dea-4e4b-91af-bdbe3a3a5ec5" dir="ltr"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/snippet_gray.svg"/></div><div style="width:100%">You may need to define multiple style rules for a single element. You can define these rules to combine multiple properties and corresponding values into a single block as defined in the following example: </div></aside><pre id="3957a82d-06a3-44b9-a94b-d8e201fb0196" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">h1 { 
+color: #36C; 
+font-weight: normal; 
+letter-spacing: .4em; 
+margin-bottom: 1em; 
+text-transform: lowercase; 
+} </code></pre><p id="c2630756-5eca-4b19-9b09-74c6d64fe6ba" class="" dir="auto">Here all the property and value pairs are separated by a semicolon (;). You can keep them in a single line or multiple lines. For better readability, we keep them in separate lines. </p><p id="cbbc65e9-e525-45fb-aa0c-f76d89ed5935" class="" dir="auto">For a while, don&#x27;t bother about the properties mentioned in the above block. These properties will be explained in the coming chapters and you can find the complete detail about properties in CSS References. </p><h3 id="bcaa8560-2ea3-4591-af65-c0d8e5a66b9d" class="" dir="auto">Grouping Selectors </h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="/icons/snippet_gray.svg" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="4feed7ae-5aff-42c9-b381-13dc1dca07b3" dir="ltr"><div style="font-size:1.5em"><img class="icon notion-static-icon" src="https://app.notion.com/icons/snippet_gray.svg"/></div><div style="width:100%">You can apply a style to many selectors if you like. Just separate the selectors with a comma, as given in the following example: </div></aside><pre id="8d086c69-820b-47ce-bfcd-01a8e1ed4fd6" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">h1, h2, h3 { 
+color: #36C; 
+font-weight: normal; 
+letter-spacing: .4em; 
+margin-bottom: 1em; 
+text-transform: lowercase; 
+} </code></pre><p id="f3854b88-b74f-45dd-9cb8-c6af9bb7795b" class="" dir="auto">This define style rule will be applicable to h1, h2 and h3 element as well. The order of the list is irrelevant. All the elements in the selector will have the corresponding declarations applied to them. </p><p id="3df6ba47-08e0-4526-a894-86e96ffcb2dd" class="" dir="auto"><span style="border-bottom:0.05em solid">You can combine the various class selectors together as shown below:</span> </p><pre id="0e01cb26-5694-4c9a-8ac8-eb64f2954946" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">#content, #footer, #supplement { 
+position: absolute; 
+left: 510px; 
+width: 200px; 
+}</code></pre><h3 id="53794240-1ad5-454a-95f0-8de0cf5fb7b2" class="" dir="auto">Selector’s priority &amp; Combining Selectors</h3><p id="7830f74f-af15-44de-80c9-e5c445c092d5" class="" dir="auto">Selector’s priority :-</p><figure id="93b246d0-0d2c-4499-85a3-ad3f2b726917" class="image" data-notion-image="specificity1-660x359.png" dir="ltr"><a href="specificity1-660x359.png"><img style="width:660px" src="specificity1-660x359.png"/></a></figure><p id="929367dc-6dbe-4647-ae9b-e8ac3aebcb4e" class="" dir="auto">Combining selectors :-</p><p id="f618a1d8-36cd-4c00-8231-580966d22c5b" class="" dir="auto"><span style="border-bottom:0.05em solid">WITH SPACE</span></p><pre id="ae851bef-608b-492d-b6c8-056925f84e1c" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--HTML CODE--&gt;
+&lt;div class= &quot;container&quot;&gt;
+&lt;h1 class= &quot;title&quot;&gt; Hello World! &lt;/h1&gt;
+&lt;/div&gt;</code></pre><pre id="f8e2132c-e589-4b28-89d0-cc042c128150" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">/*CSS CODE*/
+    /*with space*/
+.container .title{
+color:red;
+}</code></pre><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="📌" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="be47158b-43fa-4ede-a599-95cf20c90c3d" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="📌"></span></div><div style="width:100%">This is telling the browser that the element with class called <span style="border-bottom:0.05em solid">tilte</span> in the div element with class called <span style="border-bottom:0.05em solid">container</span>, make it red.</div></aside><p id="6c063a03-b704-41b2-839a-570ce4323dbe" class="" dir="auto"><span style="border-bottom:0.05em solid">WITH NO SPACE</span></p><pre id="cbba2bf1-05d9-46ef-8dc3-13e2c8f1b318" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--HTML CODE--&gt;
+&lt;div class= &quot;container&quot;&gt;
+&lt;h1 class= &quot;title&quot;&gt; Hello World! &lt;/h1&gt;
+&lt;/div&gt;</code></pre><pre id="5c7b0410-704c-4f09-969c-0c040dc8dad4" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">/*CSS CODE*/
+  /*with no space*/
+.container.title{
+color:red;
+}</code></pre><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="📌" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="38d23632-fc86-4e4c-a714-ac161bf75904" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="📌"></span></div><div style="width:100%">This is telling the browser to look for an element that has a class called <span style="border-bottom:0.05em solid">container</span> but also a class of <span style="border-bottom:0.05em solid">title</span> and to make both red.</div></aside><p id="48695109-acd6-45c6-848e-e88baf850979" class="" dir="auto"><span style="border-bottom:0.05em solid">CONCLUSION</span></p><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="efd8b0a9-d1a5-4cf4-8fc4-4a9879403827" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">Use id’s sparingly, most use id’s for sections and sections use only. classes for most of the element’s div etc. While using classes only use one/same class two different element’s and avoid using inline class, it&#x27;s really bad habit and also one of the laziest.</div></aside><hr id="4d2a42a8-e015-4d4d-a925-77c5adcfe787" dir="auto"/><h2 id="502aa15b-7c32-4bba-a2ae-51bf34ab5472" class="" dir="auto"><span style="border-bottom:0.05em solid">Inclusion</span></h2><h3 id="7d3c9344-aec5-48fd-b249-15a3ecf2fa8d" class="" dir="auto">Introduction</h3><p id="f8409704-8058-4430-af28-9e8ec0659322" class="" dir="auto">There are <span style="border-bottom:0.05em solid">three</span> ways to associate styles with your html document. Most commonly used methods are <span style="border-bottom:0.05em solid">Inline css</span> and <span style="border-bottom:0.05em solid">External css</span>.</p><h3 id="9da332fe-7914-4a23-b425-13155a43c9f9" class="" dir="auto">Embedded CSS - The &lt;style&gt; Element</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="9364eab1-a3e5-48eb-87fa-3a40a098270a" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">You can put your CSS rules into an HTML document using the &lt;style&gt; element. This tag is placed inside the &lt;head&gt;...&lt;/head&gt; tags. Rules defined using this syntax will be applied to all the elements available in the document. Here is the generic syntax:</div></aside><pre id="0d5aeb31-d2f3-4551-86ef-8eeb237e093e" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;head&gt; 
+&lt;style&gt; 
+Style Rules 
+............ 
+&lt;/style&gt; 
+&lt;/head&gt;</code></pre><h3 id="ea6f349d-c6b0-4dda-8876-7dea7cd3c4eb" class="" dir="auto">Inline CSS - The style Attribute</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="2e194480-12c8-42b9-917a-29a28d1da261" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">You can use style attribute of any HTML element to define style rules. These rules will be applied to that element only. Here is the generic syntax:</div></aside><pre id="0c5e3449-1338-429e-81d2-e617ae31594e" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;element style=&quot;...style rules....&quot;&gt;</code></pre><pre id="d8ede71f-9c54-4f1d-8bbc-0360a3009053" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">Example:-
+&lt;h1 style= &quot;color:red;&quot;&gt; 
+...This is inline css...
+&lt;/h1&gt;</code></pre><h3 id="8e260bb8-35ed-453b-9489-a293b6c16fc2" class="" dir="auto">External CSS - The &lt;link&gt; Element</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="5e8e797a-4345-47ff-a0c8-e5430ab77fc8" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">The &lt;link&gt; element can be used to include an external stylesheet file in your HTML document. An external style sheet is a separate text file with .css extension. You define all the Style rules within this text file and then you can include this file in any HTML document using &lt;link&gt; element.</div></aside><p id="9f386d19-1772-43a6-ad7b-051b97fd538f" class="" dir="auto">Here is the generic syntax of including external CSS file:</p><pre id="1029d944-b99c-418a-9ac6-7db125612bfc" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;head&gt; 
+&lt;link type=&quot;text/css&quot; href=&quot;...&quot; media=&quot;...&quot; /&gt; 
+&lt;/head&gt;</code></pre><h3 id="effb2118-0c6c-4d2c-b6d0-e9c8f9ee1235" class="" dir="auto">CSS Rules Overriding</h3><p id="03bae075-a8d2-4b28-b4d6-6c141861c5de" class="" dir="auto">We have discussed three ways to include style sheet rules in an HTML document. Here is the rule to override any Style Sheet Rule.</p><ul id="c9e65fe9-132a-4b64-acc3-330ba8178824" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Any inline style sheet takes the highest priority. So, it will override any rule defined in &lt;style&gt;...&lt;/style&gt; tags or the rules defined in any external style sheet file.</li></ul><ul id="84bc3e90-0cc9-4560-be01-8bcf0940cd5f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Any rule defined in &lt;style&gt;...&lt;/style&gt; tags will override the rules defined in any external style sheet file.</li></ul><ul id="121db317-325c-4a17-854f-92c23693bddd" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Any rule defined in the external style sheet file takes the lowest priority, and the rules defined in this file will be applied only when the above two rules are not applicable.</li></ul><h3 id="6a47e38a-3704-4176-9048-20961fbde8aa" class="" dir="auto">CSS Comments</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="83d72007-4c14-40f3-aeff-b1aebc41750c" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">Many times, you may need to put additional comments in your style sheet blocks. So, it is very easy to comment any part in the style sheet. You can simply put your comments inside CSS as follow :-</div></aside><pre id="c6374038-fd23-4df7-b530-bd367da55e15" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">/* This is a comment in style sheet */</code></pre><hr id="4dcaaf38-ce72-4f1e-abfc-7e04d76a94db" dir="auto"/><h2 id="c6faecca-f1bd-4245-b370-e491404e6f22" class="" dir="auto"><span style="border-bottom:0.05em solid">Colors in CSS</span></h2><h3 id="ff4e1af5-5be2-4c80-92fb-a6cfd8baffd3" class="" dir="auto">RGB Value</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="43752b35-e280-40d9-8207-1bd7c5c29deb" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">An RGB color value represents RED, GREEN, and BLUE light sources.</div></aside><ul id="38cf1fe8-f22c-4dc6-bb6a-95cf82790258" class="bulleted-list" dir="auto"><li style="list-style-type:disc">In CSS, a color can be specified as an RGB value, using this formula: <strong>rgb(</strong><em><strong>red,</strong></em><strong> </strong><em><strong>green</strong></em><strong>, </strong><em><strong>blue</strong></em><strong>)</strong></li></ul><ul id="03abbe51-2bf1-40a4-a17a-fb4d3c6a0206" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Each parameter (red, green, and blue) defines the intensity of the color between 0 and 255.</li></ul><ul id="6405d0ef-a6bf-4272-9afe-2f959a3878ff" class="bulleted-list" dir="auto"><li style="list-style-type:disc">For example, rgb(255, 0, 0) is displayed as red, because red is set to its highest value (255) and the others are set to 0.</li></ul><ul id="c2ae0f25-48a2-4be6-a71d-5175b1814cab" class="bulleted-list" dir="auto"><li style="list-style-type:disc">To display black, set all color parameters to 0, like this: rgb(0, 0, 0).</li></ul><ul id="26a4f537-cab8-430d-ac14-edac1da093cf" class="bulleted-list" dir="auto"><li style="list-style-type:disc">To display white, set all color parameters to 255, like this: rgb(255, 255, 255).</li></ul><figure id="a0791bf6-614b-451e-b8f0-992b143496f9" class="image" data-notion-image="Annotation_2023-04-03_175126.png" dir="ltr"><a href="Annotation_2023-04-03_175126.png"><img style="width:649px" src="Annotation_2023-04-03_175126.png"/></a></figure><ul id="7b58de97-a3ab-4893-93d4-0eaf6fc644d3" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Shades of gray are often defined using equal values for all the 3 light sources:</li></ul><figure id="13650703-6f91-44fb-8e9b-176fc9044f88" class="image" data-notion-image="Annotation_2023-04-03_175237.png" dir="ltr"><a href="Annotation_2023-04-03_175237.png"><img style="width:638px" src="Annotation_2023-04-03_175237.png"/></a></figure><h3 id="08807938-6e4f-4412-b8f1-94b4034b96b4" class="" dir="auto">RGBA Value</h3><ul id="c1925095-6520-4b5a-bb3f-defc71c55114" class="bulleted-list" dir="auto"><li style="list-style-type:disc">RGBA color values are an extension of RGB color values with an alpha channel - which specifies the opacity for a color.</li></ul><ul id="2c0a425d-32ff-4376-b622-4e213051dbac" class="bulleted-list" dir="auto"><li style="list-style-type:disc">An RGBA color value is specified with: <strong>rgba(</strong><em><strong>red,</strong></em><strong> </strong><em><strong>green</strong></em><strong>, </strong><em><strong>blue, alpha</strong></em><strong>)</strong></li></ul><ul id="5913dc26-84ec-4f2e-93ae-37f1da718eb7" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (not transparent at all):</li></ul><figure id="ce67e953-2d8e-4760-9e14-1942a31e537f" class="image" data-notion-image="Annotation_2023-04-03_175726.png" dir="ltr"><a href="Annotation_2023-04-03_175726.png"><img style="width:528px" src="Annotation_2023-04-03_175726.png"/></a></figure><h3 id="db71760a-73b0-4143-b27f-f1d5449ff3ad" class="" dir="auto"><strong>HEX Value</strong></h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="c7ff767b-b450-4223-bf77-51045e64ca0b" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">A hexadecimal color is specified with: #RRGGBB, where the RR (red), GG (green) and BB (blue) hexadecimal integers specify the components of the color.</div></aside><ul id="fa5c0181-29fa-4f56-8c26-4004ba88ff5e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">In CSS, a color can be specified using a hexadecimal value in the form: <strong>#</strong><em><strong>rrggbb</strong></em></li></ul><ul id="c39d9f56-f1b1-4f3d-9ef5-73a24bd442ae" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Where rr (red), gg (green) and bb (blue) are hexadecimal values between 00 and ff (same as decimal 0-255).</li></ul><ul id="b0da0716-eae8-4c46-9c77-88135c108a72" class="bulleted-list" dir="auto"><li style="list-style-type:disc">For example, #ff0000 is displayed as red, because red is set to its highest value (ff) and the others are set to the lowest value (00).</li></ul><ul id="34396419-4a13-4250-87a8-4e277b1bc462" class="bulleted-list" dir="auto"><li style="list-style-type:disc">To display black, set all values to 00, like this: #000000.</li></ul><ul id="cd8bbf93-2671-454c-acd3-b1cde573d1c0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">To display white, set all values to ff, like this: #ffffff.</li></ul><figure id="3510109a-0fc7-43a7-a468-de396e3f7c1e" class="image" data-notion-image="Annotation_2023-04-03_180911.png" dir="ltr"><a href="Annotation_2023-04-03_180911.png"><img style="width:528px" src="Annotation_2023-04-03_180911.png"/></a></figure><ul id="0eb5cbc3-1eba-429a-af8e-b5b89b7d2ed0" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Shades of gray are often defined using equal values for all the 3 light sources:</li></ul><figure id="83ddea40-4571-4d5c-b021-852b970be1b4" class="image" data-notion-image="Annotation_2023-04-03_180930.png" dir="ltr"><a href="Annotation_2023-04-03_180930.png"><img style="width:528px" src="Annotation_2023-04-03_180930.png"/></a></figure><p id="450933c9-0db5-491a-9c93-48249ccc66be" class="" dir="auto">
+</p><h3 id="f00cdf04-e720-4354-b397-2fe5b5c1528d" class="" dir="auto"><strong>3 Digit HEX Value</strong></h3><ul id="ca07f276-08b2-4fdc-af29-6395436b8963" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Sometimes you will see a 3-digit hex code in the CSS source.</li></ul><ul id="c1bdc7ba-ac69-40f7-919a-d42f844b82a9" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The 3-digit hex code is a shorthand for some 6-digit hex codes.</li></ul><ul id="e521bcbb-692b-4b9a-a5a6-ce96c3b8b7a5" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The 3-digit hex code has the following form: <strong>#</strong><em><strong>rgb</strong></em></li></ul><ul id="e1a3de14-669f-4002-80a0-b1e0b85e7a50" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Where r, g, and b represent the red, green, and blue components with values between 0 and f.</li></ul><ul id="1ec262d9-f174-420f-a40c-ae0434dfb6ba" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The 3-digit hex code can only be used when both the values (RR, GG, and BB) are the same for each component. So, if we have #ff00cc, it can be written like this: #f0c.</li></ul><p id="9730ae18-cd32-4e07-9737-0dae5f3e303f" class="" dir="auto">Here is an example:</p><pre id="f5733d08-f97c-4c64-848f-6600305022c1" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">body {
+  background-color: #fc9; /* same as #ffcc99 */
+}
+
+h1 {
+  color: #f0f; /* same as #ff00ff */
+}
+
+p {
+  color: #b58; /* same as #bb5588 */
+}</code></pre><p id="9b631305-5294-43eb-a8c4-6b1dd73f77c1" class="" dir="auto">
+</p><h3 id="120f24f9-6168-4fbf-8637-89a7f15d372b" class="" dir="auto"><strong>HSL Value</strong></h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="44300f5b-0edf-4d64-a66c-6f3961c85408" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">HSL stands for hue, saturation, and lightness.</div></aside><ul id="cbd74a75-ed40-4314-945d-48f35ff79ff3" class="bulleted-list" dir="auto"><li style="list-style-type:disc">In CSS, a color can be specified using hue, saturation, and lightness (HSL) in the form: <strong>hsl(</strong><em><strong>hue</strong></em><strong>, </strong><em><strong>saturation</strong></em><strong>, </strong><em><strong>lightness</strong></em><strong>)</strong></li></ul><ul id="94d6e324-4b86-470d-bd53-644c2e3bfa5e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Hue is a degree on the color wheel from 0 to 360. 0 is red, 120 is green, and 240 is blue.</li></ul><ul id="8caa4717-cb3c-477b-9052-9e8719cadb6e" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Saturation is a percentage value. 0% means a shade of gray, and 100% is the full color.</li></ul><ul id="9e8829ba-803e-4d5a-9fa0-01dfddf668d6" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Lightness is also a percentage. 0% is black, 50% is neither light or dark, 100% is white</li></ul><figure id="5e2eaf7c-5c9d-495e-a793-b7d03eece210" class="image" data-notion-image="Annotation_2023-04-03_181720.png" dir="ltr"><a href="Annotation_2023-04-03_181720.png"><img style="width:576px" src="Annotation_2023-04-03_181720.png"/></a></figure><p id="e31e56e0-b911-4b33-9323-47fe1cccbf31" class="" dir="auto">
+</p><figure id="9f1d3806-312b-4c69-b500-83ca080e3669" class="image" data-notion-image="10.png" dir="ltr"><a href="10.png"><img style="width:576px" src="10.png"/></a></figure><p id="67ec4dae-8fcb-4187-9fe8-89f3d8545df6" class="" dir="auto">
+</p><figure id="4c18fb2a-a88c-4dcc-a9e2-04de87297596" class="image" data-notion-image="20.png" dir="ltr"><a href="20.png"><img style="width:576px" src="20.png"/></a></figure><p id="bf9852bb-5f27-4a58-aae9-dd442251ba75" class="" dir="auto">
+</p><figure id="1d4395cd-1cd7-4ecc-88d1-b052316c32cc" class="image" data-notion-image="30.png" dir="ltr"><a href="30.png"><img style="width:576px" src="30.png"/></a></figure><h3 id="e072389f-1900-4ae2-98c5-15418ec66c02" class="" dir="auto"><strong>HSLA Value</strong></h3><ul id="6e1e8c0c-2c6a-40fe-a468-cf4641920a87" class="bulleted-list" dir="auto"><li style="list-style-type:disc">HSLA color values are an extension of HSL color values with an alpha channel - which specifies the opacity for a color.</li></ul><ul id="70de6142-016e-4f4b-bc91-8e8242843280" class="bulleted-list" dir="auto"><li style="list-style-type:disc">An HSLA color value is specified with: <strong>hsla(</strong><em><strong>hue,</strong></em><strong> </strong><em><strong>saturation</strong></em><strong>, </strong><em><strong>lightness, alpha</strong></em><strong>)</strong></li></ul><ul id="df2870b2-dcd3-4198-951d-1427f74fdf26" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (not transparent at all):</li></ul><figure id="423d8516-b3e1-4755-b112-49836ca79226" class="image" data-notion-image="Annotation_2023-04-03_182509.png" dir="ltr"><a href="Annotation_2023-04-03_182509.png"><img style="width:576px" src="Annotation_2023-04-03_182509.png"/></a></figure><hr id="f2fe6f5c-1d9b-4b7e-8829-d771517db5fb" dir="auto"/><h2 id="ea4a01a5-74ea-4e46-b1ad-de2f6911fedd" class="" dir="auto"><span style="border-bottom:0.05em solid">CSS Background Property</span></h2><p id="c2f6af4d-b447-4213-ab11-2e231043005a" class="" dir="auto">The CSS background properties are used to add background effects for elements.</p><h3 id="151e3086-e0a7-4f70-8bfd-ef744369f8be" class="" dir="auto"><strong>CSS background-color</strong></h3><p id="983bead2-b950-436b-9e98-c0b3fad18e75" class="" dir="auto">The <code>background-color</code> property specifies the background color of an element.</p><pre id="85847cf6-5cf4-4300-a895-77ec12d3f42c" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">body {
+  background-color: lightblue;
+}</code></pre><p id="c1d1e91d-54a4-483f-80de-c172b23b4420" class="" dir="auto">With CSS, a color is most often specified by:</p><ul id="d36421f7-450f-4a89-97f6-faf0113b668f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">a valid color name - like &quot;red&quot;</li></ul><ul id="438ef26a-7249-472e-8d9d-8971651f7324" class="bulleted-list" dir="auto"><li style="list-style-type:disc">a HEX value - like &quot;#ff0000&quot;</li></ul><ul id="72ecb1a6-0abc-4697-93ac-44db7f45e86c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">an RGB value - like &quot;rgb(255,0,0)&quot;</li></ul><h3 id="4190aaf9-bf48-4b3c-8bc0-135bb7d93592" class="" dir="auto"><strong>CSS background-image</strong></h3><p id="7cb31c9f-36ee-4651-b99f-eb0866f49f16" class="" dir="auto">The <code>background-image </code>property specifies an image to use as the background of an element.</p><p id="d2787e22-e367-4ab2-bd2d-9978a2e62db5" class="" dir="auto">By default, the image is repeated x &amp; y direction, so it covers the entire element.</p><pre id="a7e273b2-fca4-418e-b029-ff1a7afc097c" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">body {
+  background-image: url(&quot;paper.gif&quot;);
+}</code></pre><h3 id="5f7abe52-d8eb-4f5b-9f0a-d8ab03721921" class="" dir="auto"><strong>CSS background-repeat</strong></h3><p id="9706d319-8e48-45b0-8404-1b2b51cd5313" class="" dir="auto">By default, the <code>background-image </code>property repeats an image both horizontally and vertically.</p><p id="40bc1d03-06e0-43ad-b72c-6cdbb8798d08" class="" dir="auto">Some images should be repeated only horizontally or vertically, or they will look strange, like this:</p><pre id="32682360-f599-4e53-80ed-0d57e1979219" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">body {
+  background-image: url(&quot;gradient_bg.png&quot;);
+}</code></pre><p id="5035ddb5-6a19-4481-b7a8-e14b6882694e" class="" dir="auto">If the image above is repeated only horizontally (<code>background-repeat: repeat-x;</code>), the background will look better:</p><pre id="42cf937d-a924-4c49-912c-0df92ff7b9f6" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">body {
+  background-image: url(&quot;gradient_bg.png&quot;);
+  background-repeat: repeat-x;
+}</code></pre><p id="79a572d4-e33f-4aa1-a8f4-3ee302a0f453" class="" dir="auto"><strong>Tip :- </strong>To repeat an image vertically, set <code>background-repeat: repeat-y;</code></p><h3 id="ea20e964-ae6d-4441-9fe6-262af4c400e9" class="" dir="auto"><strong>CSS background-repeat: no-repeat</strong></h3><p id="7d441aff-40d0-4cda-9c89-a7592460fa7a" class="" dir="auto">Showing the background image only once is also specified by the <code>background-repeat</code>property:</p><pre id="2f1321e3-87a3-41c0-8917-6e4cfa8cfa47" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">/*Show the background image only once:*/
+body {
+  background-image: url(&quot;img_tree.png&quot;);
+  background-repeat: no-repeat;
+}</code></pre><p id="ad777cd3-dbb5-482f-b595-9ea9049fa0c9" class="" dir="auto">In the example above, the background image is placed in the same place as the text. We want to change the position of the image, so that it does not disturb the text too much.</p><h3 id="fd1b5d5c-9e2f-4df2-b7e9-4f392687c8c9" class="" dir="auto"><strong>CSS background-position</strong></h3><p id="da95923d-84d7-46c8-b6e6-133d6ae4a3a0" class="" dir="auto">The <code>background-position</code>property is used to specify the position of the background image.</p><pre id="aaaf82ed-6f7e-4cff-8f77-ffe61240b4e3" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">body {
+  background-image: url(&quot;img_tree.png&quot;);
+  background-repeat: no-repeat;
+  background-position: right top;
+}</code></pre><h3 id="37872e0a-db10-45d2-876f-8b0a4c5527cc" class="" dir="auto"><strong>CSS background-attachment</strong></h3><p id="df1a3630-e417-49f1-9d2e-53216de58265" class="" dir="auto">The <code>background-attachment</code>property specifies whether the background image should scroll or be fixed (will not scroll with the rest of the page):</p><pre id="8f92ab9d-4457-4124-bfbc-ae2bb0bc806d" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">body {
+  background-image: url(&quot;img_tree.png&quot;);
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-attachment: fixed;
+}</code></pre><pre id="233e90b6-95f2-4add-9daa-54dc73ac202f" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">/*Specify that the background image should scroll with the rest of the page:*/
+body {
+  background-image: url(&quot;img_tree.png&quot;);
+  background-repeat: no-repeat;
+  background-position: right top;
+  background-attachment: scroll;
+}</code></pre><h3 id="481879a9-d46a-478f-beeb-1029117ed82f" class="" dir="auto"><strong>CSS background - Shorthand property</strong></h3><p id="5e11d6d0-3cbe-4d04-804b-65ae5ddf27dc" class="" dir="auto">To shorten the code, it is also possible to specify all the background properties in one single property. This is called a shorthand property.</p><pre id="d1fb1af7-6da8-408d-9036-ee11ba085a5a" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">/*Instead of writing:*/
+body {
+  background-color: #ffffff;
+  background-image: url(&quot;img_tree.png&quot;);
+  background-repeat: no-repeat;
+  background-position: right top;
+}</code></pre><pre id="bf949faf-7546-45fd-8bc3-cf47ec71a90b" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">/*You can use the shorthand property background:*/
+body {
+  background: #ffffff url(&quot;img_tree.png&quot;) no-repeat right top;
+}</code></pre><p id="2166a76b-6726-43db-98e1-57d1a7473e50" class="" dir="auto">When using the shorthand property the order of the property values is:</p><ul id="c07b4000-df6c-491d-9378-efe3ecb3cfde" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><code>background-color</code></li></ul><ul id="4288c12e-130c-44d1-9784-d3d09bd66d24" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><code>background-image</code></li></ul><ul id="e1fa9717-5e5b-4665-a6d5-2c46c22c9f00" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><code>background-repeat</code></li></ul><ul id="0084aef6-704f-4e43-87dd-bfadb88a7db8" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><code>background-attachment</code></li></ul><ul id="dc2996d8-394a-4044-a263-40cf5a6be8f5" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><code>background-position</code></li></ul><p id="5a746b18-5251-4680-9475-d55f34084451" class="" dir="auto">It does not matter if one of the property values is missing, as long as the other ones are in this order. Note that we do not use the background-attachment property in the examples above, as it does not have a value.</p><h3 id="2d062c4d-77fe-4d29-b4b4-f3b622326471" class="" dir="auto"><strong>CSS background-size Property</strong></h3><ul id="447f9f98-d30b-4467-b6f7-bd0619e82786" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The <code>background-size</code>property specifies the size of the background images.</li></ul><ul id="69e10afa-ec33-4942-ae34-ae13ac89e42d" class="bulleted-list" dir="auto"><li style="list-style-type:disc">There are four different syntaxes you can use with this property: the keyword syntax (&quot;auto&quot;, &quot;cover&quot; and &quot;contain&quot;), the one-value syntax (sets the width of the image (height becomes &quot;auto&quot;), the two-value syntax (first value: width of the image, second value: height), and the multiple background syntax (separated with comma).</li></ul><ul id="c9f18c96-4198-42db-a322-823e6e677e19" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid"><strong>Cover VS Contain</strong></span> :-cover tells the browser to make sure the image always covers the entire container, even if it has to stretch the image or cut a little bit off one of the edges. contain , on the other hand, says to always show the whole image, even if that leaves a little space to the sides or bottom.</li></ul><pre id="9e87fd7a-234e-4c9d-8c41-fb85cd2c6bc6" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">#example1 {
+  background: url(mountain.jpg);
+  background-repeat: no-repeat;
+  background-size: auto; /*sets Default image size*/
+}
+
+#example2 {
+  background: url(mountain.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; /*Fits and no empty space remains even if it has to cut a little bit of imgage*/
+}
+
+#example2 {
+  background: url(mountain.jpg);
+  background-repeat: no-repeat;
+  background-size: contain; /*Fits and show the whole image even if it has to leave a little space*/
+}
+
+#example2 {
+  background: url(mountain.jpg);
+  background-repeat: no-repeat;
+  background-size: 300px ; /*sets width &amp; height becomes auto*/
+}
+
+#example2 {
+  background: url(mountain.jpg);
+  background-repeat: no-repeat;
+  background-size: 300px 100px; /*sets width &amp; height*/
+}</code></pre><hr id="c631aaa3-3253-4339-94ec-48ebf9f26271" dir="auto"/><h2 id="410290ae-dd9d-40af-a852-e7cb209126b3" class="" dir="auto"><span style="border-bottom:0.05em solid">CSS Box Model</span></h2><h3 id="1bef8d48-7dab-4b7f-9fec-c6bae8bcf8fc" class="" dir="auto">Introduction</h3><p id="87eafe0a-5f56-4da6-928b-5e7565d8d772" class="" dir="auto">In CSS, the term &quot;box model&quot; is used when talking about design and layout.</p><p id="5a74641c-dbd8-4720-a59b-6705ade22613" class="" dir="auto">The CSS box model is essentially a box that wraps around every HTML element. It consists of: margins, borders, padding, and the actual content. The image below illustrates the box model :</p><figure id="62a52547-b639-4992-99e8-1156e5232524" class="image" data-notion-image="Annotation_2023-04-04_135532.png" dir="ltr"><a href="Annotation_2023-04-04_135532.png"><img style="width:576px" src="Annotation_2023-04-04_135532.png"/></a></figure><p id="fb4d51cb-38ee-4f8f-943c-7fb95148186d" class="" dir="auto"><span style="border-bottom:0.05em solid">Explanation of the different parts</span> :</p><ul id="dcbbfa96-440d-4012-8b2c-564064153fbe" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Content</strong> - The content of the box, where text and images appear</li></ul><ul id="723358fc-3d7d-4bfd-88bc-f1e04052d204" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Padding</strong> - Clears an area around the content. The padding is transparent</li></ul><ul id="e4080e1e-2854-47aa-b834-f7f9f06f15e3" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Border</strong> - A border that goes around the padding and content</li></ul><ul id="7ba8cd9d-4261-477a-b3f6-4d21d86f47de" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>Margin</strong> - Clears an area outside the border. The margin is transparent</li></ul><p id="13eef3dd-7730-4c87-941d-bb064b2131b1" class="" dir="auto">The box model allows us to add a border around elements, and to define space between elements.</p><h3 id="720e4628-34e2-40fb-84ac-eceb2f3683c2" class="" dir="auto">Setting Width &amp; Height</h3><p id="1c21e85c-5677-469e-93aa-472a77ccdc37" class="" dir="auto">We can set width and height in CSS as follows</p><pre id="902fbc1d-9fad-469f-bfb0-8a261b8c1abf" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">#box {
+          height: 70px;
+          width: 70px;
+}</code></pre><p id="5285bc79-5e2d-4afc-b04f-a2a6555206d7" class="" dir="auto"><span style="border-bottom:0.05em solid">Note that the total width/height is calculated as follows</span> : </p><p id="37da366f-0106-48c7-83ca-4d94a6f36c1a" class="" dir="auto"><strong>Total height</strong> = height + top/bottom padding + top/bottom border + top/bottom margin</p><h3 id="fc6b67b8-612d-4b2b-917c-f5138ef0874e" class="" dir="auto"><strong>Setting Margin &amp; Padding</strong></h3><p id="94d37799-c330-4810-a0a9-726a2ce3c771" class="" dir="auto">We can set margin and padding as follows:</p><pre id="7fd7227d-22e2-47b7-b612-4f1d7efba282" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">.box{
+          margin: 3px;        /* Sets top, bottom, left &amp; right values*/
+          padding: 4px;       /* Sets top, bottom, left &amp; right values*/
+}</code></pre><p id="785b5faa-b55c-4e81-99ef-d0eecb1f4a3d" class="" dir="auto">Copy</p><pre id="91074833-a02a-4cc1-840c-3e90c811e1c7" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">.boxMain{
+          margin: 7px 0px 2px 11px;      /*top, right, bottom, left*/
+}</code></pre><p id="914e327d-7997-4d5b-9574-55ada7caba30" class="" dir="auto">Copy</p><pre id="fa623b6a-d2f5-4455-a87c-0db75aa79ef5" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">.boxLast{
+          margin: 7px 3px;           /*(top &amp; bottom) (left &amp; right)*/
+}</code></pre><p id="cc3f158f-4f36-44fb-bcc9-10d38d57820c" class="" dir="auto"><span style="border-bottom:0.05em solid">We can also set individual margins/padding like this</span>:</p><p id="5fcb71ce-b5c4-40eb-a81c-708a042414f3" class="" dir="auto">margin-top: 70px</p><p id="42218345-f873-46b4-b8ce-b5acc6bc527b" class="" dir="auto">margin-bottom: 3px</p><p id="45d959b0-2d87-4ddf-9e11-b130c394bca9" class="" dir="auto">margin-left: 8px</p><p id="9d07a54d-a3e5-493c-868b-1bf41cd83e4d" class="" dir="auto">margin-right: 9px</p><p id="2263b108-ce09-4094-9996-15cf4db7ca2b" class="" dir="auto"><strong>#Same goes with padding also</strong></p><h3 id="4c7ccb20-a7af-4a07-8eff-414604a00923" class="" dir="auto"><strong>Setting Borders</strong></h3><p id="a966503f-099f-4333-aaa5-0c863cf142c4" class="" dir="auto">We can set the border as follows</p><pre id="93f3c54f-7306-43d4-887c-8d56a5459354" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">.bx{
+          border-width: 2px;
+          border-style: solid;
+          border-color: red;
+}</code></pre><p id="ab5d7be4-2897-4e91-a753-26876d8fdc14" class="" dir="auto"><strong>Shorthand for above codes,</strong></p><pre id="284059b1-fdac-4a24-b18f-27dc69dc9eb2" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">set border: 2px solid red; /*widht style color*/</code></pre><h3 id="25fb79db-fe89-4432-bb55-713fee5f9859" class="" dir="auto"><strong>Border Radius</strong></h3><p id="b3c7a0cb-e2c2-4df6-9b9c-cec85ca85ca8" class="" dir="auto">We can set border-radius to create rounded borders</p><pre id="5f816421-2bc3-49c4-aea3-7005ea930bc6" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">.div2{
+          border-radius: 7px;
+}</code></pre><figure id="e14b976f-e804-4e51-b4ea-1d3937282182" class="image" data-notion-image="border-radius.JPG.png" dir="ltr"><a href="border-radius.JPG.png"><img style="width:1284px" src="border-radius.JPG.png"/></a></figure><h3 id="68370229-2a5a-4fa6-a058-6f2c6f98de58" class="" dir="auto"><strong>Margin Collapse</strong></h3><p id="fe4e7509-1f1a-4eb2-a5a5-6ccec5be72f7" class="" dir="auto">When two margins from different elements overlap, the equivalent margin is the greater of the two. This is called margin collapse.</p><figure id="09c9f9ca-29e9-4f25-9a12-d5aeabc0bdf6" class="image" data-notion-image="Margin-top_100px.png" dir="ltr"><a href="Margin-top_100px.png"><img style="width:425px" src="Margin-top_100px.png"/></a><figcaption>Highlited area is margin collapse.</figcaption></figure><pre id="2385dec8-a765-43dd-9302-638820a96812" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">.shree{
+    height: 100px;
+    width: 100px;
+    background-color: red;
+    margin-bottom: 50px;
+}
+.shirkut{
+    height: 100px;
+    width: 100px;
+    background-color: blue;
+    margin-top: 100px;
+}</code></pre><h3 id="7b72f378-baf1-44bf-9d4e-f6de265e5a19" class="" dir="auto"><strong>Box Sizing</strong></h3><p id="d3b01963-157d-41ed-b73a-ab488a0f9dda" class="" dir="auto">The CSS <code>box-sizing</code>property allows us to include the padding and border in an element&#x27;s total width and height.</p><figure id="7e0d3910-665b-4b3c-9209-06a1920aacbc" class="image" data-notion-image="Annotation_2023-04-04_160008.png" dir="ltr"><a href="Annotation_2023-04-04_160008.png"><img style="width:624px" src="Annotation_2023-04-04_160008.png"/></a></figure><pre id="6799f943-6f46-4459-8b93-e00444fdeeab" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">Example:-
+.div1 {
+  width: 300px;
+  height: 100px;
+  border: 1px solid blue;
+}
+
+.div2 {
+  width: 300px;
+  height: 100px;
+  padding: 50px;
+  border: 1px solid red;
+}</code></pre><figure id="8ed1ae42-5401-40af-93ef-8afd710a77bf" class="image" data-notion-image="Annotation_2023-04-04_160052.png" dir="ltr"><a href="Annotation_2023-04-04_160052.png"><img style="width:624px" src="Annotation_2023-04-04_160052.png"/></a></figure><pre id="91ac7e98-1c54-47dd-bf12-d5feb1164f6a" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">Example:-
+.div1 {
+  width: 300px;
+  height: 100px;
+  border: 1px solid blue;
+  box-sizing: border-box;
+}
+
+.div2 {
+  width: 300px;
+  height: 100px;
+  padding: 50px;
+  border: 1px solid red;
+  box-sizing: border-box;
+}</code></pre><p id="5320df44-e7fd-48b8-8c32-25b81c5a2fe8" class="" dir="auto">Since the result of using the <code>box-sizing: border-box;</code> is so much better, many developers want all elements on their pages to work this way.</p><p id="f625aeb1-de90-4670-ab94-2a1e23a3f663" class="" dir="auto">The code below ensures that all elements are sized in this more intuitive way. Many browsers already use <code>box-sizing: border-box;</code> for many form elements (but not all - which is why inputs and text areas look different at width: 100%;).</p><p id="f0785f58-ded6-48f0-a837-1132c05c6d20" class="" dir="auto">Applying this to all elements is safe and wise:</p><hr id="e196924e-8aa3-4345-9cd1-51abb637f061" dir="auto"/><h2 id="cf2bfb24-dd63-41d6-806a-40ac7fa5a0d0" class="" dir="auto"><span style="border-bottom:0.05em solid">CSS Fonts</span></h2><h3 id="88c977d1-a9f5-4063-b50e-8e77c4c755c4" class="" dir="auto">Introduction</h3><p id="5b5d7393-74f2-4158-a046-abc29c286e27" class="" dir="auto">Fonts are the most significant components we see on any website, so while building a website, choosing the correct/suitable font is very important. fonts enhance the visual appearance of any website and the use of appropriate font helps in increasing the readability and effectiveness of any website.</p><h3 id="057db51b-7098-49fa-a7be-60beccb9f435" class="" dir="auto">Generic font families in CSS</h3><p id="503001e0-8eb1-4e3d-94a8-f512ff77195e" class="" dir="auto">There are five types of font famillies in  CSS ex:- Serif, Sans-serif, Monospace, Fantasy and Cursive. All these font families are used to specify the appearance/shape of the fonts.</p><ul id="85439aea-faa7-4f0d-8fe8-876e5629df0a" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid"><strong>Serif Fonts</strong></span><strong> :-</strong> Have small stylish strokes at the edge of the letters.</li></ul><figure id="bdcc599a-6578-424e-ba07-db2242886cf1" class="image" style="text-align:left" data-notion-image="Serief.png" dir="ltr"><a href="Serief.png"><img style="width:240px" src="Serief.png"/></a></figure><ul id="c9f58071-ad12-433d-89e2-3d4f68093701" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid"><strong>Sans-serif</strong></span><strong> :-</strong> Fonts have plain letters, no stroke. These fonts are easily readable.</li></ul><figure id="5b653b7a-7892-4ee2-a2ac-3da23eb68c84" class="image" style="text-align:left" data-notion-image="sans-serif.png" dir="ltr"><a href="sans-serif.png"><img style="width:240px" src="sans-serif.png"/></a></figure><ul id="7a10ebb2-db63-4649-b8a0-de8983872620" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid"><strong>Monospace</strong></span><strong> :-</strong> Fonts are fixed-pitch fixed-width letters. Mostley used to represent the programming code.</li></ul><figure id="457d4ea4-c94c-4404-8eec-1a11d839a1f5" class="image" style="text-align:left" data-notion-image="Monospaced.png" dir="ltr"><a href="Monospaced.png"><img style="width:596px" src="Monospaced.png"/></a></figure><ul id="9f6664f5-6f70-4076-bc81-7827c41904d0" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong><span style="border-bottom:0.05em solid">Cursive</span></strong><strong> :-</strong> Fonts are very much similar to human writing.</li></ul><figure id="02119690-80ca-4a73-84d7-2036234f10a2" class="image" style="text-align:left" data-notion-image="Cursive.jpg" dir="ltr"><a href="Cursive.jpg"><img style="width:432px" src="Cursive.jpg"/></a></figure><ul id="80128194-7efb-4212-9622-32a5e28ad2a9" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><span style="border-bottom:0.05em solid"><strong>Fantasy</strong></span> <strong>:- </strong>Fonts have decorative/fancy look.</li></ul><figure id="5b9b642f-01ac-4376-9acb-ba095a36580e" class="image" data-notion-image="Fantacy.jpg" dir="ltr"><a href="Fantacy.jpg"><img style="width:672px" src="Fantacy.jpg"/></a></figure><h3 id="992dc426-fda9-4338-ae2d-9774b6f7cce7" class="" dir="auto"><strong>text-align property</strong></h3><p id="5d7e1f6c-0b6d-40b4-b043-d03396716610" class="" dir="auto">Used to set the horizontal alignment of a text</p><pre id="064f5961-ef8b-4625-bc92-6326ac633d41" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">.div1{
+          text-align: center; /*left,center,right*/
+}</code></pre><h3 id="1e00db19-3683-4408-9bfa-66074162450b" class="" dir="auto"><strong>text-decoration property</strong></h3><p id="5c3f8870-9e77-4a24-bf5f-cccbcbf9d7c4" class="" dir="auto">Used to decorate the text</p><figure id="d833be16-4c8f-4f63-b63e-bbfe91cbefd9" class="image" data-notion-image="Annotation_2023-04-07_133859.png" dir="ltr"><a href="Annotation_2023-04-07_133859.png"><img style="width:576px" src="Annotation_2023-04-07_133859.png"/></a></figure><figure id="842966f9-161e-4301-8198-c1a63df2dd39" class="image" data-notion-image="24023daf-e6a0-4046-80d5-1838472a2cd4.jfif" dir="ltr"><a href="24023daf-e6a0-4046-80d5-1838472a2cd4.jfif"><img style="width:708px" src="24023daf-e6a0-4046-80d5-1838472a2cd4.jfif"/></a></figure><figure id="5cc9e195-eda5-4627-9467-8cb867a0d65d" class="image" data-notion-image="1.png" dir="ltr"><a href="1.png"><img style="width:552px" src="1.png"/></a></figure><figure id="6c8f614c-e3b8-4171-a4e3-b5a7b47d4d10" class="image" data-notion-image="Annotation_2023-04-07_134443.png" dir="ltr"><a href="Annotation_2023-04-07_134443.png"><img style="width:481px" src="Annotation_2023-04-07_134443.png"/></a></figure><figure id="1373bcdd-ffb1-49bf-a7df-c2b08f41aa98" class="image" data-notion-image="3.png" dir="ltr"><a href="3.png"><img style="width:515px" src="3.png"/></a></figure><figure id="b2ad0c3f-e237-4f20-a12b-d7d4430838fe" class="image" data-notion-image="4.png" dir="ltr"><a href="4.png"><img style="width:487px" src="4.png"/></a></figure><figure id="c408bf8d-ff2a-44cc-8243-60a604625687" class="image" data-notion-image="5.png" dir="ltr"><a href="5.png"><img style="width:492px" src="5.png"/></a></figure><h3 id="ee9a365f-734d-4576-8935-0843c92c6fec" class="" dir="auto"><strong>text-transform property</strong></h3><p id="ed05d63f-c2a3-41c1-b33a-3a6e0543635b" class="" dir="auto">Used to specify uppercase and lowercase letters in a text</p><pre id="4fc07b10-5cb7-47bd-a564-a0ff485f680d" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">p.uppercase{
+          text-transform: uppercase; /*lowercase*/
+}</code></pre><h3 id="4ae83476-9ace-4433-b4e8-2b20146dfab8" class="" dir="auto">line-height property</h3><p id="72a312cd-754d-495f-9f39-c3ca16ea7ab3" class="" dir="auto">Used to specify the space between lines</p><pre id="fe0c59de-8cfa-437c-8eb3-5aae62c5e150" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">.Small{
+          line-height: 0.7;
+}</code></pre><h3 id="c585c896-b145-4df7-a9ef-9d12cf9eaec7" class="" dir="auto">Font-family</h3><p id="4e7b7671-ebc4-4905-9395-c65817bdfde3" class="" dir="auto">Font family specifies the font of a text. It can hold multiple values as a “fallback” system.</p><pre id="84b32340-1ebc-4146-9b37-74abedb8e9a1" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">p{
+          font-family: “Times new Roman”, monospace;
+}                          /*font 1*/     /*font 2*/</code></pre><p id="e729954f-1b26-4158-8926-9a5792222442" class="" dir="auto">#always follow the above technique to ensure the correct font of your choice is rendered.</p><h3 id="e24a31f6-7f1e-4d93-bb19-414e0c386bf1" class="" dir="auto"><strong>Other Font Properties</strong></h3><p id="b8c173c7-1efa-4139-9622-ccf37b420a4c" class="" dir="auto">Some of the other font properties are listed below:</p><ul id="00e31406-727d-46f3-b9c1-888ea88c38fa" class="bulleted-list" dir="auto"><li style="list-style-type:disc">font-size: Sets the size of the font</li></ul><ul id="f7bdfe3f-79d6-43cd-8c39-9f5463b290af" class="bulleted-list" dir="auto"><li style="list-style-type:disc">font-style: Sets the font style</li></ul><ul id="8b7cfd80-e44b-4114-a197-454dd1517ab1" class="bulleted-list" dir="auto"><li style="list-style-type:disc">font-variant: Sets whether the text is displayed in small-caps</li></ul><ul id="17d2e591-4c46-4ea9-a132-fcca2b81f676" class="bulleted-list" dir="auto"><li style="list-style-type:disc">font-weight: Sets the weight of the font</li></ul><ul id="8152ef17-8693-407a-bbdf-f90529f2e822" class="bulleted-list" dir="auto"><li style="list-style-type:disc">font-shorthand: Set’s all values in one line code.</li></ul><ul id="a3f2f3e6-e6aa-4284-b1d9-aeed5194b3fd" class="bulleted-list" dir="auto"><li style="list-style-type:disc">font-family: Set’s font family.</li></ul><h3 id="9ea01bac-0418-4b29-96fb-4ff133a3058d" class="" dir="auto">Web Safe fonts</h3><p id="8a443aa9-6da1-43bf-831f-49898c9b5619" class="" dir="auto">Some of the browser’s have not all fonts download or in any case, your font don’t work, you have to use different technique’s to embed the font or you can give second option in code as follow’s:-</p><pre id="a333d48d-1131-4b5c-8ce3-be5bb570cd04" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">example:-
+font-family: Vardana, Sans-serif;
+                    /*second font*/</code></pre><h3 id="9eda770e-b0ca-45d9-8862-618b7cd282c1" class="" dir="auto">Safe fonts/embedding fonts</h3><p id="24608234-3651-44fa-8202-1778196be092" class="" dir="auto">If you do not want to change the feel of your website, you can use some safe font’s or technique’s to add that font in your html file.</p><ol type="1" id="34fbe8fe-811c-4574-a582-7183be19e61b" class="numbered-list" start="1" dir="auto"><li>CSS web safe fonts.</li></ol><ol type="1" id="f8610b74-8967-4b79-b618-772dfb1ca1d7" class="numbered-list" start="2" dir="auto"><li>CSS font stack: web safe.</li></ol><ol type="1" id="3336237a-afa3-4413-9871-9e6b8d46e114" class="numbered-list" start="3" dir="auto"><li>Google fonts (Recommended)</li></ol><h3 id="cdfac2bd-f017-40ce-9c2c-225fc6d3cdfb" class="" dir="auto">How to Embed Google fonts</h3><p id="79bd146d-5ee0-4cf3-af53-10522cf6f80e" class="" dir="auto">To use google fonts, first you have to embed the font-family in your head section and secondly you have to specify the font family in  CSS file.</p><figure id="9b3726cc-72fb-4caf-9d61-5daa18f5e891" class="image" data-notion-image="Annotation_2023-04-19_123159.png" dir="ltr"><a href="Annotation_2023-04-19_123159.png"><img style="width:480px" src="Annotation_2023-04-19_123159.png"/></a></figure><p id="92099f86-de63-42f5-9700-c1b917624c0c" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Note</strong></span><strong>:- 99% people will see this font because we are embedding it, instead of presuming that people will already have it.</strong></p><hr id="27a80da8-3b01-4969-9d94-96e1dadce685" dir="auto"/><h2 id="676685d2-800b-4657-8cad-398cc887b142" class="" dir="auto"><span style="border-bottom:0.05em solid">CSS Measurement Units</span></h2><p id="6f51b662-27ae-46aa-a3cf-fbd71ccd0cb0" class="" dir="auto">There are two types of units you can use in CSS, relative and absolute units.</p><h3 id="b11368a4-1871-48bd-9d79-1fff5abbfc0e" class="" dir="auto">What is the difference between absolute and relative units of measurement?</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="fbdf2f0a-1626-46b5-ac92-218ea607c134" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%"><span style="border-bottom:0.05em solid">Relative units</span> are based on the value of something else, such as the size of a parent element. while <span style="border-bottom:0.05em solid">absolute units</span> always indicate a fixed length regardless of the viewport or font size.</div></aside><h3 id="594a5c23-19c2-49fd-9911-2b34bdb69bb4" class="" dir="auto">Why are relative units preferred over absolute units in CSS?</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="4876bc07-a7a0-433b-bfc7-259d06e7b1da" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">Relative units are preferred over absolute units in CSS b<strong>ecause different devices have differing physical sizes as well as different pixel resolutions</strong>.</div></aside><h3 id="f46b2c44-2fab-45a8-b0d6-36a6a6256d18" class="" dir="auto">Units in depth</h3><figure id="236fa6ac-631d-4438-993a-53d4744f810f" class="image" data-notion-image="Ednn_SgWkAIC6mf_(1)1681889464.jpg" dir="ltr"><a href="Ednn_SgWkAIC6mf_(1)1681889464.jpg"><img style="width:1531px" src="Ednn_SgWkAIC6mf_(1)1681889464.jpg"/></a></figure><figure id="fe4f99ed-50b5-452a-9e00-d8357dff3b9f" class="image" data-notion-image="CSS-UNITS.png" dir="ltr"><a href="CSS-UNITS.png"><img style="width:600px" src="CSS-UNITS.png"/></a></figure><hr id="c3879c10-c5f5-4e61-b833-53f36b97da91" dir="auto"/><h2 id="7b345ded-3aa9-4319-9d5b-0a9734692cbd" class="" dir="auto"><span style="border-bottom:0.05em solid">CSS Font Sizing (rendering)</span></h2><h3 id="060c0a26-b476-4917-a603-fe69e61ee3b0" class="" dir="auto">Rendering of CSS units</h3><figure id="c58f6e16-51bb-4185-814b-74dc8d895d63" class="image" data-notion-image="000c826d-2465-4742-a414-f33af2a9f51c.jfif" dir="ltr"><a href="000c826d-2465-4742-a414-f33af2a9f51c.jfif"><img style="width:708px" src="000c826d-2465-4742-a414-f33af2a9f51c.jfif"/></a></figure><figure id="0b15a951-a6d7-4383-ae1d-094d5bc3e11e" class="image" data-notion-image="892abd94-8b60-4b02-9203-640c93a59e05.jfif" dir="ltr"><a href="892abd94-8b60-4b02-9203-640c93a59e05.jfif"><img style="width:708px" src="892abd94-8b60-4b02-9203-640c93a59e05.jfif"/></a></figure><h3 id="94f3a304-3f47-449a-9c89-a6839d8e1cbd" class="" dir="auto">Useful tool’s</h3><ul id="f93e62d5-2b9d-4f52-a75a-d16e5f2c494f" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong><a href="http://Flaticon.com">Flaticon.com</a></strong> ➡ for cool icon more than 60000 thousand.</li></ul><ul id="04e70210-52db-4cbf-a167-4e64c11ecb28" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong><a href="http://GIPHY.com">GIPHY.com</a></strong> ➡ Best animated videos.</li></ul><ul id="d9a9f43f-d5a0-4b40-aa37-c0d77beba9b7" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong><span style="border-bottom:0.05em solid">Lorem ipsum</span></strong> ➡ you can use lorem before having any content to put on website.</li></ul><hr id="7eb439b8-26f5-4384-9a21-80315c6564af" dir="auto"/><h2 id="627abd70-dd59-4d32-912c-62fb201d3b51" class="" dir="auto"><span style="border-bottom:0.05em solid">CSS Display property</span></h2><p id="f8dbe2f9-b9d7-485b-b450-d3c4cb663b62" class="" dir="auto">The display CSS property <strong>sets whether an element is treated as a block or inline element and the layout used for its children, such as flow layout, grid or flex</strong>. Formally, the display property sets an element&#x27;s inner and outer display types.</p><figure id="0de76329-9f8e-4c5a-a7e3-4fefb46a78a5" class="image" data-notion-image="765e33a9-019d-49a3-b8ac-3c78744d9921.jfif" dir="ltr"><a href="765e33a9-019d-49a3-b8ac-3c78744d9921.jfif"><img style="width:708px" src="765e33a9-019d-49a3-b8ac-3c78744d9921.jfif"/></a></figure><div id="e682edb2-e1b0-4230-920c-8b9d96989b2e" class="column-list" data-notion-column-list="" dir="auto"><div id="efa1ef52-da75-4a36-9b16-43a3ce732db6" style="width:50%" class="column" data-notion-column-ratio="0.5" dir="auto"><figure id="a1be5e22-7e49-4cd0-a7d8-ebd8aad2f1bc" class="image" data-notion-image="00322679-bf4f-4154-9012-a1d66c9ebf9c.jfif" dir="ltr"><a href="00322679-bf4f-4154-9012-a1d66c9ebf9c.jfif"><img style="width:331px" src="00322679-bf4f-4154-9012-a1d66c9ebf9c.jfif"/></a></figure></div><div id="5d04d256-1f68-4d44-bd64-227f2e56ce1b" style="width:50%" class="column" data-notion-column-ratio="0.5" dir="auto"><figure id="c987c631-d391-481d-ba80-d682e5149082" class="image" data-notion-image="f73b90ef-6450-4a51-a314-f728f4e55a81.jfif" dir="ltr"><a href="f73b90ef-6450-4a51-a314-f728f4e55a81.jfif"><img style="width:331px" src="f73b90ef-6450-4a51-a314-f728f4e55a81.jfif"/></a></figure></div></div><div id="fff1306d-f7d2-4c56-a469-142908a94031" class="column-list" data-notion-column-list="" dir="auto"><div id="d9ef26f6-043e-4c02-8567-41bc14cb5e19" style="width:50%" class="column" data-notion-column-ratio="0.5" dir="auto"><figure id="330c09b8-78a2-469c-a820-86f11a5f7faf" class="image" data-notion-image="6efb51c3-38e8-4cb2-9486-11d890f67af1.jfif" dir="ltr"><a href="6efb51c3-38e8-4cb2-9486-11d890f67af1.jfif"><img style="width:331px" src="6efb51c3-38e8-4cb2-9486-11d890f67af1.jfif"/></a></figure></div><div id="9a71e448-0e9b-4e3d-b297-e86b90f79f5e" style="width:50%" class="column" data-notion-column-ratio="0.5" dir="auto"><figure id="ed1505ca-6958-4486-bca0-55f69d835e75" class="image" data-notion-image="24023daf-e6a0-4046-80d5-1838472a2cd4%201.jfif" dir="ltr"><a href="24023daf-e6a0-4046-80d5-1838472a2cd4%201.jfif"><img style="width:331px" src="24023daf-e6a0-4046-80d5-1838472a2cd4%201.jfif"/></a></figure></div></div><h3 id="43b765f7-4504-4081-b0dc-8e43026a212a" class="" dir="auto">📺Animated example:-</h3><figure id="05972891-123f-4524-b7a8-a46fa4ef9243" dir="ltr"><div class="source"><a href="https://appbrewery.github.io/css-display/">https://appbrewery.github.io/css-display/</a></div></figure><hr id="323ecfa7-c7a2-4633-9df1-69a66f373be0" dir="auto"/><h2 id="b68d56cf-e364-4a3c-92f2-097a809f7f0a" class="" dir="auto"><span style="border-bottom:0.05em solid">CSS Position Property</span></h2><p id="c0cba772-0994-460a-b90b-b978c97e1b32" class="" dir="auto">The CSS position property is used to manipulate the location of an element.</p><h3 id="970ec796-29dd-45b8-8142-228956e32047" class="" dir="auto">Static Position Property</h3><p id="085f22e9-d203-4840-a9a5-07039921c84c" class="" dir="auto">The Default position of any element is set to be static in any browser. top/bottom/left/right/z-index has no effect.</p><h3 id="fc104709-83d1-49b6-85b0-5fc880082a6e" class="" dir="auto">Relative Position Property</h3><p id="0aee7bc8-6ffb-49c6-9956-b078e03dc54f" class="" dir="auto">Relative positioning means that you are adding a margin relative to were the element is , it left its Ghost behind it, the top/bottom/left/right/z-index will now work. otherwise, the element is in the flow of the document like static.</p><p id="be613835-aeb7-4141-a682-b59160f67adb" class="" dir="auto"> </p><h3 id="2536d598-2743-4334-981c-d640fd06d15d" class="" dir="auto">Absolute Position Property</h3><p id="bffc0d10-079c-4673-a77f-757204041822" class="" dir="auto">Absolute positioning mean’s that you are adding a margin to its parent element and top/bottom/left/right/z-index work’s.</p><h3 id="455f1444-b2f8-4b91-a202-0c9fb03fd8fd" class="" dir="auto">Fixed Position Property</h3><p id="f9643dad-11e7-4681-b40f-3eb9c6a61568" class="" dir="auto">Fixed property is mostly used to keep a navbar or buy now button visible while scrawling.</p><h3 id="98bc21ed-c489-4e44-b536-9d2cbd9ca792" class="" dir="auto">Sticky Position Property</h3><p id="7abda39e-e08e-404d-a5e7-3aeab07d1d21" class="" dir="auto">An element with <code>position: sticky;</code> is positioned based on the user&#x27;s scroll position.</p><p id="a6f0cdcd-0a9e-4930-b2a7-4eae9db1a84e" class="" dir="auto">A sticky element toggles between <code>relative</code> and <code>fixed</code>, depending on the scroll position. It is positioned relative until a given offset position is met in the viewport - then it &quot;sticks&quot; in place (like position: fixed).</p><p id="a7250d19-3444-428f-8fd2-351dfaa46f8e" class="" dir="auto"><strong><span style="border-bottom:0.05em solid">Animated example</span></strong><strong>:-</strong></p><figure id="3eee8b95-b7b7-46f7-87e2-dc52e0465d44" class="image" data-notion-image="FGJErBKUcAIrE0c.jfif" dir="ltr"><a href="FGJErBKUcAIrE0c.jfif"><img style="width:680px" src="FGJErBKUcAIrE0c.jfif"/></a></figure><pre id="6b9bb43d-51d3-460f-afc4-cce252e3173f" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">example:-
+position:relative;
+position:absolute;
+position:fixed;
+position: sticky;</code></pre><hr id="442e861b-84fa-408a-b400-a61b326f75a4" dir="auto"/><h2 id="5f509869-5d6c-4d63-9337-868c48f7f462" class="" dir="auto"><span style="border-bottom:0.05em solid">CSS Z-index and stacking order.</span></h2><h3 id="3fd96b19-95b4-4f46-aade-d8ae8f3df06c" class="" dir="auto">Overview</h3><p id="a630b661-b039-4e87-aca0-7fc94b0abc9e" class="" dir="auto">We know that any object has two axis called <strong><span style="border-bottom:0.05em solid">y-axis</span></strong> and <strong><span style="border-bottom:0.05em solid">x-axis</span></strong>. but there is also one more axis called<span style="border-bottom:0.05em solid"><strong> z-axis</strong></span>, which is shown as below:-</p><figure id="57adf0fe-f462-4aba-bde9-131d7380a124" class="image" data-notion-image="z-index.png" dir="ltr"><a href="z-index.png"><img style="width:465px" src="z-index.png"/></a></figure><p id="16a5aa4a-ade1-4ccf-b6d9-16a83627f0c8" class="" dir="auto">The z-index property specifies the stack order of an element. An element with greater stack order is always in front of an element with a lower stack order.</p><h3 id="e0175d09-2c84-43c3-9cc3-8b1308c299ab" class="" dir="auto">Key Notes:- </h3><ul id="aa146ea9-e1ee-4cf9-a639-db6eeee28792" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The default <strong>z-index</strong> value for page element is 0.</li></ul><ul id="eeac1b89-2791-4c23-8cf7-9f886e5d976e" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>z-index: 0</strong> is always the <strong>“default layer”</strong> (the layer in which all elements without an explicit/clear z-index reside), and <strong>z-index: auto</strong> means <strong>“set’s the stack order equal to its parent”</strong>.</li></ul><ul id="d2e11a56-9317-4166-842b-bb030ba024e0" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>z-index</strong> only work’s, if you have applied position property (any property other than static) and flex items (elements that are direct children of display: flex elements)</li></ul><h3 id="2b933a82-7059-423b-a986-13f0cd5b754d" class="" dir="auto">z-index demonstration</h3><figure id="8dea58bb-8bc7-4988-83af-82e525ef2702" dir="ltr"><a href="https://www.w3schools.com/cssref/playdemo.php?filename=playcss_z-index" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">W3Schools CSS z-index demonstration</div></div><div class="bookmark-href"><img src="https://www.w3schools.com/favicon.ico" class="icon bookmark-icon"/>https://www.w3schools.com/cssref/playdemo.php?filename=playcss_z-index</div></div></a></figure><figure id="340df229-4824-420f-88e3-aa924b4d28d4" class="image" data-notion-image="maxresdefault_(4).jpg" dir="ltr"><a href="maxresdefault_(4).jpg"><img style="width:1280px" src="maxresdefault_(4).jpg"/></a></figure><pre id="ca5cd475-8953-4033-b902-d04573f28e6b" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">/* Keyword value */
+z-index: auto;
+
+/* &lt;integer&gt; values */
+z-index: 0;
+z-index: 3;
+z-index: 289;
+z-index: -1; /* Negative values to lower the priority */</code></pre><h3 id="a5a3aba1-f3d4-446c-b366-e2d2a6d98f9b" class="" dir="auto">Which One is on top? </h3><figure id="a87a3a00-157e-4975-993c-f12e0f678857" class="image" data-notion-image="6194ddef-24d0-4e45-b5cd-2c9417415b5e.jfif" dir="ltr"><a href="6194ddef-24d0-4e45-b5cd-2c9417415b5e.jfif"><img style="width:432px" src="6194ddef-24d0-4e45-b5cd-2c9417415b5e.jfif"/></a></figure><hr id="5d6ec57a-b8c9-45cc-804f-b16eed4ce310" dir="auto"/><h2 id="4776788b-c5a7-4fa3-8f33-fc17e2a05c63" class="" dir="auto"><span style="border-bottom:0.05em solid">CSS Float Property</span></h2><h3 id="7d0f037e-a276-42c5-9dfb-5d4f962f2c02" class="" dir="auto">What is CSS float property?</h3><p id="0aa27dac-a648-497a-8c30-722acbd38d6d" class="" dir="auto">The float CSS property <strong>places an element on the left or right side of its container, allowing text and inline elements to wrap around it</strong>. The element is removed from the normal flow of the page, though still remaining a part of the flow (in contrast to absolute positioning).</p><h3 id="01b2b1a6-d2e0-4003-b11a-f34b60fab1c1" class="" dir="auto"><code>Float: left;</code> Property</h3><figure id="6abccc2a-5687-4e4f-97b8-7a1c8cfe009c" class="image" data-notion-image="left.png" dir="ltr"><a href="left.png"><img style="width:725px" src="left.png"/></a></figure><h3 id="fddc0fa7-6945-4cca-a350-87852ac289b5" class="" dir="auto"><code>Float: right;</code> Property</h3><figure id="7284cbcb-927a-405c-9aca-6250c4249bbc" class="image" data-notion-image="right.png" dir="ltr"><a href="right.png"><img style="width:717px" src="right.png"/></a></figure><h3 id="9466ecf4-f09e-446d-81ed-1cf1c8e21c81" class="" dir="auto">Use case of both <code>left</code> &amp; <code>right</code> property’s</h3><figure id="2f341e44-45d6-4504-a30b-e8452dbd79a7" class="image" data-notion-image="left_right.png" dir="ltr"><a href="left_right.png"><img style="width:987px" src="left_right.png"/></a></figure><h3 id="0d56df8a-577a-47ef-b63f-0fb627c6921b" class="" dir="auto">CSS <code>Clear</code> property</h3><figure id="cc6fbb16-cee0-4033-84be-e7cde2c17769" class="image" data-notion-image="clear_1.png" dir="ltr"><a href="clear_1.png"><img style="width:976px" src="clear_1.png"/></a></figure><figure id="76114af7-9f68-4045-9436-2f2c34796073" class="image" data-notion-image="clear_2.png" dir="ltr"><a href="clear_2.png"><img style="width:977px" src="clear_2.png"/></a></figure><figure id="fabbdb51-0107-4658-8545-48a60ad31b5a" class="image" data-notion-image="clear_3.png" dir="ltr"><a href="clear_3.png"><img style="width:983px" src="clear_3.png"/></a></figure><h3 id="3aca8c6c-74e9-4ba3-b34f-e615c4721468" class="" dir="auto">CSS <code>Clear: both;</code> property</h3><figure id="e061c0b3-877f-401f-9776-374943d1606c" class="image" data-notion-image="all.png" dir="ltr"><a href="all.png"><img style="width:980px" src="all.png"/></a></figure><h3 id="1c12c801-9e28-4d94-8e6e-a5d03ba3bed3" class="" dir="auto">Conclusion:-</h3><p id="3bd0c284-8412-4f9d-a488-d116df7ff06a" class="" dir="auto">Now I&#x27;m showing you this layout so you can use the clear property.</p><figure id="541c7db0-2b1f-41a2-afa5-de1a11201f66" class="image" data-notion-image="all_1.png" dir="ltr"><a href="all_1.png"><img style="width:979px" src="all_1.png"/></a></figure><p id="d7492f3f-fced-4ae7-8d06-64c94dd17561" class="" dir="auto">But in modern web development and web design, we don&#x27;t actually use the float property to achieve these kind of designs because there are much better tools for us like Flexbox, grid bootstrap, whole load of other things that is a lot less complicated to use and to understand than using float. To achieve this, there can be very unexpected results if you&#x27;re trying to achieve complex layouts using float. So I recommend to only use float when you want to wrap text around an image. And in modern web design, this is what you&#x27;re going to see most people doing as well. So it&#x27;s an important concept to learn and understand, but try to not use it on everything that you see. We&#x27;ve got better techniques…</p><h3 id="c349c463-3c60-4fb0-a0c1-2e5bd0c764fe" class="" dir="auto">Thing’s not to do🚫</h3><figure id="d9719e33-e014-47b2-b546-521293a679b5" class="image" data-notion-image="Annotation_2023-05-01_191316.png" dir="ltr"><a href="Annotation_2023-05-01_191316.png"><img style="width:681px" src="Annotation_2023-05-01_191316.png"/></a></figure><p id="27dbefeb-7b48-489b-a940-08a4b9c0b69f" class="" dir="auto">Float is great when you want to float an image to the left or the right of a block of text to wrap the</p><p id="28c91411-e229-4ad7-9e1c-acd5147818b8" class="" dir="auto">text around it.</p><p id="46dfbce8-4813-434f-bf57-0523e86d4112" class="" dir="auto">But don&#x27;t use floats for layout instead.</p><p id="d16334c8-e2c3-4bdc-bbd2-ea80e5d97e2c" class="" dir="auto">Use something else like what?</p><p id="df927ed3-631a-4941-865c-1d68b6e09f87" class="" dir="auto">We&#x27;re going to explore Flexbox Grid Bootstrap, something that is designed specifically for creating</p><p id="9ff236a1-1471-4cfb-a875-72576b103128" class="" dir="auto">an overall page structure.</p><hr id="51d850fe-eb87-4294-b44b-1668aa48b608" dir="auto"/><h2 id="5625ddad-d7a8-4b67-8cd2-292267be7ca5" class="" dir="auto"><span style="border-bottom:0.05em solid">How to Create Responsive Websites</span></h2><h3 id="0d010e5c-30eb-462a-8096-6c793dad7fe8" class="" dir="auto">What is responsiveness?</h3><p id="f7fc06c9-e2b8-472a-9d46-3de75d1fde1d" class="" dir="auto">Responsive design refers to <strong>a site or application design that responds to the environment in which it is viewed</strong>.</p><p id="f16ab354-e7d3-445c-8631-d9e84801d9fa" class="" dir="auto">Because these days there are many different screen sizes desktops, laptops, iPads, mobile phones</p><p id="0b7c0562-2978-4387-9f2f-ef39d35e7733" class="" dir="auto">and we want our website to look good on all of them.</p><p id="dae61552-00f0-4835-a180-73a0045d8a72" class="" dir="auto">And in order to do that, we need to make our websites responsive so it responds to the changes in the</p><p id="5a382619-86e2-4485-ac1e-7ea5cbf7d0a8" class="" dir="auto">screen size.</p><h3 id="5b96f1da-15f8-481e-bec9-bb922097707b" class="" dir="auto">There are four main ways of making website responsive.</h3><figure id="5312177f-2bbc-490b-ae64-360ea5609349" class="image" data-notion-image="dadf.png" dir="ltr"><a href="dadf.png"><img style="width:528px" src="dadf.png"/></a></figure><h3 id="065d06d8-b6d4-4823-ac86-4765a0413469" class="" dir="auto">Deep dive in all of the four topics🏊‍♂️</h3><h3 id="3b10e9f2-9f8a-4706-85b6-3a1b5889251c" class="" dir="auto"><strong><span style="border-bottom:0.05em solid">CSS Media Queries</span></strong></h3><details id="f35bc52f-3811-4220-ab5d-0c3e0516ce27" open="" class="toggle" dir="auto"><summary>Introduction</summary><div class="indented"><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="96598430-66c3-4bfb-b409-b239f57ce19c" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">The <strong>CSS Media Query</strong> gives you a way to apply CSS only when the browser and device environment matches a rule that you specify, for example &quot;viewport is wider than 480 pixels&quot;. Media queries are a key part of responsive web design, as they allow you to create different layouts depending on the size of the viewport, but they can also be used to detect other things about the environment your site is running on, for example whether the user is using a touchscreen rather than a mouse an so on.</div></aside></div></details><details id="c528251b-18bc-4fd0-8a9d-89e0007c7a78" open="" class="toggle" dir="auto"><summary><strong>Media Query Basics</strong></summary><div class="indented"><p id="de569aa7-5f96-4867-87ce-696792f8edea" class="" dir="auto">The simplest media query syntax looks like this:</p><pre id="17e0d7de-1f51-4062-9215-7dc978a2f432" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">@media media-type and (media-feature-rule) {
+  /* CSS rules go here */
+}</code></pre><p id="82c8c1dc-7f6e-4980-9ec2-7f39599e72b6" class="" dir="auto">It consists of:</p><ul id="2d8cfe4c-ae63-4113-a684-3e07f0e0eb0c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">A media type, which tells the browser what kind of media this code is for (e.g. print, or screen).</li></ul><ul id="e083fc72-b740-4d11-a345-58be63acab9f" class="bulleted-list" dir="auto"><li style="list-style-type:disc">A media expression, which is a rule, or test that must be passed for the contained CSS to be applied.</li></ul><ul id="d39659be-523f-473e-98be-63448f39e444" class="bulleted-list" dir="auto"><li style="list-style-type:disc">A set of CSS rules that will be applied if the test passes and the media type is correct.</li></ul></div></details><details id="fa693fa3-8988-4dc1-bc1b-196393cca1e2" open="" class="toggle" dir="auto"><summary><strong>Media types</strong></summary><div class="indented"><p id="ccd36fe3-c068-481e-944e-7ca3f45e1eee" class="" dir="auto">The possible types of media you can specify are:</p><ul id="8bf8cb01-f026-4b18-97e1-b8140b1b075d" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><code>all</code></li></ul><ul id="1e4e7a6b-429b-40d1-a8fc-d93a5da82f3b" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><code>print</code></li></ul><ul id="36652d25-8c10-497c-af5d-3986c4737536" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><code>screen</code></li></ul><p id="033a93f0-522f-45f9-9d06-b67a49df4b1a" class="" dir="auto">The following media query will only set the body to 12pt if the page is printed. It will not apply when the page is loaded in a browser.</p><pre id="300e79d8-4ca1-47c8-bd72-fd81ba0ac4a7" class="code code-wrap" data-notion-code-syntax="css"><code class="language-css" style="white-space:pre-wrap;word-break:break-all">@media print {
+  body {
+    font-size: 12pt;
+  }
+}</code></pre></div></details><details id="3227e31b-146f-44f3-a926-005ea16b5bf5" open="" class="toggle" dir="auto"><summary>Max-Width</summary><div class="indented"><figure id="38f93727-d3ec-4022-b1c6-c2d0456b3ef1" class="image" data-notion-image="Annotation_2023-05-01_181457.png" dir="ltr"><a href="Annotation_2023-05-01_181457.png"><img style="width:709px" src="Annotation_2023-05-01_181457.png"/></a></figure><p id="a27fc711-b36f-4f09-ad4a-d1bf0bdfce0f" class="" dir="auto">We&#x27;re using that media query max width in order to define any screen size that is 600 pixels or below.</p><figure id="10b5cfa9-8df1-4bca-8382-c69bcf022226" class="image" data-notion-image="Annotation_2023-05-01_181135.png" dir="ltr"><a href="Annotation_2023-05-01_181135.png"><img style="width:717px" src="Annotation_2023-05-01_181135.png"/></a></figure><p id="5939e672-21f2-40f0-acf4-91396fbc9f00" class="" dir="auto">So anything that is smaller or equal to 600 pixels, then it should have this particular kind of styling</p><p id="46955584-9feb-48be-ad8b-8115145686e1" class="" dir="auto">and we provide an override to the default styling.</p></div></details><details id="bf10fbb2-094a-444e-92dc-834ecbb39c8e" open="" class="toggle" dir="auto"><summary>Min-Width</summary><div class="indented"><p id="3114dfcc-3ba4-4828-8069-e5b16c789743" class="" dir="auto">Now alternatively, you can use a different keyword here.</p><p id="27b1d86a-3c50-4bb2-864f-0458a1a89c65" class="" dir="auto">You can use the min width, which is the minimum width, and by changing that from max to min, essentially</p><p id="84cd3e65-be30-46bb-aaf2-884d5af9c892" class="" dir="auto">you&#x27;re going the other direction of responsiveness.</p><figure id="a12c1fb6-9f1c-4328-a5bf-fef5454a7d79" class="image" data-notion-image="Annotation_2023-05-01_181848.png" dir="ltr"><a href="Annotation_2023-05-01_181848.png"><img style="width:723px" src="Annotation_2023-05-01_181848.png"/></a></figure><p id="300fe208-bf71-4eae-9d49-37ba5a395563" class="" dir="auto">So you&#x27;re saying anything that is from 600 pixels upwards, then we should have a different styling.</p><figure id="05492a63-07b1-4813-9507-f4a855960a6c" class="image" data-notion-image="Annotation_2023-05-01_182025.png" dir="ltr"><a href="Annotation_2023-05-01_182025.png"><img style="width:714px" src="Annotation_2023-05-01_182025.png"/></a></figure><p id="3b3336fe-fe2a-4d43-a444-28216e4eaa81" class="" dir="auto">So you&#x27;re basically targeting bigger screens with this min width.</p><p id="7b3e1278-9e0d-42e1-9c98-58faadc0494c" class="" dir="auto">So if you think about the total possible size of a website, so from zero to say, I don&#x27;t know, 2400</p><p id="db180823-33b6-41fe-8237-da8969fa8fd2" class="" dir="auto">pixels, if you have a screen that is say only 600 pixels right here, then you can use the max width</p><p id="c42d4a61-6117-4cc8-8eb0-d9a4aaead02b" class="" dir="auto">to target this direction.</p><p id="d9fc3317-d0f2-4555-93a4-aa8c0f4f137c" class="" dir="auto">But if you want to target all the screens that are bigger, then you could use the min width to target</p><p id="32a8f314-50ea-4a5c-b6a0-4d0e30c572b0" class="" dir="auto">in this direction.</p><p id="9dda317c-66bb-4fd1-b6a4-fb4bf1e1557f" class="" dir="auto">So you&#x27;re essentially targeting different screen sizes and providing different styles for those different</p><p id="4149e3de-21be-492d-b4fa-65ddea44d88f" class="" dir="auto">screen sizes.</p></div></details><details id="fef233ec-7910-43ab-a525-a0658322fc95" open="" class="toggle" dir="auto"><summary>Combine</summary><div class="indented"><p id="4658c586-7487-4781-be7a-0444bb2fed7b" class="" dir="auto">Now you can also combine different breakpoints to target something that is a specific size.</p><figure id="7e7469d0-0eaa-43d5-9327-2639b6740d23" class="image" data-notion-image="Annotation_2023-05-01_183223.png" dir="ltr"><a href="Annotation_2023-05-01_183223.png"><img style="width:719px" src="Annotation_2023-05-01_183223.png"/></a></figure><p id="fca0af7a-3fac-46b3-a7e6-c1a16757614f" class="" dir="auto">So in this case, you&#x27;re saying anything that is bigger than 600 pixels.</p><p id="0b86d0f7-8bf9-42b2-9d67-7c3687f137db" class="" dir="auto">Using this particular line here.</p><p id="f08bd00d-b775-43e4-ad56-e7c2734d3816" class="" dir="auto">So minimum width for this style is 600 pixels and then maximum width for this style is 900 pixels.</p><p id="63da7d3c-5f39-4027-bc9c-0b88db9969bf" class="" dir="auto">So anything that&#x27;s less than 900 pixels and in between these two points is where your specific style</p><p id="41782532-652c-4753-8444-4de1dab54db3" class="" dir="auto">is going to be applied in here.</p><p id="35f995b7-80b1-4d56-87d0-c6bcf02419e5" class="" dir="auto">So this means the screens, which are between 600 and 900, will be targeted using this combination</p><p id="80c39a52-5741-4e53-92b4-8cda0df81c7c" class="" dir="auto">system by adding that and keyword between these two breakpoints.</p><figure id="971c4b45-99af-47b1-a338-95436d3f41eb" class="image" data-notion-image="Annotation_2023-05-01_183344.png" dir="ltr"><a href="Annotation_2023-05-01_183344.png"><img style="width:709px" src="Annotation_2023-05-01_183344.png"/></a></figure><p id="adb8c1ce-bf47-47f0-a4e6-dd327b229049" class="" dir="auto">Now if you flip that around and you change the smaller size to a max width, then you&#x27;re taking a different</p><p id="6e95984e-e56c-423a-9878-c1e06e7d7f82" class="" dir="auto">approach.</p><p id="1789e234-a035-4fc6-8b0f-6b1687462255" class="" dir="auto">You&#x27;re saying anything that is less than 600 pixels and anything that is greater than 900 pixels on</p><p id="b20a49f1-d1c1-4b0b-b32b-1cbc0daacaa0" class="" dir="auto">those screen sizes.</p><p id="8052e80a-2c06-4064-89f2-f08c7792891d" class="" dir="auto">Let&#x27;s apply these styles so you can combine things in many different ways.</p><p id="54b27397-6d78-449a-bbb5-ec5c4c883173" class="" dir="auto">You can chop it, change it however you like.</p><p id="20e74eca-6b98-4e52-8701-cfae66385917" class="" dir="auto">But the important thing is to understand this wording max width and min width, the maximum width where</p><p id="41807ad6-be7d-454a-ae0f-1c5e777d980a" class="" dir="auto">this style will be applied and the minimum width where this style will be applied.</p><p id="42af8a9e-52f6-44b6-9a27-36f4e909e18b" class="" dir="auto">So when you read it that way, it becomes much simpler to understand.</p></div></details><details id="bb366ef3-fb7e-4567-9eee-812cff72ae3c" open="" class="toggle" dir="auto"><summary>Device</summary><div class="indented"><p id="95b76254-c7bc-4ee2-b242-ecd5b50bd9ab" class="" dir="auto">In addition to max width and min width, you might also see this screen keyword being used, which is</p><figure id="bafd36b4-3bc2-4283-9658-160d111933a9" class="image" data-notion-image="Annotation_2023-05-01_184435.png" dir="ltr"><a href="Annotation_2023-05-01_184435.png"><img style="width:696px" src="Annotation_2023-05-01_184435.png"/></a></figure><p id="aaa343e2-470a-4ba5-a2fa-3173e52034b0" class="" dir="auto">not really necessary by default because it&#x27;s going to apply it to all screens.</p><p id="7f2043ca-fee7-4a97-a264-8b2326c7352b" class="" dir="auto">But if we think about the alternative to screen is a keyword called print.</p><p id="6b55309f-c5f7-4f99-b50a-49180df056a9" class="" dir="auto">And what this allows you to do is to use the media query to target only when your website is being printed</p><p id="e7e53ce8-b637-4283-8cfd-c07e3f72ef49" class="" dir="auto">and to give it a different layout.</p><p id="7df627aa-681e-49c8-a8fd-510c84fb3248" class="" dir="auto">I don&#x27;t normally recommend adding the screen keyword if you&#x27;re just writing a normal media query, but</p><p id="5cbc67b3-ba07-40e6-840f-c792d4a35cbb" class="" dir="auto">when you do see it out there in the wild, then you&#x27;ll know what that means.</p><p id="5ca2f8e3-2c2e-437f-82e3-ac06779ac7ae" class="" dir="auto">It&#x27;s just saying targeting screens or targeting print.</p><p id="cf680df3-e385-4903-8528-3b55e6591353" class="" dir="auto">For more on media queries and all of the different properties that you can change using media queries,</p><p id="1b842fbe-f7a0-46d2-a9dd-16e392b937ae" class="" dir="auto">head over to the developer docs and take a look at using media queries.</p><p id="1ed4ba8a-827f-4ad6-81bd-2a68a507d648" class="" dir="auto">You can see under the syntax section there are a lot of things that we&#x27;ve mentioned, such as orientation</p><p id="8304df4d-2c2b-4e1e-b040-dbf8b80aab4e" class="" dir="auto">or device height, device width or height and width and targeting different media types or targeting</p><p id="fd9d5a6e-4c1a-4eb1-be1e-7a77cb3dc93b" class="" dir="auto">different features.</p><p id="e4df7b6d-a656-422d-b2d1-db4019fb50cc" class="" dir="auto">And there&#x27;s a lot more that you can do with media queries and you can have very complex media queries,</p><p id="805283a8-637b-47c5-b9d7-e89b1d0c420b" class="" dir="auto">but most of the time you&#x27;re going to be using pretty simple media queries such as max width and min</p><p id="6b3eb89d-2bc7-454e-b088-e5a95bc49559" class="" dir="auto">width, and you won&#x27;t use a lot of these other features.</p><p id="1c72f92a-3f24-475a-a80d-55bc7fde181f" class="" dir="auto">But as always, it&#x27;s good to be aware that they exist.</p><p id="0eae82ba-2956-44f3-b90f-a7a8864c483e" class="" dir="auto">So have a quick read of this and see if there&#x27;s anything else there that you want to pick up.</p></div></details><h3 id="81dd795c-22c8-4bee-9950-9a50eb5741d8" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>CSS Flexbox</strong></span></h3><details id="e8b8fe88-2c45-474f-853c-e56a657e235a" open="" class="toggle" dir="auto"><summary><code>Display: Flex</code> &amp; <code>gap</code> Property</summary><div class="indented"><figure id="a2cd4561-b610-46d2-a296-07aef7dfde6c" class="image" data-notion-image="Annotation_2023-05-01_192643.png" dir="ltr"><a href="Annotation_2023-05-01_192643.png"><img style="width:718px" src="Annotation_2023-05-01_192643.png"/></a></figure><p id="aed55a1d-dced-4c60-9dd4-7486e3c96640" class="" dir="auto">all you need to do is to wrap your divs</p><p id="056286f3-5597-4e1f-9e2d-4ef4486f3420" class="" dir="auto">inside a container and then target that container in your CSS and set the display to flex.</p><p id="e0eb75e3-308d-4fc1-ad5a-786274c5e6ea" class="" dir="auto">That&#x27;s pretty much it.</p><p id="d8281a35-a9c3-4d77-8780-e2501ba7be37" class="" dir="auto">All you need to do in order to get them to be displayed in columns like this, as you would expect on</p><p id="2d05064c-3ca6-4216-bf5d-454b9a25a037" class="" dir="auto">a modern website.</p><p id="6a7100c7-4034-4d5a-aed0-d907f4e95e4b" class="" dir="auto">Now it&#x27;s also got these great additional properties like, for example, Gap, where you can add in</p><p id="9280d8dd-715f-47e2-9ef1-6d9911684e55" class="" dir="auto">a gap between each of these items </p><p id="d77dcf5e-f844-421c-a2e1-161751bd38c3" class="" dir="auto">and you&#x27;re going to see just how flexible and easy it is to use Flexbox to create more complex layouts</p><p id="8fed95c2-3596-4b20-90ca-e2f3e9ac0709" class="" dir="auto">on our website.</p></div></details><details id="37e73dde-5fe0-4111-b08c-f0a04f5f67c7" open="" class="toggle" dir="auto"><summary>Q. why flex is set on display property?</summary><div class="indented"><p id="2f39ea53-1099-448c-879e-5cfb4934b990" class="" dir="auto">Now, one of the things that you might realize at this stage is this flex is set on the display property.</p><figure id="d07b20e0-3ec5-40a6-a5c0-d83a162f73fd" class="image" data-notion-image="Annotation_2023-05-01_193508.png" dir="ltr"><a href="Annotation_2023-05-01_193508.png"><img style="width:718px" src="Annotation_2023-05-01_193508.png"/></a></figure><p id="a06a0723-013f-4665-aafc-b34a1bd4140b" class="" dir="auto">And we know that previously we&#x27;ve looked at display, inline display, block display, inline block</p><p id="6f3fc469-aed0-4cfa-858c-e4346f2e0925" class="" dir="auto">and all of that and display none.</p><p id="022c2f8b-bb29-46f9-a33a-1ae7aeb26b11" class="" dir="auto">This particular set, I want you to think of it as a completely different system.</p><p id="4eb276e5-9fde-4489-91c9-f20243f02f7f" class="" dir="auto">When we&#x27;re thinking about Flexbox, we have to throw all of this out of the window.</p><p id="88c5f958-7af7-40fa-9fe4-08f44bf3aa2f" class="" dir="auto">That doesn&#x27;t mean we&#x27;re not going to use it, because as you see, websites still continue to use these</p><p id="fc146586-3286-4c38-9848-cf1f80e2e3ff" class="" dir="auto">different things.</p><p id="b7358b30-e291-4fe3-8a77-ed8147e320f3" class="" dir="auto">But when you make something flex, it no longer abides by any of these rules.</p><p id="5d74c35a-f7e4-41d8-9748-f54bf0cab26b" class="" dir="auto">Instead, it&#x27;s a different system with different rules.</p><p id="420f7eec-c6e1-483d-8322-f5ef9505b333" class="" dir="auto">And we have to learn about it and think about it as a separate entity.</p><p id="3573ef14-4721-4008-b9b1-48d56045a68e" class="" dir="auto">And essentially what happens when we declare something display flex is we give a little bit of the control</p><p id="a06f778a-16bc-4e38-b437-6346145a6eb4" class="" dir="auto">to Flexbox to lay out our content in a reasonable and commonly desired way.</p><p id="39c18dc8-a2f2-4066-b8ef-e79e97d7a087" class="" dir="auto">But we have all of these different modifiers in order to tweak it, to have the exact layout that we</p><p id="e31744e4-ae6d-41db-b3d8-590c054f00bb" class="" dir="auto">want.</p></div></details><details id="d4bb3364-3580-48fe-a504-a25282ed362f" open="" class="toggle" dir="auto"><summary><code>Display: inline-flex</code> Property</summary><div class="indented"><p id="5858b346-cacc-4f37-ab82-7604ccfd7f67" class="" dir="auto">By default, when you declare a container to be display flex, it&#x27;s going to create a container that</p><figure id="36d36153-92c9-4760-b3f3-cdd7a84e9b3e" class="image" data-notion-image="Annotation_2023-05-01_195253.png" dir="ltr"><a href="Annotation_2023-05-01_195253.png"><img style="width:714px" src="Annotation_2023-05-01_195253.png"/></a></figure><p id="f4810db0-59ad-47f1-9504-5546bea5e5c6" class="" dir="auto">is going to be actually more or less like a block element.</p><p id="40309cb8-9e65-49eb-9d17-aff076019eda" class="" dir="auto">It&#x27;s going to be 100% full width.</p><figure id="b59fc993-5724-4182-a4be-d23963c7e8bc" class="image" data-notion-image="Annotation_2023-05-01_195436.png" dir="ltr"><a href="Annotation_2023-05-01_195436.png"><img style="width:707px" src="Annotation_2023-05-01_195436.png"/></a></figure><p id="a08336f1-d965-4959-b426-bfc923a7d991" class="" dir="auto">But there&#x27;s also this thing where instead of setting the container to be display flex, you can actually</p><p id="c0d1cfdf-1612-4167-98bd-483bc1861a27" class="" dir="auto">set it to be display inline, flex and similarly to the inline block.</p><p id="5f277925-1180-414a-b411-5108248cf982" class="" dir="auto">What it does is it allows this Flexbox to occupy as much space as it needs, but it means that other</p><p id="2c6a1c61-bcca-4e83-83eb-687c7aef9881" class="" dir="auto">things can also go and occupy that same line.</p><p id="1d9f5bea-559f-451c-a76a-e08030c09aee" class="" dir="auto">So this is just two different versions of creating a Flexbox container.</p></div></details><details id="bd7ed4b1-dbdc-4964-bf8b-2ef2e63cd4df" open="" class="toggle" dir="auto"><summary><code><strong>flex-direction</strong></code><strong> Property</strong></summary><div class="indented"><p id="4bad3ea5-1097-4d0e-98c3-5fa4675e0e21" class="" dir="auto">The flex-direction property is used to set the direction of the flexible items inside the flex container. its default value is row (left-to-right, top-to-bottom).</p><p id="86671484-0e92-462f-a3c6-cbcfcf6f0956" class="" dir="auto">The other possible values are:</p><ul id="b192119e-57f1-4e70-9fa1-0e243b733259" class="bulleted-list" dir="auto"><li style="list-style-type:disc">row-reverse</li></ul><ul id="d216dce9-f506-46c7-a805-6e065e06ac99" class="bulleted-list" dir="auto"><li style="list-style-type:disc">column</li></ul><ul id="ceb537de-ec0d-4687-b535-f7c011f26061" class="bulleted-list" dir="auto"><li style="list-style-type:disc">column-reverse</li></ul><p id="3f14a951-b9fd-4b0e-8bbb-bea9d50c1300" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Examples</strong></span>:-</p><figure id="4f0245da-1658-4b0e-8c72-dbb365414a05" class="image" data-notion-image="flex-1.png" dir="ltr"><a href="flex-1.png"><img style="width:710px" src="flex-1.png"/></a></figure><figure id="be21ea82-8d7c-4faa-a1e8-93decf4baa28" class="image" data-notion-image="flex-2.png" dir="ltr"><a href="flex-2.png"><img style="width:701px" src="flex-2.png"/></a></figure><figure id="c426322f-eb3b-44b7-a374-76a2f187c212" class="image" data-notion-image="flex-3.png" dir="ltr"><a href="flex-3.png"><img style="width:700px" src="flex-3.png"/></a></figure><figure id="9a32bb96-5c1a-4efc-b5cf-38ce95e0351e" class="image" data-notion-image="flex-4.png" dir="ltr"><a href="flex-4.png"><img style="width:700px" src="flex-4.png"/></a></figure></div></details><details id="d256c732-972b-4663-ba61-b691d4d56e73" open="" class="toggle" dir="auto"><summary><code>flex-basis</code> Property</summary><div class="indented"><p id="726815e9-2fc1-4510-a959-c36a44f36650" class="" dir="auto">The flex-basis CSS property <strong>sets the initial main size of a flex item</strong>. It sets the size of the content box unless otherwise set with box-sizing .</p><p id="fbde68e6-b8a1-4690-bcef-8344097c4af2" class="" dir="auto"><strong><span style="border-bottom:0.05em solid">Example</span></strong>:-</p><figure id="46a144e3-3e32-4f0a-9d96-ce64c40ece6d" class="image" data-notion-image="Flex-basic.png" dir="ltr"><a href="Flex-basic.png"><img style="width:1366px" src="Flex-basic.png"/></a></figure></div></details><details id="9ee93697-8c34-482b-8d7e-64ae6ab03f1d" open="" class="toggle" dir="auto"><summary>Flex Layout</summary><div class="indented"><figure id="6bfbdd8a-208b-4a51-ba9f-65b81750a858" dir="ltr"><div class="source"><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">https://css-tricks.com/snippets/css/a-guide-to-flexbox/</a></div></figure><p id="4d3f6394-e6cb-4c6b-810e-e4b623de767a" class="" dir="auto"><strong><span style="border-bottom:0.05em solid">POSTER</span></strong><strong>:-</strong></p><figure id="de34a292-c27e-4783-88cb-290f2db2b433" class="image" data-notion-image="css-flexbox-poster.png" dir="ltr"><a href="css-flexbox-poster.png"><img style="width:7200px" src="css-flexbox-poster.png"/></a></figure><figure id="0e07be4b-9933-4c00-97fe-b48ca4c2f08d" dir="ltr"><div class="source"><a href="css-flexbox-poster%201.png" data-notion-file="css-flexbox-poster%201.png" data-notion-file-alias="css-flexbox-poster.png">css-flexbox-poster.png</a></div></figure><p id="f963b186-f9ea-4284-ad51-865d992f5f74" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Example</strong></span><strong>:-</strong></p><p id="eabede8b-f969-44a3-8722-71ad082c8bb9" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Website link</strong></span><strong>:-</strong><a href="https://appbrewery.github.io/flex-layout/">https://appbrewery.github.io/flex-layout/</a></p><figure id="7de87004-b08d-4bc0-8d36-e05f4ec2ec77" dir="ltr"><div class="source"><a href="https://appbrewery.github.io/flex-layout/">https://appbrewery.github.io/flex-layout/</a></div></figure></div></details><details id="3c01f249-9530-442a-82a6-60400b8bbcc8" open="" class="toggle" dir="auto"><summary>Flex Sizing</summary><div class="indented"><p id="8cbd49e3-a027-4f9b-915e-9a84d78b374f" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Overview</strong></span><strong>:-</strong></p><ul id="7bd50c7f-211d-462c-bfd6-69d757075669" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><code>flex-grow</code></li></ul><ul id="751404cd-21f5-45cd-b8b2-a1819fe71f2a" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><code>flex-shrink</code></li></ul><ul id="0e4dd213-9a96-41a9-8ee1-f4430a1857ad" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><code>flex-basis</code></li></ul><p id="669dbab5-85a2-41f9-bfb5-860eebf284cd" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Udemy video</strong></span><strong>:-</strong></p><figure id="e1daffb6-9c29-4e3c-84ea-5961bcb4dfb0" dir="ltr"><a href="https://www.udemy.com/course/the-complete-web-development-bootcamp/learn/lecture/37368390?start=150#learning-tools" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href">https://www.udemy.com/course/the-complete-web-development-bootcamp/learn/lecture/37368390?start=150#learning-tools</div></div></a></figure><p id="a180713c-880b-467a-a7d9-2f9505ae241a" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>MDN link</strong></span><strong>:-</strong></p><figure id="8e0de666-b85a-428b-b2aa-a2b3c7da66d1" dir="ltr"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Controlling_Ratios_of_Flex_Items_Along_the_Main_Ax" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Controlling ratios of flex items along the main axis - CSS: Cascading Style Sheets | MDN</div><div class="bookmark-description">In this guide we will be exploring the three properties that are applied to flex items, which enable us to control the size and flexibility of the items along the main axis — flex-grow, flex-shrink, and flex-basis. Fully understanding how these properties work with growing and shrinking items is the real key to mastering flexbox.</div></div><div class="bookmark-href"><img src="https://developer.mozilla.org/favicon-48x48.cbbd161b.png" class="icon bookmark-icon"/>https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Controlling_Ratios_of_Flex_Items_Along_the_Main_Ax</div></div><img src="https://developer.mozilla.org/mdn-social-share.cd6c4a5a.png" class="bookmark-image"/></a></figure></div></details><h3 id="455d9508-f3c6-441e-add8-daec1fe3323f" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>CSS Grid</strong></span></h3><details id="f21ea863-7f24-4e4e-b9b0-049886e95274" open="" class="toggle" dir="auto"><summary><code>CSS Grid</code> VS <code>CSS Flexbox</code>, when to use?</summary><div class="indented"><figure id="4efe62ba-b77e-40ac-8db9-0c291bda88b3" class="link-to-page"><a href="When%20to%20use%20Flexbox%20and%20when%20to%20use%20CSS%20Grid%E2%80%A6%204efe62bab77e40ac8db90c291bda88b3.html" data-notion-page-id="4efe62ba-b77e-40ac-8db9-0c291bda88b3" data-notion-space-id="891fcf9f-039a-4eee-a794-674c831553db"><span class="icon" data-emoji="🌐"></span>When to use Flexbox and when to use CSS Grid…</a></figure><figure id="3430a3b6-6bb2-440f-b178-041d48cf1371" dir="ltr"><div class="source"><a href="https://blog.logrocket.com/css-flexbox-vs-css-grid/">https://blog.logrocket.com/css-flexbox-vs-css-grid/</a></div></figure><p id="08197bf7-d8ad-4d71-bc6d-f890eb5816e7" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Website link</strong></span><strong>:-</strong><a href="https://blog.logrocket.com/css-flexbox-vs-css-grid/">https://blog.logrocket.com/css-flexbox-vs-css-grid/</a></p></div></details><details id="eaed6813-d104-476a-a2f9-d109b7328868" open="" class="toggle" dir="auto"><summary>Grid Sizing</summary><div class="indented"><p id="b94649a1-d1d7-4575-9cdf-5c81f90561e4" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Overview</strong></span><strong>:-</strong></p><ul id="7b05dd70-791e-4d9b-bdff-f2c554b555c2" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Fixed Size</li></ul><ul id="60f23a10-7493-4e8e-9321-01a14e0eccec" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Auto Size</li></ul><ul id="0165869f-fa5e-4602-98bf-e263d4a438bd" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Fractional Size (fr)</li></ul><ul id="be7d3c94-a342-4e7a-aa51-d2c3f1c6f535" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Min Max Size</li></ul><ul id="99943c38-a99a-4c5c-90cf-d21666a5029c" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Repeat</li></ul><ul id="10d4ae5d-6c5d-480f-b02d-88dc95a58aaf" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Test</li></ul><ul id="4bf73a99-335a-416f-8563-a00880b26c14" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Developer’s tool (Layout)</li></ul><p id="a199c704-d1cc-4b10-a62b-fb32e8e48da2" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Udemy video</strong></span><strong>:-</strong></p><figure id="b2df2b96-e062-4bfa-8459-117fb1b8ed54" dir="ltr"><a href="https://www.udemy.com/course/the-complete-web-development-bootcamp/learn/lecture/37368474?start=375#learning-tools" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href">https://www.udemy.com/course/the-complete-web-development-bootcamp/learn/lecture/37368474?start=375#learning-tools</div></div></a></figure><p id="d9470218-8fe5-44a4-937a-898dc335fc3c" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Demo website for CSS grid sizing practice</strong></span><strong>:-</strong></p><figure id="44704e82-4540-498d-8c62-cf673a815d21" dir="ltr"><a href="https://appbrewery.github.io/grid-sizing/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Grid Fundamentals</div></div><div class="bookmark-href">https://appbrewery.github.io/grid-sizing/</div></div></a></figure></div></details><details id="55ec2a15-b1ae-4c0c-8026-ad3dfee1b71e" open="" class="toggle" dir="auto"><summary>Grid Item Placement</summary><div class="indented"><p id="bf6a4f69-c722-4650-af13-b486632123cb" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Grid-fundamental-concepts</strong></span><strong>:-</strong></p><figure id="d7583c16-62ac-4338-b17b-aac0daeeaed8" class="image" data-notion-image="grid-concepts.svg" dir="ltr"><a href="grid-concepts.svg"><img style="width:900px" src="grid-concepts.svg"/></a></figure><p id="9fe15765-7dd3-491b-9ae5-17effd838946" class="" dir="auto"><strong><span style="border-bottom:0.05em solid">Let&#x27;s try and create that layout using actual code.</span></strong></p><figure id="94cf1422-8a91-4ca9-9349-8ead46761cf0" class="image" data-notion-image="Annotation_2023-05-07_164939.png" dir="ltr"><a href="Annotation_2023-05-07_164939.png"><img style="width:722px" src="Annotation_2023-05-07_164939.png"/></a></figure><p id="de5f0b72-62bd-4570-a887-74e3ef193de7" class="" dir="auto">I&#x27;ve created a grid container and inside I&#x27;ve placed three grid items by creating three divs.</p><p id="957fb6bb-7d12-4bf7-83d9-6fafb0fc8c31" class="" dir="auto">Now I&#x27;m going to update the CSS code for that grid container.</p><p id="4135c524-cf4e-4b5e-bb30-bdbc2b23ab68" class="" dir="auto">Make it use grid by setting display to grid.</p><p id="847439c4-af27-48fd-ad72-fbfa4995554b" class="" dir="auto">In addition, I&#x27;m setting the height to 100 viewport height.</p><p id="14e5215e-5897-4c09-97f7-6466935148af" class="" dir="auto">Remember that by default a div is going to span the entire width of the window, but it&#x27;s only going</p><p id="038ceb45-d318-4255-9959-a9f3a1f5173b" class="" dir="auto">to occupy as much vertical space as there is content.</p><p id="9d6c8aee-2a13-4571-8aad-f5b4600f2207" class="" dir="auto">But by setting the height of our container to 100 viewport height, then it&#x27;s also going to take that</p><p id="97926d05-0191-4f87-ad31-d5b050463003" class="" dir="auto">container and make it stretch all the way down to the bottom of the window.</p><p id="00f3c404-d25a-4cef-a6ab-d63b3fabf278" class="" dir="auto">So now that we&#x27;ve got our grid container, we can create our tracks, and the tracks, if you remember,</p><p id="cb880158-9adf-4bf5-ae7c-0a7df8518ace" class="" dir="auto">are created using the grid template properties.</p><p id="f430e9e4-882c-4b57-b3bf-34b19b22e28b" class="" dir="auto">We&#x27;re saying that there should be three columns.</p><p id="06b76c1a-129e-416c-8ec3-970b7a1c36b2" class="" dir="auto">The first two are about the same height as each other and the third one is a little bit wider.</p><p id="be174739-01e4-4498-9976-f35bfb8a3b7a" class="" dir="auto">And then we&#x27;ve said that there should be two rows of equal height so something like this would get created.</p><p id="49f4bcc5-361c-42da-a586-773b0a564f01" class="" dir="auto">So we&#x27;ve got our tracks, we&#x27;ve got our lines, we&#x27;ve got our container.</p><p id="d483d8ff-3e5e-4408-a191-48faebc6bc6c" class="" dir="auto">Now the items get placed in by default.</p><p id="4bb95754-7abd-42a6-947f-41676ba83544" class="" dir="auto">It will start from the first and it will go into each of the cells that are available.</p><p id="df752b16-aea3-4930-aedb-f09612bc58ce" class="" dir="auto">This cowboy will go into here.</p><p id="f6eccd9b-9cdf-4dfb-aa78-4932792009ff" class="" dir="auto">The next one the astronaut will go into here and the book will take up the final cell.</p><p id="5a4d420a-a845-403c-a17e-47127a6764bc" class="" dir="auto">This is before we specified any sort of positioning.</p><p id="d8de1485-c141-4913-bfe0-27b7a857e67c" class="" dir="auto">And the final thing that we&#x27;ve updated here is the gap.</p><p id="ccfc11c1-911c-46a8-9c74-97a0b114547f" class="" dir="auto">We&#x27;ve said that this should be a three REM gap.</p><p id="ecf31270-ecc3-40ee-9a41-599f80401b9d" class="" dir="auto">We&#x27;re saying that each of these lines should be three REM thick, and that means that we don&#x27;t have</p><p id="be09f0b8-53b3-4d42-af5a-b363fcb831c1" class="" dir="auto">to use padding or margin to separate the items in our grid.</p><p id="2c7a07b6-76a8-406d-a3e6-296f1ceed38b" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>And when we run all of this code,</strong></span> this is what we will see.</p><figure id="6d6db34b-04e2-4ccd-9a03-70900f1ec2e7" class="image" data-notion-image="Annotation_2023-05-07_165035.png" dir="ltr"><a href="Annotation_2023-05-07_165035.png"><img style="width:717px" src="Annotation_2023-05-07_165035.png"/></a></figure><p id="fac7a1af-8c2b-4566-b85b-aa43bc95eeec" class="" dir="auto">You&#x27;ll notice the three REM gap between each of the grid items.</p><p id="74aa3e49-c5a8-447e-81e3-a1bd5012b85b" class="" dir="auto">You&#x27;ll notice the ratio of the width of our column 1 to 1 to 1.5.</p><p id="f574f09a-961c-44fb-bbd9-0c188da374ef" class="" dir="auto">But you&#x27;ll also notice that there&#x27;s actually a whole track down here that&#x27;s unoccupied because as I</p><p id="e74c696f-ecd9-467c-86d9-942dd8cf09c5" class="" dir="auto">mentioned, by default, our grid is going to lay out our items into the unoccupied cells, one item</p><p id="9aa5712f-44f6-4ac4-b3ec-cdbf36a23bd0" class="" dir="auto">per cell.</p><p id="5fcde617-2411-4fab-ae3a-e1766806e34e" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Udemy video link</strong></span><strong>:-</strong></p><figure id="8a881f49-801c-4b4f-998f-b95d6b5aefad" dir="ltr"><a href="https://www.udemy.com/course/the-complete-web-development-bootcamp/learn/lecture/37368524#learning-tools" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href">https://www.udemy.com/course/the-complete-web-development-bootcamp/learn/lecture/37368524#learning-tools</div></div></a></figure></div></details><h3 id="39a91262-806a-444c-8429-dff8f6bb0eb6" class="" dir="auto"><strong><span style="border-bottom:0.05em solid">External Frameworks e.g. Bootstrap</span></strong></h3><details id="3992fa45-8188-4b0b-9fb0-9a0df55c146b" open="" class="toggle" dir="auto"><summary>Overview</summary><div class="indented"><p id="7daf90d7-069b-425a-979b-3a707526ddb9" class="" dir="auto">Now the very last method of creating responsiveness that I want to talk about is using the bootstrap</p><p id="b3ea3280-482c-4331-8b53-b79bed90eba9" class="" dir="auto">framework.</p><p id="7262f591-524c-4e51-81a0-12d66c40793e" class="" dir="auto">And the reason why it&#x27;s called a framework is because it&#x27;s external.</p><p id="d7610019-5450-4c75-b0a2-6462f2c560b3" class="" dir="auto">So it&#x27;s not something that&#x27;s built into CSS like Grid or Flexbox, but it&#x27;s actually something that</p><p id="c78d5429-05c5-4aef-b72b-6a52e233998a" class="" dir="auto">we have to bring in so other people&#x27;s code that we&#x27;re going to use.</p><p id="0662875a-0c7f-45ab-b40e-baf40de70de4" class="" dir="auto">And essentially what they&#x27;ve done is they&#x27;ve defined a whole bunch of classes in their CSS.</p><p id="0c6fb8a2-672a-4b6b-91fd-e58a7d319a6e" class="" dir="auto">So they&#x27;ve written an extensive amounts of CSS and they&#x27;ve put different rules for different selectors.</p><p id="2b22b72e-4153-40d0-a3d1-5420d8b7aecf" class="" dir="auto">For example, you could have something called card.</p><p id="8e8c7ec2-ab21-4f2f-8cfd-f85c4c26b942" class="" dir="auto">You could have something called Row and you could have something called container.</p><p id="a8ae6fd8-0421-441e-9acc-1cffb599cc57" class="" dir="auto">And these all will point to some CSS code inside the bootstrap container, which has predefined layout.</p><figure id="5a1f5efa-7fb0-4061-b677-a8c05a83c8c7" class="image" data-notion-image="Annotation_2023-05-07_181657.png" dir="ltr"><a href="Annotation_2023-05-07_181657.png"><img style="width:719px" src="Annotation_2023-05-07_181657.png"/></a></figure><p id="c4ce1f4d-d0bd-4bd6-8fc5-40851c4c7a44" class="" dir="auto">For example, here I&#x27;ve got three cards and notice how they&#x27;ve all got rounded corners and how they</p><p id="d232fc20-deaf-4f63-8dfa-be06fcee56fe" class="" dir="auto">have a specific type of font and all of that styling is applied automatically to your code by simply</p><p id="3d789665-beb1-4c99-9be6-0d5604619ccf" class="" dir="auto">putting in the bootstrap framework and then adding a particular class name.</p><p id="a708a166-107a-4ebd-b648-be8d18923250" class="" dir="auto">Now in terms of responsiveness, they also have a sort of flex system because bootstrap is in fact built</p><p id="a4157db4-f9d5-4e3d-93c1-82cc40f10b15" class="" dir="auto">on top of Flexbox.</p><p id="99aa0520-e3ef-448a-9c78-0ca251df7cb7" class="" dir="auto">Now, this system is a 12 division system.</p><p id="3f587cd7-67ee-4216-8d07-91412358994c" class="" dir="auto">So let me explain this.</p><p id="13f74bde-73e4-45d5-bcdf-052b52ac7d61" class="" dir="auto">If the full width of your website can be divided into 12 equal portions, so then you have one, two,</p><p id="513ac36e-ea8e-4348-b490-5689d297e78b" class="" dir="auto">three.</p><p id="4631b66e-42d3-451c-a78d-dbbb12a6701a" class="" dir="auto">One, two, three.</p><p id="8bdf88a5-6082-42a2-8e7f-ffe632f6f825" class="" dir="auto">One, two, three.</p><p id="9b7dd35f-b24b-4cfe-b445-ceaad86c0505" class="" dir="auto">Now, if you count these, you&#x27;ll find that there are 12 little sections and they divide up the entire</p><p id="c46e4982-0ba6-4389-832b-94a193fb629a" class="" dir="auto">website.</p><p id="a721e504-2509-4ec9-880f-4cc3365f549e" class="" dir="auto">Now you can say if I want a particular div that is going to take up half of the width, then I can use</p><p id="47ee8481-81c8-4c4b-bf43-eb6de84a3da9" class="" dir="auto">this class called Col six.</p><p id="ad2c4cd1-1f18-4742-8ce0-686992deccec" class="" dir="auto">So column dash six and it&#x27;s basically going to take up six of these columns right here.</p><p id="2edd11bc-e883-4750-99da-7337e573cfdb" class="" dir="auto">So six of these little sections.</p><p id="a893b4cd-18c7-457b-9b13-eb6db92881fb" class="" dir="auto">And as you can see, this first card indeed does take up six of the sections.</p><p id="c8ca46d5-f0ec-4894-b437-b8c7b91aa5e6" class="" dir="auto">Now I can create other cards in here.</p><p id="bc21b6a8-45ac-4f19-b9ae-23508c3be4ed" class="" dir="auto">So this one&#x27;s going to take up two of the columns and this one&#x27;s going to take up four of the columns</p><p id="a89e30ff-8eeb-47ba-84b2-cb2691c1dc82" class="" dir="auto">and added together they add up to 12, which means that it&#x27;s going to take up the entire width.</p><p id="1710ce0b-1df9-483f-bf1f-4ae86501e3e2" class="" dir="auto">So we&#x27;ve now got three cards taking up the entire width of the website.</p><p id="1647a6fc-a2f7-47f6-8def-eed09d3fc4ab" class="" dir="auto">But as we resize the website, then it&#x27;s going to respond.</p><p id="2fb26035-605e-483c-b34c-00330dc7205e" class="" dir="auto">So a column six is going to be a 50% width.</p><p id="fa5a83f0-eed2-47de-a9c1-30032de27920" class="" dir="auto">If the width was 1000 pixels, then this one is going to be 500 pixels wide.</p><p id="4a10bbd5-e3ef-494d-80ac-0b2c37a4f386" class="" dir="auto">If the width was 2000 pixels, then the width will be 1000 pixels.</p><p id="ba223fb7-cff4-43ae-8312-83b0889239c1" class="" dir="auto">ET cetera.</p><p id="c2c2c9d6-ff11-43d4-b8de-6f123057c2e1" class="" dir="auto">And this is not only really good for responsiveness, but it&#x27;s also really good because I mentioned</p><p id="42e63fef-3716-4308-8474-a82a56927e73" class="" dir="auto">we can get styling brought into our website really easily just by using some of the pre-built components</p><p id="0d3055e4-6c5c-404b-a0ed-8f562709169c" class="" dir="auto">that comes with this framework similar to Grid Flexbox.</p><p id="ca2afe53-c973-4c0c-bf1c-6f0d83991c8d" class="" dir="auto">We&#x27;re going to be doing a section on Bootstrap as well so that you can learn more about this system</p><p id="fccc5fa9-b4e4-4e2a-b65e-7d8d33a9b672" class="" dir="auto">and all of the features that are available to you once you understand how it works.</p></div></details><h2 id="f0c9095c-465d-468e-90a6-f8109524c261" class="" dir="auto"><span style="border-bottom:0.05em solid">Advanced CSS</span>:- Transitions/Transform/Animation…</h2><figure id="80c1e2d9-2098-4921-89af-db810758f657" dir="ltr"><div class="source"><a href="https://youtu.be/ESnrn1kAD4E?t=17252">https://youtu.be/ESnrn1kAD4E?t=17252</a></div></figure><figure id="5665923c-fc57-4e68-9f73-2f85e95e2a47" class="image" data-notion-image="Untitled.jpeg" dir="ltr"><a href="Untitled.jpeg"><img style="width:4000px" src="Untitled.jpeg"/></a></figure><figure id="bd60818b-42d6-443e-b411-f10c88b6f3bc" class="image" data-notion-image="Untitled%201.jpeg" dir="ltr"><a href="Untitled%201.jpeg"><img style="width:4000px" src="Untitled%201.jpeg"/></a></figure><figure id="224c2e0b-2852-42f4-8272-17df4ee23ff8" class="image" data-notion-image="Untitled%202.jpeg" dir="ltr"><a href="Untitled%202.jpeg"><img style="width:4000px" src="Untitled%202.jpeg"/></a></figure><figure id="ad9a7321-3c9d-4b82-bb22-d1c455a5ab5c" class="image" data-notion-image="Untitled%203.jpeg" dir="ltr"><a href="Untitled%203.jpeg"><img style="width:4000px" src="Untitled%203.jpeg"/></a></figure><figure id="42ca45bc-b998-46a3-8dc0-a8d7b6772f0a" class="image" data-notion-image="Untitled%204.jpeg" dir="ltr"><a href="Untitled%204.jpeg"><img style="width:4000px" src="Untitled%204.jpeg"/></a></figure><figure id="6db4b1df-0438-420d-b9eb-953fa061cb5a" class="image" data-notion-image="Untitled%205.jpeg" dir="ltr"><a href="Untitled%205.jpeg"><img style="width:4000px" src="Untitled%205.jpeg"/></a></figure><figure id="71cbdefb-1e15-43fb-8323-c8ab75416f19" class="image" data-notion-image="Untitled%206.jpeg" dir="ltr"><a href="Untitled%206.jpeg"><img style="width:4000px" src="Untitled%206.jpeg"/></a></figure><figure id="4d4dc10e-4188-4ae1-8b0a-043a8c6840af" class="image" data-notion-image="Untitled%207.jpeg" dir="ltr"><a href="Untitled%207.jpeg"><img style="width:4000px" src="Untitled%207.jpeg"/></a></figure><figure id="7953196c-a926-4715-a30a-4217bc57f3fc" class="image" data-notion-image="Untitled%208.jpeg" dir="ltr"><a href="Untitled%208.jpeg"><img style="width:4000px" src="Untitled%208.jpeg"/></a></figure><figure id="75c41dd8-52b2-4d8f-bed8-514b1050a448" class="image" data-notion-image="Untitled%209.jpeg" dir="ltr"><a href="Untitled%209.jpeg"><img style="width:4000px" src="Untitled%209.jpeg"/></a></figure><figure id="5d0739fd-a9c8-48bb-9fe9-0f843162afeb" class="image" data-notion-image="Untitled%2010.jpeg" dir="ltr"><a href="Untitled%2010.jpeg"><img style="width:4000px" src="Untitled%2010.jpeg"/></a></figure><hr id="9fd5fb40-552e-4dc6-8bdf-21dd24ad9ec3" dir="auto"/><p id="a721f446-0ff7-4d4d-b5d9-5b6ab6071f78" class="" dir="auto"><a href="CSS%20664a7269635d4d1cbb67a6ae55a3c3b5.html">Go on top</a>👆</p><p id="a4158631-4673-47f2-9d70-59bc4ccec4b0" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

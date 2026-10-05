@@ -1,0 +1,910 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>HTML</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="d8447477-876e-469d-9c99-230fad3d5730" class="page mono" data-notion-page-icon="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5d9883d2-26bd-4fdf-87c1-0295df63ef5c/html-5.png"><header><div class="page-header-icon undefined"><img class="icon" src="html-5.png"/></div><h1 class="page-title" dir="auto">HTML</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><p id="42b55245-f1b1-4337-96c4-cba71f6fd044" class="" dir="auto">Table of Content :-)</p><nav id="f56b4c31-5c75-47f3-a915-003364540abe" class="block-color-gray table_of_contents" data-notion-highlight="gray" data-notion-toc="" dir="ltr"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9cc64204-1134-453a-813c-9293f7cbcdb7">HTML</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cbf46279-79f1-4376-a7fc-e73b5cdcbc37">Overview</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6d152bf4-b523-41b0-9d7b-376516899f75">Basic HTML Page</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#912c3808-5de9-4929-a8e8-3259a3d4c676">Quick Points 🚀</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#287167c4-7d89-4b69-a4f7-a29fe2f2b6dc">Comments in HTML</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9c2cceaf-6856-4f5f-b729-d4905214da53">HTML is NOT case sensitive</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#eb8d1d0b-8571-49bf-9bce-4b1c99278f08">Difference between ELEMENT &amp; ATTRIBUTES</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6a66efb6-ea00-45a3-b8cd-d9992948d17f">Heading Tag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3298dd12-cc2d-45db-8747-3cba52064f39">Paragraph Tag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#81f83f03-603a-4ab6-8f3f-64d2f7bfba31">Anchor Tag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7ccf1e46-8966-4179-9aec-c432d8b8cfa6">Image Tag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#083a8ce4-e1c1-4744-9c23-d9a40b9748dd">Bold, Italic and Underline tags</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c02145dd-eba4-4b99-b58a-39715e4dd47e">Br Tag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3c7044d5-4377-4f9a-8ccb-fef7939241db">Hr Tag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#99982d73-3cbd-4cd3-85aa-360aed8771ec">Big &amp; Small Tags</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4b063553-480c-4301-b370-c4e7f9f29be6">Subscript &amp; Superscript Tag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ef84ce2d-7d89-4d6b-91a5-c4d47ebcf876">Pre Tag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f7f3fc98-14cc-43c6-ac82-2a54a3c14078">Creating a Page Layout</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4fe567c1-6266-4521-ba52-17d91eca74bf">Inside Main Tag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d9d58084-9ae5-4c75-9233-06c00a77f65c">Revisiting Anchor Tag(for new tab,clickable pic)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dff333f3-f7c7-40f8-a12f-4bab267b8400">Div Tag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8828267d-12e5-4727-abd9-8e6a60aa5084">Span Tag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9b1d7027-f087-49a2-b99b-32e05acabb1e">List in HTML</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7d0f482c-d43a-40a1-b6a6-490cdb30cc88">Tables in HTML</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7d9587b1-2d78-4312-8010-d26034944ceb">Caption in Tables</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bdceb80c-403e-42c2-aca1-891f858b1ce8">thead &amp; tbody in Tables</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b47c2805-7d23-4e7f-ba93-b5549e7fe94f">Colspan Attribute</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ef6dcc7a-0d36-455d-aea8-3c50970a1b03">Form in HTML</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4e5ada84-6a1a-4ec5-8f48-3d8b0431c5f9">Action in Form</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#05e99e45-b613-42f8-8ab9-38213830c847">Form Element : Input</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#268e771f-6c60-430c-9bc2-1968cd5bfaba">Label</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9bbdf4ca-1d16-426b-ae1c-d069f2ecdc69">Class &amp; Id / Textarea</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7e7a48db-a7b0-4723-a87a-37137156360b">Select (Drop down menu)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#162d2fad-db96-4fb8-b28b-74b4341c9bc2">iframe Tag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7fa239ba-f2a1-458b-bcc8-0fdf81c10191">Video Tag</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c43f97ee-e999-4c1e-a97b-02708547e0e0">Some Shortcut’s/Notes :-</a></div></nav><h1 id="9cc64204-1134-453a-813c-9293f7cbcdb7" class="" dir="auto">HTML</h1><h3 id="cbf46279-79f1-4376-a7fc-e73b5cdcbc37" class="" dir="auto">Overview</h3><ul id="4d2fdce7-3cf0-47c9-b76e-4b8abb7c4694" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Hyper Text Markup Language.</li></ul><ul id="bcc9e572-74c6-4037-a38c-2a315ea949c5" class="bulleted-list" dir="auto"><li style="list-style-type:disc">HTML is the code that is used to<br/>structure a web page and its content.</li></ul><ul id="4f9fa812-0937-4301-93d4-bca5d8d6d4a3" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The component used to design the<br/>structure of websites are called HTML tags.</li></ul><h3 id="6d152bf4-b523-41b0-9d7b-376516899f75" class="" dir="auto">Basic HTML Page</h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19ebf1de-98bb-46c0-87b1-5ce64e5f7fa9" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!DOCTYPE html&gt; //tells browser you are using HTML5
+&lt;html&gt;          //root of an html document
+ &lt;head&gt;         //container for metadata
+ &lt;title&gt;My First Page&lt;/title&gt;  //page title
+ &lt;/head&gt;
+ &lt;body&gt;       //contains all data rendered by the browser
+ &lt;p&gt;hello world&lt;/p&gt;  //paragraph tag
+ &lt;/body&gt;
+&lt;/html&gt;</code></pre><h3 id="912c3808-5de9-4929-a8e8-3259a3d4c676" class="" dir="auto">Quick Points 🚀</h3><ul id="1d69c95b-df32-4ace-b908-120178f98db7" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Html tag is parent of head &amp; body tag</li></ul><ul id="aa574ba5-0eda-4ec9-9048-a6b40da319c5" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Most of html elements have opening &amp; closing tags<br/>with content in between.</li></ul><ul id="0c6fddcc-9129-4851-8eb7-50acc3a3fd87" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Some tags have no content in between, eg -&lt;br&gt;,&lt;hr&gt; (this are also called as <span style="border-bottom:0.05em solid">self closing</span> tag)</li></ul><h3 id="287167c4-7d89-4b69-a4f7-a29fe2f2b6dc" class="" dir="auto">Comments in HTML</h3><p id="66791a94-9b14-462d-b81a-5fba3c672ce3" class="" dir="auto">This is part of code that should not be parsed.</p><pre id="9c4886ad-3a49-4065-aab3-29a86a35e5e1" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--This is an HTML Comment--&gt;</code></pre><h3 id="9c2cceaf-6856-4f5f-b729-d4905214da53" class="" dir="auto">HTML is NOT case sensitive</h3><pre id="a99322e1-9201-4f33-9077-e2a8abca4089" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">- &lt;html&gt; = &lt;HTML&gt;
+- &lt;p&gt; = &lt;P&gt;
+- &lt;head&gt; = &lt;HEAD&gt;
+- &lt;body&gt; = &lt;BODY&gt;</code></pre><p id="edb2dca5-e2af-40b2-96b9-065c551ef52d" class="" dir="auto">
+</p><h3 id="eb8d1d0b-8571-49bf-9bce-4b1c99278f08" class="" dir="auto">Difference between ELEMENT &amp; ATTRIBUTES</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="593b31d3-437d-4991-94ab-2d6246e5c90f" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">Html elements holds the content. html attributes are used to describe the charasteristic of an html element in detail. whatever written wethin a Html tag are Html elements. Html attributes are found only in the starting tag</div></aside><pre id="7ed5937f-b153-4612-b3a1-030a9356ba77" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--&lt;h3&gt;&lt;/h3&gt; tag is and element and &lt;a&gt;&lt;/a&gt; is an attribute--&gt;
+&lt;h3&gt; &lt;a href= &quot;https://google.com/&quot;&gt;GOOGLE&lt;/a&gt; &lt;/h3&gt;</code></pre><h3 id="6a66efb6-ea00-45a3-b8cd-d9992948d17f" class="" dir="auto">Heading Tag</h3><pre id="c78b18cd-377b-4caa-ab7b-50b64dea4883" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;h1&gt; (most important)  &lt;/h1&gt;
+&lt;h2&gt;                   &lt;/h2&gt;
+&lt;h3&gt;                   &lt;/h3&gt;
+&lt;h4&gt;                   &lt;/h4&gt;
+&lt;h5&gt;                   &lt;/h5&gt;
+&lt;h6&gt; (least important) &lt;/h6&gt;</code></pre><h3 id="3298dd12-cc2d-45db-8747-3cba52064f39" class="" dir="auto">Paragraph Tag</h3><pre id="9b920619-b67c-4a03-95e7-499b2cfbbec4" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--Used to add paragraphs in HTML page--&gt;
+&lt;p&gt; This is a paragraph &lt;/p&gt;</code></pre><h3 id="81f83f03-603a-4ab6-8f3f-64d2f7bfba31" class="" dir="auto">Anchor Tag</h3><pre id="c8a96631-ac19-4af3-a65d-f4630f2f68ea" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--Used to add links to your page--&gt;
+&lt;a href= &quot;https://google.com/&quot;&gt;GOOGLE&lt;/a&gt;</code></pre><h3 id="7ccf1e46-8966-4179-9aec-c432d8b8cfa6" class="" dir="auto">Image Tag</h3><pre id="1f347025-2806-4f45-bf87-75ed13092765" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--Used to add images to your page--&gt;
+&lt;img src=&quot;/image.png&quot; alt=&quot;Random Image&quot;&gt;
+      &lt;!--Relative url--&gt;</code></pre><h3 id="083a8ce4-e1c1-4744-9c23-d9a40b9748dd" class="" dir="auto">Bold, Italic and Underline tags</h3><pre id="29c17227-e132-45e4-966c-74afdb9cff7b" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--We can use bold, italic and underline tags to highlight the text as follows--&gt;
+&lt;i&gt;This is italic&lt;/i&gt;
+&lt;b&gt;This is bold&lt;/i&gt;
+&lt;u&gt;This is Underline&lt;/u&gt; </code></pre><h3 id="c02145dd-eba4-4b99-b58a-39715e4dd47e" class="" dir="auto">Br Tag</h3><pre id="123bb9cb-d0b6-42d3-8340-1f6c33536111" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--Used to add next line(line breaks) to your page and also know as Self closing tag--&gt;
+&lt;br&gt;</code></pre><h3 id="3c7044d5-4377-4f9a-8ccb-fef7939241db" class="" dir="auto">Hr Tag</h3><pre id="2f4bb813-6582-4fe2-9bd9-6a9776f118a5" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--Used to display a horizontal ruler, used to separate content also know as Self closing tag--&gt;
+&lt;hr&gt;</code></pre><h3 id="99982d73-3cbd-4cd3-85aa-360aed8771ec" class="" dir="auto">Big &amp; Small Tags</h3><pre id="e7c044d7-05fe-4cb5-bd22-6c3448b09cc1" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--Used to display big &amp; small text on your page--&gt;
+&lt;big&gt; Big &lt;/big&gt;
+&lt;small&gt; Small &lt;/small&gt;</code></pre><h3 id="4b063553-480c-4301-b370-c4e7f9f29be6" class="" dir="auto">Subscript &amp; Superscript Tag</h3><pre id="6b9b5b7d-6fc6-4758-a95e-5efb76ed571c" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--We can add subscript and superscript in html as follows--&gt;
+&lt;sub&gt; subscript &lt;/sub&gt; //H2O
+&lt;sup&gt; superscript &lt;/sup&gt; //An + B 
+</code></pre><h3 id="ef84ce2d-7d89-4d6b-91a5-c4d47ebcf876" class="" dir="auto">Pre Tag</h3><pre id="5254e10a-bf25-4896-957b-7f4e163f7799" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--Used to display text as it is (without ignoring spaces &amp; next line)--&gt;
+&lt;pre&gt; This
+ is a sample
+ text.
+&lt;/pre&gt;</code></pre><h3 id="f7f3fc98-14cc-43c6-ac82-2a54a3c14078" class="" dir="auto">Creating a Page Layout</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="a04af3a3-69d3-4f6c-b232-4fe8d5cec5b8" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">When we use the right tag in right place, it results in better page layout, better indexing by search engine and better user Experience, we use the following tag to get the job done.</div></aside><pre id="3a13f2ab-0326-4163-b050-598bac3b90d9" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;header&gt;Contains navbar&lt;/header&gt;
+&lt;main&gt;Content&lt;/main&gt;
+&lt;footer&gt;Contact us etc&lt;/footer&gt;</code></pre><h3 id="4fe567c1-6266-4521-ba52-17d91eca74bf" class="" dir="auto">Inside Main Tag</h3><pre id="a7663680-ce67-42b3-a50d-cbb3633ec7d4" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--Section Tag- for a section on your page--&gt;
+&lt;section&gt;&lt;/section&gt;
+
+&lt;!--Article Tag- for an article on your page--&gt;
+&lt;article&gt;&lt;/article&gt;
+
+&lt;!--Aside Tag- for content aside main content(ads)--&gt;
+&lt;aside&gt;&lt;/aside&gt;</code></pre><h3 id="d9d58084-9ae5-4c75-9233-06c00a77f65c" class="" dir="auto">Revisiting Anchor Tag(for new tab,clickable pic)</h3><pre id="c9c98fb5-d951-4aeb-9b38-e306e92975e8" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;a href=&quot;https://google.com&quot; target=&quot;_main&quot;&gt; Google &lt;/a&gt;
+                           &lt;!--for new tab--&gt;
+
+&lt;a href=&quot;https://google.com&quot;&gt; &lt;img src=&quot;link&quot;&gt; &lt;/a&gt;
+                            &lt;!--clickable pic--&gt;</code></pre><h3 id="dff333f3-f7c7-40f8-a12f-4bab267b8400" class="" dir="auto">Div Tag</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="f2269998-5c3a-4301-bc44-bcbe358a8ff8" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">Div tag is often used as a container for other elements div is a block(Always take full width) level element.</div></aside><table id="aa443f1a-2263-40f6-9bab-cc0b3f7cb553" class="simple-table" dir="ltr"><tbody><tr id="e4e9faea-2b38-4235-9b17-e96ba629dc56" dir="ltr"><td id="MqAx" class="">&lt;address&gt;</td><td id="jSFu" class="">&lt;fieldset&gt;</td></tr><tr id="d47de632-b3ed-413b-9698-3d8689a2f8ce" dir="ltr"><td id="MqAx" class="">&lt;article&gt;</td><td id="jSFu" class="">&lt;figcaption&gt;</td></tr><tr id="0ec6173a-7a64-4996-92aa-95cb905f31cf" dir="ltr"><td id="MqAx" class="">&lt;aside&gt;</td><td id="jSFu" class="">&lt;figure&gt;</td></tr><tr id="5387d1b9-511a-4b11-95bc-836214a29a13" dir="ltr"><td id="MqAx" class="">&lt;blcokquote&gt;</td><td id="jSFu" class="">&lt;footer&gt;</td></tr><tr id="237668e8-ee65-4045-b084-9bc55afb7da6" dir="ltr"><td id="MqAx" class="">&lt;canvas&gt;</td><td id="jSFu" class="">&lt;form&gt;</td></tr><tr id="90e496c2-78f2-45d6-91c7-77c9ed8dd554" dir="ltr"><td id="MqAx" class="">&lt;dd&gt;</td><td id="jSFu" class="">&lt;h1&gt;-&lt;h6&gt;</td></tr><tr id="a4213d18-5f22-48dc-aa31-88c8752a3b2d" dir="ltr"><td id="MqAx" class="">&lt;div&gt;</td><td id="jSFu" class="">&lt;header&gt;</td></tr><tr id="4cfab145-9fc0-4eab-ac52-eed8ba323d61" dir="ltr"><td id="MqAx" class="">&lt;dl&gt;</td><td id="jSFu" class="">&lt;hr&gt;</td></tr><tr id="65231d9f-be35-4d56-98c5-54f3be8b43e1" dir="ltr"><td id="MqAx" class="">&lt;dt&gt;</td><td id="jSFu" class="">&lt;li&gt;</td></tr><tr id="28c32abf-b2e5-4839-9c6f-cdbfa7982993" dir="ltr"><td id="MqAx" class="">&lt;main&gt;</td><td id="jSFu" class=""></td></tr></tbody></table><h3 id="8828267d-12e5-4727-abd9-8e6a60aa5084" class="" dir="auto">Span Tag</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="7ec976da-7e2f-4c5e-bbaf-974fc0976300" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">Span is also a container used for other HTML elements<br/>Inline Element (takes width as per size)</div></aside><table id="225f6c07-9600-406e-bbe3-306429fb02e7" class="simple-table" dir="ltr"><tbody><tr id="4c70d2b3-4081-4200-96c1-827234ef5022" dir="ltr"><td id="ViXX" class="">&lt;a&gt;</td><td id="\who" class="">&lt;i&gt;</td><td id="zo}m" class="">&lt;script&gt;</td></tr><tr id="2fe25cd3-c71d-4165-82c6-0f13078a7a12" dir="ltr"><td id="ViXX" class="">&lt;abbr&gt;</td><td id="\who" class="">&lt;img&gt;</td><td id="zo}m" class="">&lt;select&gt;</td></tr><tr id="5726e43f-9912-48ab-abcd-12434381af2b" dir="ltr"><td id="ViXX" class="">&lt;acronym&gt;</td><td id="\who" class="">&lt;input&gt;</td><td id="zo}m" class="">&lt;small&gt;</td></tr><tr id="772a0091-78df-4cc3-a35c-7b3544b93ca3" dir="ltr"><td id="ViXX" class="">&lt;b&gt;</td><td id="\who" class="">&lt;kbd&gt;</td><td id="zo}m" class="">&lt;span&gt;</td></tr><tr id="1257cd7e-a483-4d47-a096-b5843c0f468c" dir="ltr"><td id="ViXX" class="">&lt;bdo&gt;</td><td id="\who" class="">&lt;label&gt;</td><td id="zo}m" class="">&lt;strong&gt;</td></tr><tr id="1a32d419-2b6e-4c36-aca5-40f6b0fa03f1" dir="ltr"><td id="ViXX" class="">&lt;big&gt;</td><td id="\who" class="">&lt;map&gt;</td><td id="zo}m" class="">&lt;sub&gt;</td></tr><tr id="85b8ab5d-f8a0-419f-9be4-d9ed2fafa95e" dir="ltr"><td id="ViXX" class="">&lt;br&gt;</td><td id="\who" class="">&lt;object&gt;</td><td id="zo}m" class="">&lt;sup&gt;</td></tr><tr id="d97b3c39-14ad-46f6-96f8-4025236d9f47" dir="ltr"><td id="ViXX" class="">&lt;button&gt;</td><td id="\who" class="">&lt;tt&gt;</td><td id="zo}m" class="">&lt;textarea&gt;</td></tr><tr id="2830842b-1547-4224-8bac-144041f78b6e" dir="ltr"><td id="ViXX" class="">&lt;cite&gt;</td><td id="\who" class="">&lt;var&gt;</td><td id="zo}m" class="">&lt;time&gt;</td></tr><tr id="49047199-40a1-4801-896b-d7d58bb2dd37" dir="ltr"><td id="ViXX" class="">&lt;code&gt;</td><td id="\who" class="">&lt;output&gt;</td><td id="zo}m" class=""></td></tr><tr id="a2c95de4-bf84-485b-820d-22758d7263c1" dir="ltr"><td id="ViXX" class="">&lt;dfn&gt;</td><td id="\who" class="">&lt;q&gt;</td><td id="zo}m" class=""></td></tr><tr id="edc61af3-9372-4531-a171-61794edd2527" dir="ltr"><td id="ViXX" class="">&lt;em&gt;</td><td id="\who" class="">&lt;samp&gt;</td><td id="zo}m" class=""></td></tr></tbody></table><h3 id="9b1d7027-f087-49a2-b99b-32e05acabb1e" class="" dir="auto">List in HTML</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="c386b728-eca2-4ea4-8792-d329749a9e4d" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">Lists are used to represent real life list data. There are two types of list- 1.Unordered &amp; 2.Ordered.</div></aside><pre id="2dbbfd86-3937-4b0d-bb07-b0de4fd5bb58" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--Unordered list--&gt;
+&lt;ul&gt;
+&lt;li&gt; Apple &lt;/li&gt;    &lt;!--⚫Apple--&gt;
+&lt;li&gt; Mango &lt;/li&gt;    &lt;!--⚫Mango--&gt;
+&lt;/ul&gt;
+
+&lt;!--Ordered list--&gt;
+&lt;ol&gt;
+&lt;li&gt; Apple &lt;/li&gt;    &lt;!--1.Apple--&gt;
+&lt;li&gt; Mango &lt;/li&gt;    &lt;!--2.Mango--&gt;
+&lt;/ol&gt;
+
+&lt;!--Using Roman numeral type--&gt;
+&lt;ol type=&quot;i&quot;&gt;
+&lt;li&gt; Apple &lt;/li&gt;    &lt;!--I.Apple--&gt;
+&lt;li&gt; Mango &lt;/li&gt;    &lt;!--II.Mango--&gt;
+&lt;/ol&gt;</code></pre><h3 id="7d0f482c-d43a-40a1-b6a6-490cdb30cc88" class="" dir="auto">Tables in HTML</h3><pre id="fed569fc-e481-431d-b7de-afdb7704aeea" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;!--Tables are used to represent real life table data.--&gt;
+&lt;tr&gt; &lt;!--used to display table row--&gt;
+&lt;td&gt; &lt;!--used to display table data--&gt;
+&lt;th&gt; &lt;!--used to display table header--&gt;
+
+&lt;!--Tables in Html Example--&gt;
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Name&lt;/th&gt;
+    &lt;th&gt;Roll No&lt;/th&gt;
+  &lt;/tr&gt;
+
+  &lt;tr&gt;
+    &lt;td&gt;Shree&lt;/td&gt;
+    &lt;td&gt;188&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+&lt;!--Output👇--&gt;</code></pre><table id="9db8512d-fd1b-4e33-bdb3-fb813c67b841" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="f2174bd1-c6dc-4d95-bab4-f7490732a5c8" dir="ltr"><th id="yL&gt;Y" class="simple-table-header-color simple-table-header">Name</th><th id="R?:m" class="simple-table-header-color simple-table-header">Roll No</th></tr></thead><tbody><tr id="6ccb9c30-c9a4-4044-914a-f67992975e61" dir="ltr"><td id="yL&gt;Y" class="">Shree</td><td id="R?:m" class="">188</td></tr></tbody></table><h3 id="7d9587b1-2d78-4312-8010-d26034944ceb" class="" dir="auto">Caption in Tables</h3><pre id="b4eb2649-a7a2-4fb9-95b0-7c2fe6172bf1" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;caption&gt; Student Data &lt;/caption&gt;
+&lt;!--Output👇--&gt;</code></pre><p id="3b952f45-3dcb-49e8-bd00-b871cf7998f5" class="" dir="auto">                <span style="border-bottom:0.05em solid">Student Data</span></p><table id="4e543f01-2928-4991-9c47-e220f673732a" class="simple-table" dir="ltr"><thead class="simple-table-header"><tr id="e8734b93-c9cf-4936-b84a-e76816e8632d" dir="ltr"><th id="M{:`" class="simple-table-header-color simple-table-header">Name</th><th id="W|~_" class="simple-table-header-color simple-table-header">Roll No</th></tr></thead><tbody><tr id="ccb11719-a824-4716-b812-48f0be6a3875" dir="ltr"><td id="M{:`" class="">Shree</td><td id="W|~_" class="">188</td></tr></tbody></table><h3 id="bdceb80c-403e-42c2-aca1-891f858b1ce8" class="" dir="auto">thead &amp; tbody in Tables</h3><pre id="2ecad334-dc19-4edf-936e-e49eec0eb4da" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;thead&gt; to wrap table head
+&lt;tbody&gt; to wrap table body</code></pre><h3 id="b47c2805-7d23-4e7f-ba93-b5549e7fe94f" class="" dir="auto">Colspan Attribute</h3><pre id="98ed835e-0d52-4039-932f-aa8c43e7e41f" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">colspan=&quot;n&quot; &lt;!--used to create cells which spans over multiple columns--&gt;
+&lt;!--Output👇--&gt;</code></pre><figure id="63979427-d67b-4f2d-8078-527cd5e127a2" class="image" data-notion-image="Annotation_2023-04-02_173806.png" dir="ltr"><a href="Annotation_2023-04-02_173806.png"><img style="width:192px" src="Annotation_2023-04-02_173806.png"/></a></figure><h3 id="ef6dcc7a-0d36-455d-aea8-3c50970a1b03" class="" dir="auto">Form in HTML</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="3dd4fc1a-7030-4d5d-9eef-3875f781a1c1" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">Forms are used to collect data from the user<br/>Eg- sign up/login/help requests/contact me etc. </div></aside><pre id="dbf85a22-b219-4999-9508-06993873af57" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;form&gt;
+form content
+&lt;/form&gt;</code></pre><h3 id="4e5ada84-6a1a-4ec5-8f48-3d8b0431c5f9" class="" dir="auto">Action in Form</h3><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="5d167a09-6062-4de2-86bb-b562ee32ef59" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">Action attribute is used to define what action needs to be<br/>performed when a form is submitted.</div></aside><pre id="bd544db8-0f30-47d2-95b0-9ae767c2d6ef" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;form action=&quot;/action.php&quot;&gt;</code></pre><h3 id="05e99e45-b613-42f8-8ab9-38213830c847" class="" dir="auto">Form Element : Input</h3><pre id="60a7209b-6cb7-4979-9802-99e29d7a7ef1" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;input type=&quot;text&quot; placeholder=&quot;Enter Name&quot;&gt;</code></pre><figure id="d652136e-c3fd-4a53-9597-8e973af73489" class="image" data-notion-image="Annotation_2023-04-02_174654.png" dir="ltr"><a href="Annotation_2023-04-02_174654.png"><img style="width:480px" src="Annotation_2023-04-02_174654.png"/></a></figure><h3 id="268e771f-6c60-430c-9bc2-1968cd5bfaba" class="" dir="auto">Label</h3><pre id="9428557d-2852-479e-954b-c99fc509ae89" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">💡The &lt;label&gt; tag defines a label for several elements:
+
+&lt;label for=&quot;id1&quot;&gt;
+&lt;input type=&quot;radio&quot; value=&quot;class X&quot; name=&quot;class&quot; id=&quot;id1&quot;&gt;
+&lt;/label&gt;
+
+&lt;label for=&quot;id2&quot;&gt;
+&lt;input type=&quot;radio&quot; value=&quot;class X&quot; name=&quot;class&quot; id=&quot;id2&quot;&gt;
+&lt;/label&gt;</code></pre><h3 id="9bbdf4ca-1d16-426b-ae1c-d069f2ecdc69" class="" dir="auto">Class &amp; Id / Textarea</h3><figure id="06d07700-0234-4590-b22c-c35b631d859a" class="image" data-notion-image="1.jfif" dir="ltr"><a href="1.jfif"><img style="width:708px" src="1.jfif"/></a></figure><figure id="ddbbb29a-82bd-4a85-aadb-d31e693613ce" class="image" data-notion-image="2.jfif" dir="ltr"><a href="2.jfif"><img style="width:708px" src="2.jfif"/></a></figure><h3 id="7e7a48db-a7b0-4723-a87a-37137156360b" class="" dir="auto">Select (Drop down menu)</h3><pre id="4cee41de-60a9-4163-8d94-756871643a41" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;select name=&quot;city&quot; id=&quot;city&quot;&gt;
+   &lt;option value=&quot;Delhi&quot;&gt; Delhi &lt;/option&gt;
+   &lt;option value=&quot;Mumbai&quot;&gt; Mumbai &lt;/option&gt;
+   &lt;option value=&quot;Banglore&quot;&gt; Banglore &lt;/option&gt;
+&lt;/select&gt;</code></pre><figure id="df1dc8ac-6937-45fb-9296-e815ebb9d7f2" class="image" data-notion-image="Annotation_2023-04-02_181102.png" dir="ltr"><a href="Annotation_2023-04-02_181102.png"><img style="width:336px" src="Annotation_2023-04-02_181102.png"/></a></figure><h3 id="162d2fad-db96-4fb8-b28b-74b4341c9bc2" class="" dir="auto">iframe Tag</h3><pre id="cc440e07-87bd-4ac8-a18c-a2cbbc60de38" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">//website inside website//
+&lt;iframe src=&quot;&quot;&gt; LINK &lt;/iframe&gt;</code></pre><h3 id="7fa239ba-f2a1-458b-bcc8-0fdf81c10191" class="" dir="auto">Video Tag</h3><pre id="d2696d16-f120-451e-9884-0170f671b759" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;video src=&quot;myVid.mp4&quot;&gt; My Video &lt;/video&gt;</code></pre><figure id="71b10fbe-1253-4787-8b94-2eebc0dd156e" class="image" data-notion-image="Annotation_2023-04-02_182042.png" dir="ltr"><a href="Annotation_2023-04-02_182042.png"><img style="width:576px" src="Annotation_2023-04-02_182042.png"/></a></figure><p id="f0c179e3-e644-43ab-b800-adce1af4498f" class="" dir="auto">Video Syntax :- Where to put the Attributes.</p><figure id="6e994503-e94b-4868-bf0f-4c5363babda3" class="image" data-notion-image="123.png" dir="ltr"><a href="123.png"><img style="width:384px" src="123.png"/></a></figure><h3 id="c43f97ee-e999-4c1e-a97b-02708547e0e0" class="" dir="auto">Some Shortcut’s/Notes :-</h3><figure id="18a1e32a-fe61-4769-891b-5417d76f12cb" class="image" data-notion-image="9f3497f6-65a2-482f-8d9c-c639921019e8.jfif" dir="ltr"><a href="9f3497f6-65a2-482f-8d9c-c639921019e8.jfif"><img style="width:480px" src="9f3497f6-65a2-482f-8d9c-c639921019e8.jfif"/></a></figure><hr id="39117d89-b028-410d-8a3f-fe06d5ac77bf" dir="auto"/><p id="be0efcb6-067d-40aa-8ab2-5f2305616623" class="" dir="auto">
+</p><p id="e368756a-c636-4ce1-a325-4f7edc079fc8" class="" dir="auto">
+</p><p id="2368e621-8010-4b73-bd11-8538a3269aaf" class="" dir="auto">
+</p><p id="afccb37e-770f-49a6-a0a8-048ef5212c23" class="" dir="auto">
+</p><p id="4b7ad8aa-5170-40e3-b8bd-f3cced226dac" class="" dir="auto">
+</p><p id="3e9cde6f-1317-49f6-acd9-f34d0207138e" class="" dir="auto">
+</p><p id="7b945a1a-64fe-4eda-944b-6b8b62270043" class="" dir="auto">
+</p><p id="e9dcc781-e6f4-4410-b9de-6e3b697f876d" class="" dir="auto">
+</p><p id="0610f7b6-d60a-47a2-9f28-a592eb9fad83" class="" dir="auto">
+</p><p id="f2dccc17-39cb-43c5-92db-647dc440882d" class="" dir="auto">
+</p><p id="e6f7ed85-0d64-4165-9906-1c5f1bcd41d3" class="" dir="auto">
+</p><p id="54945d3f-7d96-4463-918b-74349f3fd1a7" class="" dir="auto">
+</p><p id="3427d649-52da-46a9-816c-62ac483610d5" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

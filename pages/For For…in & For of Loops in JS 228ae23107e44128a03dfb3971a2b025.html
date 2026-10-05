@@ -1,0 +1,833 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>For/For…in &amp; For...of Loops in JS</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="228ae231-07e4-4128-a03d-fb3971a2b025" class="page sans" data-notion-page-icon="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bd99f6d7-e451-4400-8343-3233f0f47222/loop.png"><header><div class="page-header-icon undefined"><img class="icon" src="loop.png"/></div><h1 class="page-title" dir="auto">For/For…in &amp; For...of Loops in JS</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><p id="6afb8898-81a7-4134-9a00-a7224ec9b431" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>For Loop</strong></span></p><p id="629d5ad8-c396-4124-9eef-7485a6e1b82a" class="" dir="auto">A <code>for</code> loop is a control flow statement that allows you to repeatedly execute a block of code based on a specified condition. It&#x27;s commonly used when you know in advance the number of times you want to iterate over a block of code.</p><p id="eea109cd-83f8-421e-94b4-8375c44a8657" class="" dir="auto">Here&#x27;s the basic syntax of a for loop in JavaScript:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js" integrity="sha512-m3JYEI6gx5fh9jF10FjGoMzVKcV2N6nchcDcqPCdI1L3R2WQV7br2XVNR8iTLb2daOMRl3zldbcfT40xU2ntVw==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="8226ffb1-b111-423f-87c2-9eaa5cdb187e" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">for (initialization; condition; increment) {
+  // code to be executed
+}
+</code></pre><p id="f26b6aa5-407a-43de-afaf-116d2e5bfbc2" class="" dir="auto">Now, let&#x27;s break down the different parts of the for loop:</p><ol type="1" id="34573033-c82f-4b97-8b4e-ca3e57c2ed69" class="numbered-list" start="1" dir="auto"><li><strong>Initialization:</strong> This part is used to initialize a counter variable or variables. It typically sets the initial value of a variable that will be used to control the loop. For example, <code>let i = 0</code> initializes a variable <code>i</code> with the value 0.</li></ol><ol type="1" id="c3769f4f-f146-46d3-b97a-7993c8d5cc57" class="numbered-list" start="2" dir="auto"><li><strong>Condition: </strong>This part is a condition that is checked before each iteration of the loop. If the condition evaluates to <code>true</code>, the loop will continue executing. If it evaluates to <code>false</code>, the loop will terminate. For example, <code>i &lt; 5</code> checks if the value of <code>i</code> is less than 5.</li></ol><ol type="1" id="cca0724e-3436-4747-9bb5-8cf2413be83e" class="numbered-list" start="3" dir="auto"><li><strong>Increment:</strong> This part is executed after each iteration of the loop. It updates the value of the counter variable. It can be used to increment or decrement the variable by a specific value. For example, <code>i++</code> increments the value of <code>i</code> by 1 after each iteration.</li></ol><ol type="1" id="460e3bb9-91b8-46c3-b799-529995dae926" class="numbered-list" start="4" dir="auto"><li><strong>Code to be executed:</strong> This is the block of code that will be executed repeatedly as long as the condition is true. It can contain any valid JavaScript statements or code blocks.</li></ol><p id="b295f296-ebba-4daf-a86e-7a5f858f16c6" class="" dir="auto">Here&#x27;s a simple example that demonstrates how a for loop works:</p><pre id="71989f43-fc27-4a63-af0a-334c5857692f" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">for (let i = 0; i &lt; 5; i++) {
+  console.log(&quot;Iteration:&quot;, i);
+}
+</code></pre><p id="539ca784-02c1-4f06-a14b-bb69ee715ee5" class="" dir="auto">In this example, the loop will iterate 5 times because the condition <code>i &lt; 5</code> is true initially and after each iteration, until <code>i</code> becomes 5. The code inside the loop will be executed on each iteration, printing the value of <code>i</code> to the console. The output will be:</p><pre id="a7058a7d-8e15-4165-88b1-b9fd118af914" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">/*** * Console * ***/
+Iteration: 0
+Iteration: 1
+Iteration: 2
+Iteration: 3
+Iteration: 4
+</code></pre><p id="6116f20c-1e90-435e-9a34-0c95cd8ede52" class="" dir="auto">That&#x27;s the basic concept of a for loop in JavaScript. It allows you to repeat a block of code for a specific number of times, based on the initialization, condition, and increment parts of the loop.</p><p id="1c5020ec-26e6-4613-b0a2-9c30bd61d08a" class="" dir="auto"><strong><span style="border-bottom:0.05em solid">For…in loop</span></strong></p><p id="b1403975-b053-4dfd-9d69-7bf960f635ec" class="" dir="auto">Let&#x27;s start with the <code>for-in</code> loop. Imagine you have a basket filled with different fruits, and you want to go through each fruit and check its color. We can use the for-in loop to accomplish that.</p><pre id="30990e5a-05a7-45a6-ae0b-17670eb71b92" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">const fruitBasket = {
+  apple: &quot;red&quot;,
+  banana: &quot;yellow&quot;,
+  orange: &quot;orange&quot;
+};
+
+for (let fruit in fruitBasket) {
+  console.log(fruit + &quot; is &quot; + fruitBasket[fruit]);
+}
+</code></pre><p id="af6c5b8f-b257-4030-8480-025cc9872609" class="" dir="auto">In this example, we have a <code>fruitBasket</code> object that represents a basket with different fruits. Each fruit is associated with a color. The for-in loop allows us to iterate over each fruit in the <code>fruitBasket</code> object. Inside the loop, we use the <code>fruit</code> variable to access the name of each fruit, and <code>fruitBasket[fruit]</code> to access its corresponding color. The loop will go through each fruit in the <code>fruitBasket</code> and print out its name and color.</p><p id="4330452c-6a73-46c3-b1f5-8b4b660e8f92" class="" dir="auto">Here&#x27;s the output you would see:</p><pre id="fad7136a-2eb0-43bf-878d-89c269e0d21e" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">/*** * Console * ***/
+apple is red
+banana is yellow
+orange is orange
+</code></pre><p id="d4961a53-a181-4126-9710-3fae60a63d7b" class="" dir="auto">I hope this example clarifies how the for-in loop works with objects. </p><hr id="b55a8cd0-464d-478b-8e19-c8f77c59b967" dir="auto"/><p id="add9068b-32b5-4d6a-998a-b0e541fadbd0" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>We can call the key value using any name!!!</strong></span></p><p id="d49ab76a-f37a-4908-93ef-70b2bef3d86d" class="" dir="auto">Yes, that&#x27;s correct! In the example you provided, the variable <code>fruit</code> is just a placeholder name that represents each key or property in the <code>fruitBasket</code> object as you iterate over them using the for-in loop.</p><p id="3976719b-04a8-43b7-bec5-e73b4100f4b6" class="" dir="auto">You can actually use any valid variable name instead of <code>fruit</code>. For example, you could use <code>key</code> instead of <code>fruit</code>:</p><pre id="8377838d-7699-4032-8ac5-f803f1edd871" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">for (let key in fruitBasket) {
+  console.log(key + &quot; is &quot; + fruitBasket[key]);
+}
+</code></pre><p id="e5845fa4-8d0d-44b0-8bd6-04abe8b31db3" class="" dir="auto">Or you could use <code>property</code> instead of <code>fruit</code>:</p><pre id="fa9a90db-ef7e-474d-bb99-4bc42cae5ca1" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">for (let property in fruitBasket) {
+  console.log(property + &quot; is &quot; + fruitBasket[property]);
+}
+</code></pre><p id="b7e6a887-29f2-4c82-ab6d-0be2eec904e2" class="" dir="auto">The important thing is that the variable you choose (whether it&#x27;s <code>fruit</code>, <code>key</code>, <code>property</code>, or any other name) represents each key or property in the object during each iteration of the loop. You can then use that variable to access the corresponding value using bracket notation (<code>fruitBasket[key]</code>, <code>fruitBasket[property]</code>, etc.).</p><p id="e2283ed9-b90e-42a5-9d55-26528ac6bc77" class="" dir="auto">So, feel free to use any valid variable name that makes sense to you and helps you understand the code better.</p><p id="613d7a52-2660-4faf-9fdd-c6854835c700" class="" dir="auto">I hope this clarifies the usage of variable names in the for-in loop!</p><hr id="752e64c8-af9d-43c8-adb4-35690b8b6e44" dir="auto"/><p id="2eb7d6c7-6428-40f1-ab8b-ef1a092fad9f" class="" dir="auto"><strong><span style="border-bottom:0.05em solid">For…of loop</span></strong></p><p id="cc92fd40-bd10-4c34-aacf-7b0af6ce00f4" class="" dir="auto">Now, let&#x27;s move on to the <code>for-of</code> loop. Imagine you have a line of friends waiting to go on a roller coaster ride, and you want to call each friend&#x27;s name to join. The for-of loop helps you do that with arrays and other iterable objects in JavaScript.</p><p id="db0c3068-0bd9-4123-bff2-4daaf8baf2d7" class="" dir="auto">Here&#x27;s an example:</p><pre id="44659cec-5388-42cf-9157-c1652afb3cca" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">const friends = [&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;, &quot;Dave&quot;];
+
+for (let friend of friends) {
+  console.log(friend); // Prints the name of each friend
+}
+/*Iterate meaning:- Repeat something*/</code></pre><p id="20ca1803-0736-454f-8e82-61ccfa55fc63" class="" dir="auto">In this example, we have an array called <code>friends</code> that contains different names. The for-of loop allows us to iterate over each element in the <code>friends</code> array. Inside the loop, we can access each friend&#x27;s name using the <code>friend</code> variable. The loop will go through each friend in the array and perform the specified actions.</p><hr id="95cd1822-29b1-4840-800f-36cc67f6cdfd" dir="auto"/><p id="2bd7246f-b5c3-4911-a0c7-ae5731033847" class="" dir="auto"><strong><span style="border-bottom:0.05em solid">Key Differences in For…in &amp; For…of Loop</span></strong></p><aside class="block-color-gray_background callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="gray_background" style="white-space:pre-wrap;display:flex" id="2d35cc1d-5b48-437a-bc36-ca5db04c72ea" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%"><strong><code>Google</code></strong><p id="5f7ffd43-49a4-411a-8f33-9e105c1a49c6" class="" dir="auto"><strong>What is the difference between for in and for of loop?</strong></p><p id="50d1c164-674f-4907-af03-36294af3a52b" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Ans</strong></span><strong>-</strong> Both for..in and for..of are looping constructs which are used to iterate over data structures. The only difference between them is the entities they iterate over: <strong>for..in iterates over all enumerable property keys of an object</strong>. <strong>for..of iterates over the values of an iterable object</strong>.</p></div></aside><p id="866c91ca-1286-471c-b2cd-e61c5b60ff14" class="" dir="auto">The <code>key difference</code> between the for-in and for-of loops is the way they iterate over elements.</p><p id="6ccb0355-9ffc-4d51-9678-1ca4cc427cbe" class="" dir="auto">The for-in loop is used to iterate over the properties or keys of an object. It allows you to access each property name or key one at a time. It&#x27;s commonly used with objects.</p><p id="47237515-fbb7-4e87-ba13-0f95fac7115e" class="" dir="auto">On the other hand, the for-of loop is used to iterate over the elements of an iterable object such as an array, string, or other collection. It allows you to access each element directly without needing to access the index. It&#x27;s commonly used with arrays and similar data structures.</p><p id="8b094f3b-f005-4c0e-963a-176d9cb730ee" class="" dir="auto">So, in summary:</p><ul id="fa271da6-644c-4845-9b95-a9f099fc3b1b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The for-in loop is used to iterate over the properties of an object.</li></ul><ul id="d337fa53-4989-43df-86b8-6592ac4330e3" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The for-of loop is used to iterate over the elements of an array or other iterable objects.</li></ul><p id="1b489f3b-71c4-480a-84e7-483007ce2593" class="" dir="auto">Remember that the for-in loop is best suited for objects, while the for-of loop is best suited for arrays and other iterable objects.</p><p id="69e11945-20e8-42d9-a1e9-07eabc90295a" class="" dir="auto">I hope this explanation helps you understand the for-in and for-of loops in JavaScript!</p><hr id="52e06459-a53f-4b84-bd00-dd26ee30e092" dir="auto"/></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

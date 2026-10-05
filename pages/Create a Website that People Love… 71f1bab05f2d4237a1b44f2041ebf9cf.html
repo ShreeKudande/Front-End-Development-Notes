@@ -1,0 +1,798 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Create a Website that People Love…</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="71f1bab0-5f2d-4237-a1b4-4f2041ebf9cf" class="page sans" data-notion-page-icon="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9d1ca5ea-abfd-42c4-9fc0-9d8a1463b140/browser.png"><header><div class="page-header-icon undefined"><img class="icon" src="browser.png"/></div><h1 class="page-title" dir="auto">Create a Website that People Love…</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><h3 id="355662f0-153c-4d5a-bd70-2306ef635fff" class="" dir="auto">Web Design Principals:-</h3><details id="88635c25-d0c1-44c1-89d0-2985f6d58881" open="" class="toggle" dir="auto"><summary>Introduction to Web Design</summary><div class="indented"><p id="a655983b-56e1-4d05-a43c-967eaf6ae925" class="" dir="auto">Now today I want to talk about something a little bit different namely how to design websites so that</p><figure id="91f1db56-9b1d-4f0a-97d1-4a6d56302202" class="image" data-notion-image="Annotation_2023-05-14_115339.png" dir="ltr"><a href="Annotation_2023-05-14_115339.png"><img style="width:1366px" src="Annotation_2023-05-14_115339.png"/></a></figure><p id="83725ad6-d07b-41c0-9a5f-4723cce780c3" class="" dir="auto">not only does your website have great functionality but it also looks beautiful.</p><p id="cb6ce6dc-a955-4af7-a2e4-39d91bdebff4" class="" dir="auto">The most important thing to making a website loved by users is pretty much the design.</p><p id="35931803-676f-4b7b-a0f9-5039b4b8fa32" class="" dir="auto">After all, think about it.</p><p id="c003d364-0854-4b8a-bb4e-9cdfe17f4570" class="" dir="auto">When was the last time you heard somebody tell you, &quot;Hey I came across this great website.</p><p id="808cdf2b-2643-4923-8260-63b0202d7c08" class="" dir="auto">It worked really really well.</p><p id="84ba5448-a821-44f7-9f6f-527542510ce1" class="" dir="auto">So smooth and no bugs.&quot;</p><p id="f91ecb74-3bae-405f-8410-0ca7faff8f2e" class="" dir="auto">Nobody ever says that right?</p><p id="60b005c6-32ec-4e96-8d93-a6ea6043c4b2" class="" dir="auto">They say things like: &quot;It looked so beautiful. It just worked like I wanted it to.&quot;</p><p id="93bc8e4f-8401-4406-a0cf-11e02894958b" class="" dir="auto">So today we&#x27;re going to talk about design and I want to show you some of the different aspects of design</p><p id="7634db80-a61d-41d4-aec6-fac7fce96415" class="" dir="auto">when it comes to websites.</p><p id="8182c1c0-291a-4b70-817e-f61278e78cdd" class="" dir="auto">Now more often than not, you&#x27;ve heard the saying right?</p><p id="1523215f-3ee1-4554-8605-789c4eb18a1b" class="" dir="auto">&quot;Don&#x27;t judge a book by its cover.&quot;</p><figure id="44a8ab48-07ef-4fa7-9fc9-e4a1c1e548b3" class="image" data-notion-image="432.png" dir="ltr"><a href="432.png"><img style="width:1366px" src="432.png"/></a></figure><p id="97305c86-b112-4f83-8baf-431a690060f2" class="" dir="auto">Now at the same time, you might have also heard of this saying: &quot;You only have three seconds to make a</p><p id="7d763a60-4e6b-4d6c-866e-1115fcdecbef" class="" dir="auto">good impression.&quot;</p><figure id="61777c3d-f497-48d7-bd2c-41e95a4d6c76" class="image" data-notion-image="Annotation_2023-05-14_115507.png" dir="ltr"><a href="Annotation_2023-05-14_115507.png"><img style="width:1366px" src="Annotation_2023-05-14_115507.png"/></a></figure><p id="c72a45a9-90ec-4ebd-968e-96aa10a57c94" class="" dir="auto">Now when it comes to web design, the latter is probably more accurate.</p><p id="20c65877-f0be-4367-9757-85cbade66d67" class="" dir="auto">It&#x27;s just like a job interview or a first date, your website has a crucial few seconds before the user</p><p id="4ff8ee24-c2b0-4754-b16d-d018116999ae" class="" dir="auto">is going to judge your company, your brand, your product.</p><p id="45a38dfb-c6ad-4377-b610-8ffbf5b731d1" class="" dir="auto">So take a look at this example.</p><p id="87a42beb-7baf-430d-8a20-04b877133e35" class="" dir="auto">This is a website called Penny juice and it&#x27;s a company that sells children&#x27;s juice cartons.</p><figure id="bd6e7f6c-6ce4-4d95-88ea-b1f3f19be33f" class="image" data-notion-image="Annotation_2023-05-14_120215.png" dir="ltr"><a href="Annotation_2023-05-14_120215.png"><img style="width:1366px" src="Annotation_2023-05-14_120215.png"/></a></figure><p id="4ad10217-eb08-4f0f-bc3c-a02a51277ef3" class="" dir="auto">Now look at the design of it. There&#x27;s clashing colors, there&#x27;s different typefaces, there&#x27;s different colors</p><p id="7fb964c0-907f-4af6-92be-7acc08f47033" class="" dir="auto">for the text and they have different fonts and it&#x27;s all, to be honest, a bit of a mess.</p><p id="4fddf951-e85e-45ff-8a54-47c04a28caf7" class="" dir="auto">So this is a question I often ask students at this point.</p><p id="e35ccd59-9910-4a2e-8153-31229a512a03" class="" dir="auto">Take a look at this website and ask yourself if you were to buy a product from this company,</p><p id="68f361b8-70b3-46f2-acca-e90d70822627" class="" dir="auto">if you were to buy a carton of juice, how much would you pay for it?</p><p id="9a8902f2-9b86-4fc3-9487-ee051350e587" class="" dir="auto">Now take a look at this website.</p><figure id="dbda726f-39d4-464f-a455-5ec608285bf8" class="image" data-notion-image="Annotation_2023-05-14_115623.png" dir="ltr"><a href="Annotation_2023-05-14_115623.png"><img style="width:1366px" src="Annotation_2023-05-14_115623.png"/></a></figure><p id="8d714329-f68f-4fb9-a251-5f8ad0c4140f" class="" dir="auto">This is the same website reimagined by a professional web designer.</p><p id="fdda4119-f59e-426e-a53b-5059b515578b" class="" dir="auto">Look at how the color scheme is now consistent, how the fonts and the typefaces now look a lot better.</p><p id="4089e51f-0a46-4bd4-89bd-64a102a53053" class="" dir="auto">And ask yourself again, how much would you pay for a single carton of juice from this website.</p><p id="23e339f9-79ef-412b-85d2-241fb0a1d198" class="" dir="auto">Now I&#x27;ve asked this question to a number of people and this is the result I got.</p><p id="05ef9b0c-441c-4d27-b47b-b89649c754e4" class="" dir="auto">People are willing to pay anywhere up to only a dollar for a carton of juice from the first website</p><p id="e4c87072-7635-4a43-912f-6e1a86905b27" class="" dir="auto">but anywhere up to $3 for the second website.</p><p id="520f410a-4d06-4077-baf2-e7fbdaf9a4d8" class="" dir="auto">Now I run a startup and a lot of friends and colleagues of mine also work on their own businesses.</p><p id="99dc97a8-e3b7-440f-b0b6-4418aee92181" class="" dir="auto">And we usually spend a lot of time brainstorming, how can we make our product better,</p><p id="4c6653ba-8609-4e33-bf30-44a5e24fdee3" class="" dir="auto">how do we make our brand stronger.</p><p id="dbd4189d-014a-4a00-8fed-06e704e7ca75" class="" dir="auto">And there&#x27;s very very few things that we can think of that can actually produce a three times improvement</p><p id="77bff255-d15a-4f44-8c3a-a87a875180d4" class="" dir="auto">in the value of your product or in the value of your company.</p><p id="826786c2-16b7-4ea0-bdc5-a3da684c46b8" class="" dir="auto">So design is really really powerful.</p><p id="990d5d74-4645-4766-9eb2-a7310fc56b18" class="" dir="auto">It&#x27;s one of the cheapest ways to make your company or your product look expensive because it&#x27;s elevating.</p><p id="62264081-aa20-4e4e-9f83-710acb84c09b" class="" dir="auto">And it doesn&#x27;t take a lot to get good at design as you&#x27;ll see in the coming lessons.</p><p id="1de89f45-97b4-4236-a596-13806ee653a8" class="" dir="auto">So we&#x27;re going to be exploring some of the principles of web design in this module.</p><p id="7d65e09d-75b6-4c84-801d-723eb93a4ee7" class="" dir="auto">And I want to take you through everything from color theory to typography to user interface design and</p><p id="af9106fb-fd36-4d53-8f89-0c068ce5ae5c" class="" dir="auto">user experience design.</p><figure id="e3ec2b1b-d0ab-4b75-9a13-ac4794258b00" class="image" data-notion-image="Annotation_2023-05-14_115727.png" dir="ltr"><a href="Annotation_2023-05-14_115727.png"><img style="width:1366px" src="Annotation_2023-05-14_115727.png"/></a></figure><p id="24339d01-41ca-43b6-9660-684bc4c8ea14" class="" dir="auto">These are the four pillars of good web design.</p><p id="e97b4083-2bca-4a81-9635-c20c04099a7f" class="" dir="auto">So once you are ready, head over to the next lesson and let&#x27;s get started.</p><hr id="323a0a24-04d0-401d-9955-ff0feb64ec61" dir="auto"/></div></details><details id="821389bc-e577-4b41-a829-d47f3896568b" open="" class="toggle" dir="auto"><summary>Understanding Color Theory</summary><div class="indented"><p id="e94659fd-c88f-4589-ae6f-abab83bf8318" class="" dir="auto">Now one of the first things I want to talk about is Color Theory. And color theory is the art and science</p><p id="79d2701d-1c1f-4210-b5b4-ac348a1cf7b6" class="" dir="auto">of creating the right palette for your website.</p><figure id="9d6d5ec8-d876-4d90-9a72-327e6d7ccf82" class="image" data-notion-image="Annotation_2023-05-14_203312.png" dir="ltr"><a href="Annotation_2023-05-14_203312.png"><img style="width:1366px" src="Annotation_2023-05-14_203312.png"/></a></figure><p id="ee1346e8-66c7-44f8-bea3-cc0f3b801fc3" class="" dir="auto">So take a look at this example.</p><p id="1f631562-cca0-4e17-9f30-02be81238f28" class="" dir="auto">Now let&#x27;s say you had a logo where you have flowers which are brown, paintball which is pink.</p><figure id="5065e203-55bd-4df8-a410-fe8353bef01e" class="image" data-notion-image="c1.png" dir="ltr"><a href="c1.png"><img style="width:1366px" src="c1.png"/></a></figure><p id="bbdadfa2-2847-4e59-b460-a39208eed63d" class="" dir="auto">It looks all very weird and very inconsistent.</p><p id="af9f4091-10ac-4685-bc9f-ec5d70015874" class="" dir="auto">And take a look at the actual logos. Like what are you thinking when you see these color palettes on</p><p id="6eb7a3fd-855e-495b-9d72-bf9f8a7cfffc" class="" dir="auto">the words. The color of the flowers looks a bit like dirt I guess but it also looks a bit like something</p><p id="6e7260c7-6aa2-4f4d-a00a-531eb5ed7afd" class="" dir="auto">else. And the paint ball being pink</p><p id="362bb3b9-b7dc-4c5a-b144-645c7e579750" class="" dir="auto">I&#x27;m not really sure who that target audience is. But take a look at this.</p><figure id="a95e14cf-fc26-4759-91b3-cebe309b0562" class="image" data-notion-image="Annotation_2023-05-14_201802.png" dir="ltr"><a href="Annotation_2023-05-14_201802.png"><img style="width:1366px" src="Annotation_2023-05-14_201802.png"/></a></figure><p id="3a013019-caf4-4bac-8d72-d54a735b25c6" class="" dir="auto">If we flip the color palette, it suddenly all looks like it&#x27;s meant to be like this.</p><p id="809a6d1d-c903-4e4a-931c-4334d238abf1" class="" dir="auto">It suddenly all looks a lot better right?</p><p id="10ca9d2f-1b91-4aad-a1de-54fb032bc58e" class="" dir="auto">It looks consistent with the actual message.</p><hr id="b1b28efa-f1ce-45dd-8379-d51e3bb0d22a" dir="auto"/><p id="77279d33-0722-476c-b863-127c8a067840" class="" dir="auto">So when you&#x27;re picking colors you have to be aware of the mood of your color palette.</p><figure id="d1b77dcc-f3a3-4e08-94dc-bdfa4d9c3bea" class="image" data-notion-image="Annotation_2023-05-14_201831.png" dir="ltr"><a href="Annotation_2023-05-14_201831.png"><img style="width:1366px" src="Annotation_2023-05-14_201831.png"/></a></figure><p id="5f3e4921-914e-4620-8072-5c6e1c1e27dd" class="" dir="auto">So the predominant color that is going to be in your design really tells a story and it conveys a message</p><p id="a716e381-7bef-4b2c-88d5-981b378cb643" class="" dir="auto">to the user.</p><hr id="dd3e8c00-b96b-453e-b035-d8ad23043a85" dir="auto"/><p id="a6304461-da4c-430a-a60a-2558033fdd69" class="" dir="auto">For example, Red conveys love, energy, intensity. Which is why you see a lot of car adverts which have a</p><p id="ec2bda80-be53-4a98-a8a6-7e8c026fac22" class="" dir="auto">red car on a red background.</p><figure id="a87420e7-67bf-48f9-99d5-ef2cafe8bab4" class="image" data-notion-image="Annotation_2023-05-14_203707.png" dir="ltr"><a href="Annotation_2023-05-14_203707.png"><img style="width:1366px" src="Annotation_2023-05-14_203707.png"/></a></figure><p id="a5099281-eba8-4a08-a3ce-c803736c2d44" class="" dir="auto">It&#x27;s because they&#x27;re trying to tell you,</p><p id="fec64629-9635-42a7-9f3b-986a0253430c" class="" dir="auto">&quot;Hey buy this car and you&#x27;ll feel energetic</p><p id="628a4651-f3df-40cb-9e42-69583565e1d3" class="" dir="auto">and the intensity of this car even if you&#x27;re 89.&quot; </p><hr id="37fc81e5-96ff-4872-967a-3ce505a74216" dir="auto"/><p id="de979496-3a4f-4684-ba8b-38c927aaac69" class="" dir="auto">Now yellow is more about joy, intellect, attention.</p><figure id="26287e0c-72cb-4fbb-9e71-637a0f1c907a" class="image" data-notion-image="Annotation_2023-05-14_202215.png" dir="ltr"><a href="Annotation_2023-05-14_202215.png"><img style="width:1366px" src="Annotation_2023-05-14_202215.png"/></a></figure><p id="d859dec3-1655-45b9-b8df-c3942102092b" class="" dir="auto">And the most important thing about yellow though is how attention grabbing it is because it&#x27;s almost</p><p id="44bb208a-6de4-49bf-9f11-437c3ec1f999" class="" dir="auto">impossible to not look at something that is very yellow.</p><p id="5c4fd0ad-ebab-4b59-93fe-d7e967e5c058" class="" dir="auto">For example this ad. Now a few years back</p><p id="f9970173-256d-46cc-9af5-a7df0aae80be" class="" dir="auto">this ad caused an uproar because it has this lady in a yellow bikini</p><p id="f275cf69-7029-4179-8e3f-d7603219e640" class="" dir="auto">and it says, &quot;Are you</p><p id="10713c78-23b0-43bb-9191-1690cf285059" class="" dir="auto">beach body ready?&quot;</p><p id="4668e808-6239-4d98-81d9-3fc9b8c0c976" class="" dir="auto">And a lot of people got really really upset about it.</p><p id="2dda1e83-6f98-4c24-a343-2c8b091e2afc" class="" dir="auto">They took to the Internet,</p><p id="b177a52a-a526-45d4-b3e6-02d47a44ccd7" class="" dir="auto">they raved about it.</p><p id="5d96932f-dd2b-4356-84e6-5741c2b162da" class="" dir="auto">And I remember thinking to myself at the time, &quot;You know, this is not so different from a lot of the other</p><p id="dbd90667-2d5e-4b0b-b19b-e625e9ccf8f6" class="" dir="auto">ads that are trying to tell women how to look.&quot;</p><p id="96663069-60fb-4e3d-8d87-c51f5a7c0eb0" class="" dir="auto">And it&#x27;s not a great message.</p><p id="ffe5df57-c52f-4c11-9917-eb4cdc7b03c1" class="" dir="auto">But why is it causing so much anger and causing so much attention drawn to it?</p><p id="dd9bc932-b596-4afe-ae8f-14cdc111019f" class="" dir="auto">And I think the reason is because it&#x27;s actually bright yellow.</p><p id="811aadb7-0c6e-4888-a0c8-8063cb82379f" class="" dir="auto">It&#x27;s impossible to ignore this advert when you come across it.</p><p id="0a8f2f8d-07e5-4979-bfe7-6166d9e44346" class="" dir="auto">So when you&#x27;re creating a logo or when you&#x27;re creating some sort of headline, then yeah yellow is a great</p><p id="29f19353-018b-4306-9822-f0d792006199" class="" dir="auto">choice. But when you&#x27;re creating something that&#x27;s designed to be looked at for a long period of time</p><p id="12bbbf7b-1f75-4ef3-8bb8-d28e280c20dd" class="" dir="auto">then yellow can be too attention grabbing. It might actually hurt your user&#x27;s eyes</p><p id="0ac3495f-4ba9-46e0-9e14-06a93ab0e3da" class="" dir="auto">if you tried to read a whole article that&#x27;s backgrounded in yellow.</p><hr id="db53c416-2f57-4103-946a-ee8e1e49ef5e" dir="auto"/><p id="78663dd8-bead-4114-b5c5-e4edb1c87362" class="" dir="auto">Now the next color that we&#x27;re going to talk about is green which is all about freshness, growth, safety.</p><figure id="2995f0b7-1ad2-4e35-ac88-459025042d8e" class="image" data-notion-image="Annotation_2023-05-14_202302.png" dir="ltr"><a href="Annotation_2023-05-14_202302.png"><img style="width:1366px" src="Annotation_2023-05-14_202302.png"/></a></figure><p id="1d448329-eed9-47ae-85ce-14bcb5dbda8b" class="" dir="auto">And that&#x27;s why you see a lot of grocery companies like Hello Fresh or Amazon groceries use this color</p><p id="a633033e-211f-44f7-96ac-5d0e23bd083d" class="" dir="auto">as their predominant color palette. Because it&#x27;s trying to tell you, &quot;Hey look! This thing is edible.</p><p id="ecaf364d-7afb-42f3-9864-405671d2413b" class="" dir="auto">This is what we&#x27;re selling.&quot;</p><p id="1499177c-6f45-4229-a968-28a51ce46b60" class="" dir="auto">And so if you have a company that has anything to do with food, this is usually a safe bet to go with.</p><hr id="4b4ecd9b-27ab-476d-bddd-b56c8893fc43" dir="auto"/><p id="44d25051-9e3a-4e1e-a4a4-b940ebd1fec4" class="" dir="auto">Now Blue is about stability, trust, serenity. And so you see a lot of companies which need to convey that</p><figure id="30dd1b4a-120f-451d-a14b-cfa90cc9f800" class="image" data-notion-image="Annotation_2023-05-14_202402.png" dir="ltr"><a href="Annotation_2023-05-14_202402.png"><img style="width:1366px" src="Annotation_2023-05-14_202402.png"/></a></figure><p id="93fbe8f2-0561-4b6d-bc08-762a82225c2f" class="" dir="auto">&quot;Hey, we&#x27;re really trustworthy&quot;</p><p id="51904aee-8d47-4815-a34c-9aefd5e3d6bf" class="" dir="auto">use this color. For example,</p><p id="fbb62272-fadb-425b-ae2d-fffd1d750ca4" class="" dir="auto">look at all the financial companies, look at companies like PayPal or the cryptocurrency companies like</p><p id="3bdadfe1-2180-4030-a406-45dd6cf2b21a" class="" dir="auto">Coin base. They all choose this color because they want you to know that they&#x27;re not going to run away</p><p id="66d22f4d-b2d0-4807-a956-48095368f3a5" class="" dir="auto">with your money.</p><p id="33123be6-86d5-4b81-acb0-37499815e15e" class="" dir="auto">In fact, there was a really interesting psychology study where they compared interviewees wearing different</p><p id="d72fbcec-dd54-4393-8e19-84dffc00d96d" class="" dir="auto">colored shirts.</p><p id="8784df26-1d19-4e88-843d-4925488cdcc0" class="" dir="auto">So for example, a group of them would wear a green shirt,</p><p id="b1905e67-8744-41e5-8fd9-ea3553cf3e33" class="" dir="auto">another group would wear a blue shirt and they compared how they were perceived by the interviewers.</p><p id="466de1e2-088f-45b8-8821-c097f0bf417f" class="" dir="auto">And it showed that just by changing the color of your shirt to a blue one you vastly increase the amount</p><p id="85902f75-f676-4ce5-8ea1-4a87891ec0b8" class="" dir="auto">of trust in you</p><p id="24676b94-d495-4ed2-b47f-475ae664a73d" class="" dir="auto">that&#x27;s given by other people.</p><p id="5e290386-91b6-4e5a-bd47-70d2ddcd41d6" class="" dir="auto">So have a think about that the next time you&#x27;re going for an interview.</p><hr id="d540ffd8-c7ea-47a3-910e-386689266bba" dir="auto"/><p id="5112d7cb-b551-4033-b814-f4d901ab2e7f" class="" dir="auto">Now the final color is purple and it&#x27;s meant to signify royalty, wealth, femininity. And strangely enough</p><figure id="9cea5154-41e4-450b-8e46-ab991b21f831" class="image" data-notion-image="Annotation_2023-05-14_202437.png" dir="ltr"><a href="Annotation_2023-05-14_202437.png"><img style="width:1366px" src="Annotation_2023-05-14_202437.png"/></a></figure><p id="9c04164a-2071-48ec-bf70-937304d4154a" class="" dir="auto">I&#x27;ve come across a number of payday loan companies which use this color palette especially ones which</p><p id="2cbcdce1-ba77-4895-ab66-993ba894061a" class="" dir="auto">are targeted at women.</p><p id="57293aa4-b3f5-49e8-9a67-677dbb0cf4a5" class="" dir="auto">So, the important thing to think about is that you&#x27;re making a conscious decision when you&#x27;re choosing</p><p id="4c600f3b-f9ff-4d4a-915f-a15856d7b1dc" class="" dir="auto">a color palette.</p><p id="7f5dc572-bc0f-4bf3-8c4b-566b51ac3733" class="" dir="auto">It&#x27;s not just whichever color you like or your favorite color. But it&#x27;s actually &#x27;what message am I trying</p><p id="39ed60e7-1fae-4115-979c-4dec80651cc2" class="" dir="auto">to convey to the user&#x27; and then picking an appropriate color. </p><hr id="f417e872-b9eb-46b6-90a2-6836e7d90451" dir="auto"/><p id="1ddf0e78-1164-4dd0-8e14-fa3cddc94761" class="" dir="auto">Now, usually you&#x27;re not just going to be</p><p id="9edd09d3-dfaf-4395-bba5-bdbcc41b33f3" class="" dir="auto">using a single color for your design. You&#x27;re probably going to be using two or three.</p><figure id="0bd63996-5326-4a9d-8d2a-e9925be4608a" class="image" data-notion-image="Annotation_2023-05-14_202512.png" dir="ltr"><a href="Annotation_2023-05-14_202512.png"><img style="width:1366px" src="Annotation_2023-05-14_202512.png"/></a></figure><p id="e2e844c4-8651-4406-b875-73a474e3f1f9" class="" dir="auto">So at some point you have to think about which different colors to combine.</p><p id="f5f18e0b-4135-443c-8689-1169e7d1350d" class="" dir="auto">And this is probably the most scientific part of color theory.</p><p id="2ecc2d83-fb45-4381-87fe-b30070450b38" class="" dir="auto">Now very often, designers will rely on scientific ways of combining colors. For example taking two colors</p><p id="c1697682-18a4-4929-be84-7a14069d0c24" class="" dir="auto">that are right next to each other on the color wheel.</p><p id="a175e953-84a1-4f04-9cec-bebdd3b970b3" class="" dir="auto">And this way you create what&#x27;s called an analogous color palette.</p><figure id="fd13ef6a-250a-4348-8211-19f3d15dc3b1" class="image" data-notion-image="Annotation_2023-05-14_202601.png" dir="ltr"><a href="Annotation_2023-05-14_202601.png"><img style="width:1366px" src="Annotation_2023-05-14_202601.png"/></a></figure><p id="757811b1-92e4-4ada-a72d-0936675339aa" class="" dir="auto">And these designs look incredibly harmonious and they really work well together.</p><p id="3a5c91e7-9ba1-4281-bd47-97f1de49cdb6" class="" dir="auto">So this color palette can be really good for things like navigation bars and the body of your website</p><p id="ac5479fa-02b8-4f04-b080-c3f18bf8fbce" class="" dir="auto">or things like a logo and it&#x27;s background.</p><hr id="bb1b8ebf-4151-4828-83c9-d519cd5f6a6f" dir="auto"/><p id="03d828d6-4ad4-41e9-ae2f-0a8838d21a5d" class="" dir="auto">Now, what it&#x27;s not so good at though is standing out. If you really want your design to pop, you&#x27;re better</p><p id="979f0e7b-f249-4725-8e0c-e52d1bf12960" class="" dir="auto">off taking two colors from opposite ends of the color wheel creating what&#x27;s called a complementary color</p><p id="c1eda457-fac2-4e18-bd4c-70332ce5a223" class="" dir="auto">palette or a clashing palette.</p><figure id="7a067b62-b3c9-4267-92c2-e7ed9bc16a27" class="image" data-notion-image="Annotation_2023-05-14_204443.png" dir="ltr"><a href="Annotation_2023-05-14_204443.png"><img style="width:1366px" src="Annotation_2023-05-14_204443.png"/></a></figure><p id="e6de2fb6-cb92-4dbb-bd2c-5b654fc90517" class="" dir="auto">Now this complementary color palette really creates that pop.</p><p id="3abd2989-e538-446f-8903-b62cf6322da3" class="" dir="auto">And it really brings out each of the colors.</p><p id="25dc7967-7b86-488e-9e31-3e00ae8e2dda" class="" dir="auto">So the next time you go to a supermarket, I want you to take a look at the meat aisle and see if they&#x27;ve</p><p id="f399d719-1bb3-4b35-a4d1-c7357c13a86c" class="" dir="auto">used this complementary color palette to make things pop.</p><figure id="739157c3-e215-4075-a207-f4b724802643" class="image" data-notion-image="Annotation_2023-05-14_204530.png" dir="ltr"><a href="Annotation_2023-05-14_204530.png"><img style="width:1366px" src="Annotation_2023-05-14_204530.png"/></a></figure><p id="1453ab77-5b08-4678-8f87-4367ed5c9631" class="" dir="auto">So, one of the things that you often see is they&#x27;ll take these fake plastic bits of greenery like fake</p><p id="dc01dbbe-7acd-47cd-a515-13935626c413" class="" dir="auto">grass or fake bushes and they&#x27;ll put it in between the meat. And because the green and the red are complementary</p><p id="68fb92a9-b243-45b0-ba6d-c3a02a4d56b8" class="" dir="auto">colors it makes the red meat pop out a lot more and gives you this idea of freshness</p><p id="0320b06a-4ae3-42f9-920b-a349b54e9dcc" class="" dir="auto">even if it&#x27;s a little bit past the best dates. </p><hr id="b31169cc-812a-4107-868f-ffa068546631" dir="auto"/><p id="8e35cd0c-5ea2-4d09-b2c0-4ecb2f41d8b6" class="" dir="auto">But what you shouldn&#x27;t do with clashing colors or complementary</p><figure id="09684bf9-20b5-4556-98b9-62c447e23e90" class="image" data-notion-image="Annotation_2023-05-14_202731.png" dir="ltr"><a href="Annotation_2023-05-14_202731.png"><img style="width:1366px" src="Annotation_2023-05-14_202731.png"/></a></figure><p id="bbe8866b-c784-456e-a05a-4f428b36a51d" class="" dir="auto">colors is to try to style text and text background with it because it actually looks very very jarring</p><p id="b4837ba6-43b4-4b78-a423-faaa59bc999e" class="" dir="auto">and you can feel your eyes sort of getting a little bit fuzzy</p><p id="cafddd18-d613-48fb-90f0-bd7d90ae9175" class="" dir="auto">looking at this particular combination. So don&#x27;t do this when it concerns text.</p><p id="37879182-839f-4aeb-93c5-2b8d11980394" class="" dir="auto">Instead, keep it to things like logos or icons or things that you really really want to stand out from</p><p id="6465ad56-0b20-45be-a17d-f46722fd679f" class="" dir="auto">each other.</p><hr id="49a272a6-7c6c-4fdb-ab68-a1dabe81a175" dir="auto"/><p id="21acb9a1-1f32-4a2e-b552-4740c979bbd3" class="" dir="auto">Now, there&#x27;s a lot of other ways that you can combine colors like drawing an equilateral triangle to</p><p id="0c4d5ff5-a9c8-45ff-8a02-fc2feda4864a" class="" dir="auto">create a triadic color palette or drawing a perfect square.</p><figure id="87335c53-fcd1-41bf-a749-408baa9b1066" class="image" data-notion-image="Annotation_2023-05-14_202812.png" dir="ltr"><a href="Annotation_2023-05-14_202812.png"><img style="width:1366px" src="Annotation_2023-05-14_202812.png"/></a></figure><hr id="f1095fc6-c6a0-4737-9fc8-5fb46f2c4070" dir="auto"/><p id="90963c03-a126-485c-981f-3cf827ab1b6a" class="" dir="auto">Now if you want to, you can head over to a website called Adobe color which lets you mess around with</p><p id="8a4a1dba-c7cc-4faa-acaa-3c5ad1bbd233" class="" dir="auto">all of these different color combinations. So select a triadic color palette or a square color palette</p><p id="55930e6f-0b43-42a4-9189-336fa7237ea0" class="" dir="auto">and then drag it around the color wheel so that you get different combinations of colors.</p><p id="f2aa064b-e325-4f96-a8be-5b6c4d2141e2" class="" dir="auto">And once you come across a palette that fits the mood of your project, then you can pick the hex codes</p><p id="b0a1472d-f52b-4c50-b9a8-a7c9e32828f7" class="" dir="auto">and just put them straight into your website.</p><figure id="b11460bb-56b0-490a-9d5d-241b5393a81c" dir="ltr"><a href="https://color.adobe.com/create/color-wheel" class="block-color-gray_background bookmark source" data-notion-highlight="gray_background"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href"><img src="https://color.adobe.com/apple-touch-icon.png" class="icon bookmark-icon"/>https://color.adobe.com/create/color-wheel</div></div></a></figure><p id="ad8747bd-60ce-4f10-ae98-61accff074fc" class="" dir="auto">Now if all of that sounds like it was a little bit too much work ,then I got you covered.</p><hr id="18fb143f-d670-4cd7-89c4-dc6bdfaac671" dir="auto"/><p id="cd1926c0-b96a-426a-8547-cc724d816848" class="" dir="auto">You can also use a website called colorhunt.co.</p><figure id="0d95f0bf-2977-4b23-b92a-65d725061395" dir="ltr"><div class="source"><a href="https://colorhunt.co/">https://colorhunt.co/</a></div></figure><p id="8c2b4b70-6b60-43fb-8164-856597d2042c" class="" dir="auto">This is a website where professional designers have curated some of their favorite color palettes</p><p id="f3ba84e3-c314-4c58-8a2b-f65cc0e71202" class="" dir="auto">and you can nab the hex codes straight off the website.</p><p id="b64ed5fa-9f98-4e87-bcd9-38957ddc6e2b" class="" dir="auto">So take a look at the hot and popular sections of this website and use it to guide the pilot scheme</p><p id="4ed4e9db-5845-423f-8031-24680bd96053" class="" dir="auto">for your next project.</p><hr id="58718da7-a623-434a-b9a5-209b35632d08" dir="auto"/><p id="9bf0226b-a64b-487a-925a-c0375135affb" class="" dir="auto">Now when you create a website that has a beautiful consistent color scheme like the one for the LIEBE</p><p id="be68bf05-535e-4965-acc5-5f0ca6e51eb0" class="" dir="auto">yogurt, you can see how much it makes the design stand out and it becomes really colorful and really</p><figure id="8733dc43-0b47-45c0-b6f5-21f1ef4cfbdc" class="image" data-notion-image="Annotation_2023-05-14_203007.png" dir="ltr"><a href="Annotation_2023-05-14_203007.png"><img style="width:1366px" src="Annotation_2023-05-14_203007.png"/></a></figure><p id="bccfff9a-0dfe-472e-b1f3-1b5df9348a93" class="" dir="auto">playful and you can convey different messages using your choice of colors and your color scheme.</p><p id="bcb4edce-1dd6-4aef-b36b-038a6fc0b130" class="" dir="auto">So think about your color choice and your color palette</p><p id="b5796892-2dc4-4de4-b5eb-49a0dc5c96f1" class="" dir="auto">the next time you design your website to make sure that it is consistent with what your brand is about</p><p id="2db0878c-a39e-4396-a66b-d8ec57eba811" class="" dir="auto">and what your product is about and it conveys the message you want to convey.</p><hr id="51e02e9c-9af5-46c7-91cd-e04099deb7a5" dir="auto"/></div></details><details id="d8b4081c-39b2-42c6-81d8-6989b3e02198" open="" class="toggle" dir="auto"><summary>Understanding Typography and How to Choose a Font</summary><div class="indented"><p id="82ac5976-622e-4338-ba40-f52896bb89f5" class="" dir="auto">The next topic I want to talk about is typography.</p><figure id="2c3ee703-4616-4cf7-b423-277547c8655e" class="image" data-notion-image="Annotation_2023-05-15_062849.png" dir="ltr"><a href="Annotation_2023-05-15_062849.png"><img style="width:1366px" src="Annotation_2023-05-15_062849.png"/></a></figure><p id="b5741f27-f3a7-4878-8998-a54366aa159b" class="" dir="auto">Now, I know a lot of students always say to me</p><p id="4e984c09-1a93-414f-9c24-0f3b297c28e1" class="" dir="auto">&quot;But why do I need to learn about typography?</p><p id="3dacaf11-f7fb-42f8-b48c-af7644136b4a" class="" dir="auto">I just open up Word, click the dropdown,</p><p id="55188159-cd3e-4909-863a-e96da6d3a407" class="" dir="auto">find Times New Roman,</p><p id="0c19744c-f096-478f-8204-00911bd9c863" class="" dir="auto">my favorite font.</p><figure id="62f87c63-1e88-4be5-a3cb-11f8f25ac6b8" class="image" data-notion-image="Annotation_2023-05-15_063018.png" dir="ltr"><a href="Annotation_2023-05-15_063018.png"><img style="width:1366px" src="Annotation_2023-05-15_063018.png"/></a></figure><p id="988e9a40-bb99-420a-86f6-e6d570f2bf04" class="" dir="auto">And then just put that on everything. It&#x27;s done right?&quot;</p><hr id="fd2283e6-ca46-4ed9-9bc8-7bf33b84bf94" dir="auto"/><p id="62b12519-e3e0-49ed-9574-086c893adde5" class="" dir="auto">Well let&#x27;s think about this.</p><p id="28b502d1-d29e-4289-a1c7-b22721933f2a" class="" dir="auto">Well let&#x27;s say it&#x27;s Valentine&#x27;s Day and you decide that you want to write a letter to your beloved Valentine</p><p id="5ce0f8f9-b2f4-4ede-877f-465915117e15" class="" dir="auto">and you change the font to something cursive like this.</p><figure id="097e1c0a-0971-4589-968b-face890a93f9" class="image" data-notion-image="Annotation_2023-05-15_063158.png" dir="ltr"><a href="Annotation_2023-05-15_063158.png"><img style="width:1366px" src="Annotation_2023-05-15_063158.png"/></a></figure><p id="926fc5e3-bbe3-46d6-a51e-ff38f8c9101b" class="" dir="auto">&quot;You&#x27;ll always be mine.&quot;</p><p id="550df1fe-7c78-4e7a-94d1-61c03d77b9db" class="" dir="auto">I don&#x27;t know if she or he will be</p><p id="692c1b72-3712-4d4f-a454-6c4fdf6adb24" class="" dir="auto">but you have a good chance.</p><p id="18647b2a-78bb-4435-8ed2-fb6879b8da81" class="" dir="auto">Now let&#x27;s say that you chose the wrong font.</p><p id="54ee6bab-ec27-48d6-affb-310d84418a7e" class="" dir="auto">That&#x27;s a bit of a problem.</p><p id="c627a4b1-8782-491d-b05a-99e31c5965e8" class="" dir="auto">Not only do I not think your Valentine is going to take very kindly to this,</p><p id="e4f824a8-417a-4077-b790-41af6534ee58" class="" dir="auto">you might also have the police on your back which is a bit of a problem.</p><hr id="b4427334-d306-463c-9878-efd93b36703f" dir="auto"/><p id="b8dcd7fa-53e6-4df3-9c23-2dbcd8eaa7ab" class="" dir="auto">So fonts really do matter and it&#x27;s important to consider not only their mood but also how to combine</p><p id="e61bb606-bf6e-49e6-b4ee-92ec82cfc657" class="" dir="auto">different fonts.</p><p id="c503637e-af79-453c-8353-bace8d43f0af" class="" dir="auto">And it&#x27;s a really really easy way to make your designs look very professional and really slick. Out of</p><p id="ee01bd6e-185e-464c-b902-805cdbef5944" class="" dir="auto">all of the fonts in the world</p><p id="c4bc257c-714c-4485-96cd-f4d2c2cec0ca" class="" dir="auto">there&#x27;s pretty much two large families that you should really know about.</p><figure id="ee8ef528-7c3e-44c1-8236-b4e018459903" class="image" data-notion-image="Annotation_2023-05-15_063521.png" dir="ltr"><a href="Annotation_2023-05-15_063521.png"><img style="width:1366px" src="Annotation_2023-05-15_063521.png"/></a></figure><p id="279eec1d-834f-4180-8cd3-0b7b6f84ed5e" class="" dir="auto">One is the Serif family where they have these little feet at the end of their central beams.</p><p id="2787d925-9261-413a-8052-89ceec314acf" class="" dir="auto">And the reason why they have these old feet is because the Serif typeface were inspired by the marble</p><p id="9810834a-1861-4c4a-a32e-84a82317a235" class="" dir="auto">carvings of days of yore.</p><p id="41ba0da3-90dd-4ccd-bd22-1ed07e3f68c0" class="" dir="auto">So if you next go out and you take a look at the buildings around you especially if you&#x27;re in a historical</p><p id="adf859e3-c7d7-4070-8686-38d3e45d7acb" class="" dir="auto">area, take a look at places where they&#x27;ve carved into stone or marble and you&#x27;ll notice that they also</p><p id="c24d621f-61fe-423a-b061-612a897e416c" class="" dir="auto">have these little feet at the end of the central beams.</p><figure id="a5ab4589-dc83-422c-baa3-39907573ffde" class="image" data-notion-image="Annotation_2023-05-15_072255.png" dir="ltr"><a href="Annotation_2023-05-15_072255.png"><img style="width:1366px" src="Annotation_2023-05-15_072255.png"/></a></figure><p id="723da6bd-4139-4ed0-9cce-ba6b7bdd7c88" class="" dir="auto">So why is that?</p><p id="c95f09b4-314e-41d2-a140-3e02dad0e88a" class="" dir="auto">I don&#x27;t know how many of you carved marble in your spare time but if you did you would know that once</p><p id="a7d54040-58c7-49dd-9cbd-7a6cad0ee504" class="" dir="auto">you chisel has gone into the Rock and you need to exit your engraving it&#x27;s actually not possible to</p><p id="ab75146d-d8ff-4a0a-af1e-37e45087dffb" class="" dir="auto">create 90 degree angles when you&#x27;re carving into rock.</p><p id="e958ae68-0d0f-47df-a704-fc4c7a5b678b" class="" dir="auto">So this is where the Serif typeface gets their inspiration from.</p><p id="46b3e203-4b48-4f69-9d33-7c55bd62e126" class="" dir="auto">And this is also the reason why when you&#x27;re choosing a Serif typeface you&#x27;re making your design look</p><p id="07c686a4-0e82-48e1-812b-60ec7e05446a" class="" dir="auto">more serious, more authoritative and also a little bit older as well.</p><p id="d19046f6-dce6-4ca6-9c47-c39cb22c4cf2" class="" dir="auto">So it&#x27;s really good if you&#x27;re designing something like a letterhead for a legal company or a magazine</p><p id="0ce6a653-50ef-4b61-b4d0-75280fa897e7" class="" dir="auto">for architectural design.</p><hr id="0ef1fe16-4247-48d8-ac69-b16db8550bae" dir="auto"/><p id="d6b6de34-a0a8-4af7-9d85-fc81882f773d" class="" dir="auto">But when we take a look at the big family of Serif typefaces</p><p id="b53527f3-8fc5-4304-a1cb-a845d70802ca" class="" dir="auto">they&#x27;re actually further subdivided into smaller sub families like Old style, Transitional, Modern and</p><p id="534264e7-2673-4829-9483-6411e038b1fe" class="" dir="auto">Slab-Serif.</p><figure id="095fb32b-fb18-4ce5-a88d-520744aa858a" class="image" data-notion-image="Annotation_2023-05-15_064014.png" dir="ltr"><a href="Annotation_2023-05-15_064014.png"><img style="width:1366px" src="Annotation_2023-05-15_064014.png"/></a></figure><p id="97fea392-e91e-46b9-9283-5a6eb2353709" class="" dir="auto">Now the really interesting thing is you can actually tell how old a typeface would look by looking at</p><p id="5be4e902-0098-4097-8859-636d8ce077a8" class="" dir="auto">the difference between the thickest and the thinnest parts of each letter.</p><figure id="6beb26c3-80b2-42a6-b0b2-d9c9359b19cb" class="image" data-notion-image="Annotation_2023-05-15_064130.png" dir="ltr"><a href="Annotation_2023-05-15_064130.png"><img style="width:1366px" src="Annotation_2023-05-15_064130.png"/></a></figure><figure id="d0d4a3b6-a4b5-4c05-b47e-ec19a22cabfe" class="image" data-notion-image="Annotation_2023-05-15_064229.png" dir="ltr"><a href="Annotation_2023-05-15_064229.png"><img style="width:1366px" src="Annotation_2023-05-15_064229.png"/></a></figure><p id="c85592d1-bb36-4883-b137-a58c5c4e08d1" class="" dir="auto">So compare the Old Style &#x27;o&#x27; versus the Transitional</p><p id="e825631d-39f3-41db-a119-215fa7a045b7" class="" dir="auto">&#x27;o&#x27; versus the modern</p><p id="0213684b-4f1f-47e3-a44d-c8cd1610d260" class="" dir="auto">&#x27;o&#x27;. And look at how that difference between the thickest part of the letter and the thinnest part gets</p><p id="8825af6f-4cb1-47df-8dde-ce876db8724f" class="" dir="auto">more and more exaggerated as you get towards a more modern font.</p><p id="15b5d09f-65be-48e3-946b-96c2c95a7650" class="" dir="auto">So if you want something that looks authoritative but modern then maybe you want to go for a modern</p><p id="ee7cb670-c6aa-4d12-a4b6-30841b1e47cc" class="" dir="auto">Serif typeface like Didot. But if you want it to come across as a little bit older, a little bit more aged</p><p id="42af786e-4a15-4870-8216-785740f48f38" class="" dir="auto">maybe you have a winery, maybe you want to go for an Old Style Serif instead.</p><hr id="5b7b8045-a533-4a86-80a8-91ec45f3555d" dir="auto"/><p id="6e198685-dc41-48f1-bac6-252460147311" class="" dir="auto">Now just as different colors have different moods and emotions, different fonts also have different moods</p><p id="648bc03a-df96-4b9d-9e47-60b86179267d" class="" dir="auto">and they also convey a different message to a user depending on which one you choose.</p><figure id="691b09c8-ab97-4f85-8677-6a53873983a6" class="image" data-notion-image="Annotation_2023-05-15_064548.png" dir="ltr"><a href="Annotation_2023-05-15_064548.png"><img style="width:1366px" src="Annotation_2023-05-15_064548.png"/></a></figure><p id="35797055-b372-4cec-a973-2e7b26b04f93" class="" dir="auto">So the Serif family generally come across as traditional, stable, respectable, authoritative.</p><p id="cdf84157-7650-4b5e-b9ad-1cbb0c9fffa4" class="" dir="auto">These are the words that get thrown around by designers when they&#x27;re thinking about the Serif typeface.</p><hr id="828c91ad-ef2a-4141-8515-a7a4a76ee9f9" dir="auto"/><p id="b0e2476e-9f9c-454b-8e6b-e0ce0ee12a34" class="" dir="auto">So for example, the next time you go to a magazine rack pick up the Vogue magazine.</p><figure id="6bef9612-6c55-4b73-8c7b-5b8804d8fd37" class="image" data-notion-image="Annotation_2023-05-15_064730.png" dir="ltr"><a href="Annotation_2023-05-15_064730.png"><img style="width:1366px" src="Annotation_2023-05-15_064730.png"/></a></figure><p id="62f9b47c-2987-4dc4-a19f-b3537e441159" class="" dir="auto">Take a look at their title and see how it&#x27;s a modern Serif typeface.</p><p id="8f6217fc-6332-4d79-8914-81ecdbd12cea" class="" dir="auto">It&#x27;s got hugely exaggerated difference between the thick and thin parts of the lettering and it looks</p><p id="e2a75a98-9bab-4904-a448-70f081223988" class="" dir="auto">authoritative and it knows what it is talking about.</p><hr id="50824c6b-1f4d-4ae4-82e9-101e1e54fd95" dir="auto"/><p id="807e4db3-b112-45ea-a583-378e99f11219" class="" dir="auto">Now on the other hand, if we think about the San-Serifs, they&#x27;re kind of a different family because instead</p><p id="c9313270-90d1-4b09-a508-4fda422ccc60" class="" dir="auto">of having the Serifs or the little feet at the end the central beams, they have perfect right angles.</p><figure id="fc5407bd-f4ff-471e-ab4c-167c485480dc" class="image" data-notion-image="Annotation_2023-05-15_064900.png" dir="ltr"><a href="Annotation_2023-05-15_064900.png"><img style="width:1366px" src="Annotation_2023-05-15_064900.png"/></a></figure><p id="41215b6b-a283-46cb-be95-bfbc9c6b3d52" class="" dir="auto">And it&#x27;s this right angle that makes the San-Serif family look so much more friendly, more approachable,</p><p id="3250d604-130e-4d95-a50c-5398695e0911" class="" dir="auto">more novel and more contemporary.</p><p id="66344fe8-d8a7-41a0-bea9-934adf5bda80" class="" dir="auto">So for example, you will tend to get words like sensible, simple, straightforward. And this is why a lot</p><p id="45dabfe8-aced-4f10-b813-f067b428cffc" class="" dir="auto">of startups love using the San-Serif typeface in their websites.</p><figure id="15f45861-a2ea-45be-b5aa-f8da6a53d79c" class="image" data-notion-image="Annotation_2023-05-15_065013.png" dir="ltr"><a href="Annotation_2023-05-15_065013.png"><img style="width:1366px" src="Annotation_2023-05-15_065013.png"/></a></figure><p id="f8800aa1-5a54-4219-96a2-8ad8f0727da6" class="" dir="auto">For example, a Humanist typeface which is a subfamily of the San-Serifs. It&#x27;s something that is known</p><figure id="6f5b38e7-13f7-4fcf-a3b9-07e7ea2627c3" class="image" data-notion-image="Annotation_2023-05-15_065119.png" dir="ltr"><a href="Annotation_2023-05-15_065119.png"><img style="width:1366px" src="Annotation_2023-05-15_065119.png"/></a></figure><p id="ad6f2dda-e108-4d79-8643-269b9e70b70b" class="" dir="auto">as a highly readable typeface. And in fact, even within the Serifs and the San-Serifs, you will tend to</p><p id="3e62a02c-18b0-4fb7-b064-23e0c53c3135" class="" dir="auto">see designers going for the San-Serifs if they want to write body text which needs to be more legible</p><p id="d7926901-a095-4dc2-b209-73ed5014d59f" class="" dir="auto">and more readable.</p><hr id="acbf42df-17c3-4a27-9ecc-cff85681f488" dir="auto"/><p id="c0da2dc6-e883-4c9a-a1e0-f595e48bcf41" class="" dir="auto">Now within this sub family, there&#x27;s even differences in terms of legibility and readability.</p><figure id="59f54d39-ef68-4b67-bbc2-9fafd27332c0" class="image" data-notion-image="Annotation_2023-05-15_070428.png" dir="ltr"><a href="Annotation_2023-05-15_070428.png"><img style="width:1366px" src="Annotation_2023-05-15_070428.png"/></a></figure><p id="6552c380-325d-4765-ae59-81abbcfda32d" class="" dir="auto">So how easy are the words to read and how pleasant is it to read the letters.</p><p id="59b967de-fe08-43ba-b842-9a8ee97a4827" class="" dir="auto">There was a really interesting study done by MIT a few years back where they took two groups of users,</p><p id="a3b24288-a02e-42de-982c-07694df6e8c3" class="" dir="auto">one they put them into a car which had a dashboard made of a Humanist typeface and the other car had</p><p id="371cef53-6943-4930-be9d-905a5846e62e" class="" dir="auto">a dashboard which had a Grotesque San-Serif typeface. And what they did is they tracked the pupils of</p><p id="51f48935-47b6-4aaf-903d-54c90c6fdb35" class="" dir="auto">the people who were driving the cars and they tested how long each driver needed to look down at the</p><p id="60e75376-aec3-417d-8086-b9382a85fc3f" class="" dir="auto">dashboard before they got enough information from the speedometer or the odometer and before they could</p><p id="3d9dbef1-212f-4074-934a-624b46de5cea" class="" dir="auto">come back and look at the road again. And really surprisingly they found that just by changing the font</p><p id="0a423514-c304-4c18-a388-82e366dc2815" class="" dir="auto">from a Grotesque San-Serif to a Humanist San-Serif, they could save the drivers somewhere around</p><p id="7f34aa9f-0fd6-469f-a9e8-55a300b71a37" class="" dir="auto">30 to 40 percent of the time that&#x27;s required to understand the information.</p><p id="87f6bc13-0248-4b8b-8b0c-adb5784568c8" class="" dir="auto">So imagine that car is on a freeway that&#x27;s driving at 60 miles, 100 miles an hour.</p><p id="659cb267-138a-4a80-bff1-a2b73f13dadb" class="" dir="auto">That difference in the amount of time the user needs to look down at the dashboard could be the difference</p><p id="092a5a44-fde9-41e1-ab90-ae054464b0ae" class="" dir="auto">between life and death.</p><p id="95ecdfbe-4c28-4cc2-ae45-f9489faaed36" class="" dir="auto">And as designers, we rarely get to make that kind of difference in the world right?</p><hr id="61af1046-3982-4a32-8a0f-a3556caede39" dir="auto"/><p id="3b4358a4-fae2-433f-8823-efd347c43ca4" class="" dir="auto">So knowing that the Humanist typeface, all of the fonts that belong in that category like Gill Sans,</p><p id="a2c43d8f-5262-4ac6-a761-d5b83b547521" class="" dir="auto">Tahoma, Verdana, these are highly readable and highly legible fonts which you can use in the body types</p><p id="5acafb03-d8f4-4752-9985-12a673c99006" class="" dir="auto">for example of your sales pitch.</p><p id="46725e59-c85d-487b-aa4e-1c8e5ffe6695" class="" dir="auto">Now, even though we&#x27;re not saving lives with our sales pitches,</p><p id="dd3d1a0c-9720-4212-8279-213ad9405ce6" class="" dir="auto">if you manage to get the user to read through more of your sales copy then they&#x27;re probably going to</p><p id="6a9cc45f-e03c-4ea2-b656-dcc7233785f1" class="" dir="auto">be more convinced and more likely to buy your product</p><p id="f0ad76c7-37f9-4870-b595-827500a7ea38" class="" dir="auto">right?</p><p id="6480e164-a0b7-4b90-8d2d-48f012ab06e8" class="" dir="auto">So readability and legibility when you&#x27;re choosing fonts is incredibly important. And the things that</p><figure id="257078e4-8684-4461-b5a2-bb93a604bc2a" class="image" data-notion-image="Annotation_2023-05-15_070722.png" dir="ltr"><a href="Annotation_2023-05-15_070722.png"><img style="width:1366px" src="Annotation_2023-05-15_070722.png"/></a></figure><p id="48feab31-6637-42ab-99b9-0e1245985181" class="" dir="auto">you&#x27;re looking for in the letters when you&#x27;re looking for legibility are open shapes and a lot of space</p><p id="c5b63cae-0711-49b3-bb19-2e1375599e0b" class="" dir="auto">between each of the letters and also the forms look unambiguous so they look different</p><p id="05d419b3-551f-40ce-8b4f-ef3cdef2989d" class="" dir="auto">for example here the &#x27;g&#x27; and the 9 actually look different on the second line. And finally, varying proportions.</p><p id="7bac9def-d2d2-4d8e-9472-73f71f338885" class="" dir="auto">So having an &#x27;O&#x27; that&#x27;s very wide and a &#x27;0&#x27; that&#x27;s a bit more narrow so you can actually tell the difference</p><p id="27874e6c-20aa-4364-8207-80072618ba2b" class="" dir="auto">between the two.</p><hr id="d064ea35-676f-4cfb-ba9f-690db1c3018e" dir="auto"/><p id="154b9407-9e7b-44b1-b702-93f81be16ad8" class="" dir="auto">Now while we&#x27;ve talked about using fonts it&#x27;s often that you see people go a bit overboard where they</p><p id="3cbfb0b9-0afd-42e0-b852-043a0c77a8e7" class="" dir="auto">choose 10 fonts in the same design. And that makes your design look very cluttered and very unprofessional.</p><figure id="839c7e63-9d6b-4306-a2a1-9e833363d4a8" class="image" data-notion-image="Annotation_2023-05-15_070856.png" dir="ltr"><a href="Annotation_2023-05-15_070856.png"><img style="width:1366px" src="Annotation_2023-05-15_070856.png"/></a></figure><p id="d1ee6d2a-7987-4cb8-8b8b-54894107fbe0" class="" dir="auto">I recommend actually sticking to just two fonts in one design.</p><p id="d168311a-fa7e-4d68-be39-3ce95b1f8c13" class="" dir="auto">So if you&#x27;re making a poster keeping that to two fonts. If you&#x27;re making a section of your website keeping</p><p id="eb45ee2e-a359-47dd-9948-e990fa068378" class="" dir="auto">then again to two fonts. It just looks a lot cleaner and a lot tighter.</p><hr id="482791db-1d48-4e52-8b9f-a87df6ab94d0" dir="auto"/><p id="7abf2ae1-3eb4-42a0-adb6-989c1454e053" class="" dir="auto">And when you&#x27;re combining these two different fonts you want to try to go for similar moods. So find</p><p id="e55ddb42-196a-4a03-b929-a364d4d56a89" class="" dir="auto">fonts that have a similar mood to each other and also a similar time era.</p><figure id="c70bf937-c8a3-4b61-ae63-f82d008ff32b" class="image" data-notion-image="Annotation_2023-05-15_071045.png" dir="ltr"><a href="Annotation_2023-05-15_071045.png"><img style="width:1366px" src="Annotation_2023-05-15_071045.png"/></a></figure><p id="7f47b23f-01d5-47e4-8ff0-fa5ac8b73daa" class="" dir="auto">You don&#x27;t want something that looks ultramodern with something that looks like it&#x27;s from the days of</p><p id="7510b824-eee6-4048-8f85-5e7d8d973676" class="" dir="auto">yore combined together. It looks a little bit weird.</p><p id="f699a303-2740-416b-b20d-e4d26fbb07c3" class="" dir="auto">Now the things you want to contrast are the serif-ness.</p><p id="703dcb28-cfbb-430d-8b16-499523ee8f15" class="" dir="auto">So for example you on the heading to be a Serif and the body to be a San-Serif or the opposite way</p><p id="983b8d61-ab03-463d-85ba-84c52f376529" class="" dir="auto">round. It just creates more interest in your design.</p><p id="b343073f-8244-4cfd-9c71-91f0e5f4494a" class="" dir="auto">And similarly, you can also create interest by just changing up the weights between the heading and the</p><p id="d0fa03ee-2bc4-43b3-b4c3-40fb499a0145" class="" dir="auto">body. So making the heading really really bold or even using a black typeface and making the body text</p><p id="c874efb4-7f56-4553-9a50-727050e11322" class="" dir="auto">using something like thin or regular or light. These different weights can create contrast in your design.</p><hr id="a1ed2ff7-c119-4394-85cd-ac1a4f65941e" dir="auto"/><p id="010f5d5a-923d-456e-83b6-5338d5b06d90" class="" dir="auto">Now if you don&#x27;t remember anything from this talk on typefaces, I just want you to look at these six</p><figure id="bc31e7e1-7423-46f0-8dbd-e7de1838b5b4" class="image" data-notion-image="Annotation_2023-05-15_071247.png" dir="ltr"><a href="Annotation_2023-05-15_071247.png"><img style="width:1366px" src="Annotation_2023-05-15_071247.png"/></a></figure><p id="65e8836d-a564-4311-9dfc-e1bd3419f5f9" class="" dir="auto">fonts and try to wipe them from your memory because it is very very difficult to make these designs</p><p id="1d301d25-2b36-44e7-85a6-3181860e26b9" class="" dir="auto">look good unless I guess if you&#x27;re running a lemonade stand.</p><figure id="c7021aed-fe3d-4f0f-adde-961217ba8dd4" class="image" data-notion-image="Annotation_2023-05-15_071623.png" dir="ltr"><a href="Annotation_2023-05-15_071623.png"><img style="width:1366px" src="Annotation_2023-05-15_071623.png"/></a></figure><p id="b3ec29c3-a267-4a7e-bf37-546ae6d8f640" class="" dir="auto">But if you want to look professional, if you want to look designs, try to use one of the other fonts that</p><p id="3ac309cb-d991-441b-a89a-ac02fee8dbbf" class="" dir="auto">we&#x27;ve talked about and try to ignore these ones which are difficult to read and have moods that are</p><p id="d5305fa5-e2f3-4aae-ad26-16ca79fc40ba" class="" dir="auto">difficult to fit in in a professional setting.</p><p id="18fa185f-d51c-41a5-8d88-a9625b9c30e6" class="" dir="auto">The next time you&#x27;re designing a website think about what typefaces you&#x27;re going to choose.</p><p id="91836e05-640d-4592-8ffd-641e7de4bc22" class="" dir="auto">Think about what you&#x27;re trying to convey with those typefaces and then pick a font from the San-Serif</p><p id="b9e3d1d8-094d-47ce-a62b-a9ee41a67e91" class="" dir="auto">or the Serif family and maybe try to combine them</p><p id="4356d0ab-3c30-452e-9990-0f8e5c9ac7ac" class="" dir="auto">so you have a heading that&#x27;s a San-Serif and a body that&#x27;s a Serif and try to create contrast in your</p><p id="0faf5989-2657-4399-a0ac-372190d96fe6" class="" dir="auto">designs.</p><p id="3af32400-aaec-4a3f-8510-c14ed6ebfe4d" class="" dir="auto">So keep this in mind and hopefully they&#x27;ll make your designs a lot more interesting and a lot more professional.</p><hr id="4c2c7174-a563-461c-a439-2bdd8755b0e9" dir="auto"/></div></details><details id="1ff504f1-6393-442d-8168-44ee5b5e5747" open="" class="toggle" dir="auto"><summary>Manage ATTENTION with effective User Interface (UI) Design</summary><div class="indented"><h3 id="1dd31d1b-1845-4290-bd2c-ea77c50b6b71" class="" dir="auto">Overview:-</h3><ol type="1" id="ebce2639-f1de-4681-bbbc-c5619e9ade44" class="numbered-list" start="1" dir="auto"><li><a href="Create%20a%20Website%20that%20People%20Love%E2%80%A6%2071f1bab05f2d4237a1b44f2041ebf9cf.html">HIERARCHY</a></li></ol><ol type="1" id="d0eec3c1-6c8c-4555-9317-c2f2b9ebed98" class="numbered-list" start="2" dir="auto"><li><a href="Create%20a%20Website%20that%20People%20Love%E2%80%A6%2071f1bab05f2d4237a1b44f2041ebf9cf.html">LAYOUT</a></li></ol><ol type="1" id="ef290cbb-0a5a-4312-b782-5be8bed554f9" class="numbered-list" start="3" dir="auto"><li><a href="Create%20a%20Website%20that%20People%20Love%E2%80%A6%2071f1bab05f2d4237a1b44f2041ebf9cf.html">ALIGNMENT</a></li></ol><ol type="1" id="bb3b8112-faa7-47d9-ab0d-5564c5e02b88" class="numbered-list" start="4" dir="auto"><li><a href="Create%20a%20Website%20that%20People%20Love%E2%80%A6%2071f1bab05f2d4237a1b44f2041ebf9cf.html">WHITE SPACE</a></li></ol><ol type="1" id="ec79f5d9-cf10-4811-a7b7-517bef80b903" class="numbered-list" start="5" dir="auto"><li><a href="Create%20a%20Website%20that%20People%20Love%E2%80%A6%2071f1bab05f2d4237a1b44f2041ebf9cf.html">YOUR AUDIENCE</a></li></ol><ol type="1" id="423ff2fa-7522-4c44-9379-412dd213eb5a" class="numbered-list" start="6" dir="auto"><li><a href="Create%20a%20Website%20that%20People%20Love%E2%80%A6%2071f1bab05f2d4237a1b44f2041ebf9cf.html">Five things to keep in mind…</a></li></ol><hr id="a14ce23d-717f-450b-9267-a195ab58060b" dir="auto"/><p id="b4f9581d-8b7d-4636-ad62-a02128242b58" class="" dir="auto">So now that we&#x27;ve talked about some of the fundamentals of design like Color Theory and Typography, the</p><p id="5033e46a-3a4e-4388-bddd-87809a26c1cc" class="" dir="auto">next thing I want to talk about is User Interface Design.</p><figure id="e04a057f-d140-43bb-bdcf-cacd3c068e8f" class="image" data-notion-image="Annotation_2023-05-15_084808.png" dir="ltr"><a href="Annotation_2023-05-15_084808.png"><img style="width:1366px" src="Annotation_2023-05-15_084808.png"/></a></figure><p id="5f86239b-1965-4d51-a22f-f9b879d1a170" class="" dir="auto">Now take a look at this picture.</p><figure id="f6f05fd0-bea7-4568-a99f-81b3b5b68ded" class="image" data-notion-image="Annotation_2023-05-15_084907.png" dir="ltr"><a href="Annotation_2023-05-15_084907.png"><img style="width:1366px" src="Annotation_2023-05-15_084907.png"/></a></figure><p id="0da50cbb-772b-4dda-9d48-653c2f320822" class="" dir="auto">In most cases, 99% of you would have read &quot;YOUR EYE HERE&quot; first, &quot;then here&quot; then</p><p id="423ea8fb-9368-43e7-9af1-604d707a42d3" class="" dir="auto">&quot;Isn&#x27;t that fascinating?&quot;</p><p id="e8915a24-4fa6-4b51-be54-60b68c6b1553" class="" dir="auto">So this is just a way that our brains work.</p><p id="c4c9b348-9052-491a-ae1e-7a3af9d9501f" class="" dir="auto">We&#x27;re always drawn to the bigger bolder square of things.</p><p id="30388298-8994-4ae4-b491-137789050a9b" class="" dir="auto">And As designers, we can use this knowledge to define hierarchy. </p><figure id="5b125c0c-c979-4744-ab03-40818bcebbc2" class="image" data-notion-image="Annotation_2023-05-15_085011.png" dir="ltr"><a href="Annotation_2023-05-15_085011.png"><img style="width:1366px" src="Annotation_2023-05-15_085011.png"/></a></figure><p id="8e99eb31-2e4e-4946-bdc9-c9fbaf641777" class="" dir="auto">So let&#x27;s say that you were to write a birthday invites to Jane.</p><figure id="9e644751-af6c-41d6-8658-df3b2e6a3318" class="image" data-notion-image="Untitled%201.png" dir="ltr"><a href="Untitled%201.png"><img style="width:1366px" src="Untitled%201.png"/></a></figure><p id="d7838efa-c222-4ac2-8591-5fe4e3b6106c" class="" dir="auto">You could write it like this. But all of the information has equal weighting.</p><p id="f6e70e60-34b8-4c6d-baef-524df58e7a02" class="" dir="auto">So as a reader, I have to go through the entire paragraph and I can&#x27;t just skim through it to get the</p><p id="904f5d59-9985-4615-8b85-1ce808b16da8" class="" dir="auto">important bits.</p><p id="a135cae8-1d0e-4c6d-a178-0260b4879b31" class="" dir="auto">So it&#x27;s gonna take me a lot longer</p><p id="5d3be75d-9fe7-4453-841c-0167700de07c" class="" dir="auto">right? Now on the other hand if I apply the rules of hierarchy then the most important information gets</p><p id="22e47ec7-e3ff-43cc-864e-569e3887b920" class="" dir="auto">conveyed over first and I make sure that Jane actually knows whose birthday party it is, where it is</p><p id="30bfd724-83da-4a67-8113-4dad2917ad1c" class="" dir="auto">and when they should go.</p><hr id="cfe818a4-1a89-4768-95d2-72e166fa9694" dir="auto"/><p id="58619bfb-9bf1-4fa4-987a-68dae78c5451" class="" dir="auto">So we can establish hierarchy in a number of ways.</p><p id="0dc7a625-012c-40a8-9b9f-b8d9b99f946b" class="" dir="auto">The most obvious is through the use of color.</p><figure id="a9a7ab82-ac50-4846-9429-a46f8d2569ce" class="image" data-notion-image="Untitled%202.png" dir="ltr"><a href="Untitled%202.png"><img style="width:1366px" src="Untitled%202.png"/></a></figure><p id="55fe50fd-d451-4242-bdb2-19f6a9bd0d0d" class="" dir="auto">So colors that really pop and stand out and have contrast with that background tend to be used for high</p><p id="9e2cbf9d-ec12-496a-bf90-d671b35f5e7b" class="" dir="auto">hierarchy.</p><p id="89f8a3b6-8685-45c8-85c6-81263caa56f7" class="" dir="auto">So for example in this case if all the colors were the same, then it feels like they all have equal importance.</p><p id="1323dc88-4e06-4630-800b-385c961c05f5" class="" dir="auto">But on the other hand, if we have something that&#x27;s very bright very standoutish versus something that&#x27;s</p><p id="385a9011-f372-429d-8ac1-8d9eeab3ea9a" class="" dir="auto">a bit more grade, a bit more muted, then we know exactly where our eyes will go to first.</p><hr id="c135c9e0-5409-4f06-9e58-ce4abe46aaa3" dir="auto"/><p id="75760021-e971-442e-b698-e76f4a01d9a6" class="" dir="auto">Now if you take a look at this example this is the ASOS website. And their predominant color palette</p><figure id="6ce6e562-f254-4301-827d-787db217dea7" class="image" data-notion-image="Untitled%203.png" dir="ltr"><a href="Untitled%203.png"><img style="width:1366px" src="Untitled%203.png"/></a></figure><p id="25a185e3-0395-4dc6-85d4-a90dab5d24f9" class="" dir="auto">is the sort of gray and white color. But they&#x27;ve really cleverly used their accent tone, this green and</p><p id="29859d47-d8a1-4a52-9395-086f843fd95c" class="" dir="auto">red, to really tell the user what they think you should really look at.</p><p id="11c940b2-c796-49ed-864a-479197b69d91" class="" dir="auto">And it seems like ASOS really cares that you know that they have an outlet and also that you add your</p><p id="df0673b8-6c59-45f9-a2d5-c4bed8b303aa" class="" dir="auto">product to the bag so that they can actually make money off you.</p><p id="d6150fcf-d424-4334-9ece-8977a8b62c29" class="" dir="auto">So, in this case, they&#x27;re using that green accent tone to really pull the eyes to that button and make sure</p><p id="a703e8c3-8b52-4b25-8864-87417d5fa500" class="" dir="auto">that the user actually completes their transaction. </p><hr id="d5a416f2-1de4-4a07-9314-78b8ba7c3b10" dir="auto"/><p id="f6c172c5-fe96-43cd-9759-2c1cddd440e8" class="" dir="auto">Now in addition to color, you should also think about</p><figure id="9261f3c9-7e2d-4a5d-8962-0e604593d22d" class="image" data-notion-image="Untitled%204.png" dir="ltr"><a href="Untitled%204.png"><img style="width:1366px" src="Untitled%204.png"/></a></figure><p id="ea4ad9f1-0e49-427a-8fcf-0a6a50430559" class="" dir="auto">size because as I said, the bigger items often draw your eyes to it.</p><hr id="f1042eb9-be6e-4d17-bdd9-e681bc35f03b" dir="auto"/><p id="8b2cc3a1-e072-4102-aab1-5cb11655c7ba" class="" dir="auto">So, for example, if you look at the Coin-base website which you can use to buy cryptocurrency, we can see</p><figure id="d1fe3b0e-d34f-4251-936a-57abffa4ce7c" class="image" data-notion-image="Untitled%205.png" dir="ltr"><a href="Untitled%205.png"><img style="width:1366px" src="Untitled%205.png"/></a></figure><p id="5321641e-548e-4a1d-b868-b68a4dcd00f6" class="" dir="auto">the first thing they want to tell you is you can use this website to buy and sell cryptocurrency.</p><p id="f166ec6e-13ed-4ebe-8b83-d9d3d893a55d" class="" dir="auto">Now the next biggest thing on the page is this huge email input and a button that says &quot;Get started&quot;.</p><p id="63a9d2bd-d4aa-4042-a12b-b838a7f06f79" class="" dir="auto">So because a lot of these companies run ads and they&#x27;re paying for users to land on their page, it&#x27;s really</p><p id="6fc5bc72-f424-4582-bfec-f84d2cb8e6a6" class="" dir="auto">important for them to capture the emails.</p><p id="31ae996e-1430-4ef7-8703-007002095d6a" class="" dir="auto">This is kind of what this design is representing</p><p id="208a5c71-e9e1-46a9-8802-7d45429b2239" class="" dir="auto">right?</p><p id="8485afe4-8217-4835-a9f8-c02117951046" class="" dir="auto">As long as you land on this page, you&#x27;re probably going to want to look at this place where you put in</p><p id="0359fc33-0ac6-42af-85da-0422f78fd026" class="" dir="auto">your email address and get started so that the company can capture your information.</p><hr id="195a426b-a9b5-4b8f-a07b-fa03b699db06" dir="auto"/><p id="8b5b7b96-4101-4b90-adcf-c38ebaf3fdd6" class="" dir="auto">Now in addition to establishing hierarchy in terms of user interface, you should think about the layout</p><p id="346598df-6b91-4624-bd0e-b1b3e285196e" class="" dir="auto">of your website.</p><figure id="f03284fa-ce22-4973-9d74-c1a0c9f5a2b9" class="image" data-notion-image="Untitled%206.png" dir="ltr"><a href="Untitled%206.png"><img style="width:1366px" src="Untitled%206.png"/></a></figure><p id="43d5ad2a-4d95-40bc-9633-0321c0c27366" class="" dir="auto">You can of course, on one hand, have this big block of text which is just your website where everything</p><p id="0d4efa71-3ce3-4ed0-acbc-625ca5cc42fb" class="" dir="auto">is all laid out in the same kind of way</p><p id="db2c03b0-b772-40ae-9396-8a92bedefeb9" class="" dir="auto">or you can create more interest by creating a block of text and then interspersed with pictures and</p><p id="dcd0c6c5-848f-4dc2-a136-60d4a3ddbd46" class="" dir="auto">then create some different sizes and different shapes and different hierarchies to make your design look more interesting. </p><hr id="d39104e9-ff5e-4252-bb86-4c572a9e0d6d" dir="auto"/><p id="816e95de-0e57-4518-9895-afcbce89ef0a" class="" dir="auto">Now the Wikipedia pages are a example in bad design because just look at how bland it looks.</p><figure id="7b6869bb-08f9-4299-8420-f61a32f5eb04" class="image" data-notion-image="Untitled%207.png" dir="ltr"><a href="Untitled%207.png"><img style="width:1366px" src="Untitled%207.png"/></a></figure><p id="59ac7191-8227-4140-aba4-7081035c1704" class="" dir="auto">It really is trying to be an encyclopedia but it doesn&#x27;t have to be like this. Now</p><p id="6150ccd7-9249-4349-ba60-53d1bfd8ef14" class="" dir="auto">one of the most noticeable things about Wikipedia is just the length of each block of text.</p><p id="b265810e-6396-4c7b-8e1d-1144bd719b84" class="" dir="auto">Just look at how long each line of text is.</p><p id="dd6ebfe7-b07d-4159-b0d1-fcfc8816fb2d" class="" dir="auto">It&#x27;s very hard for a user to keep their eyes tracking along the same line.</p><hr id="ef4ebafc-c542-411d-9549-266009837b5f" dir="auto"/><p id="fd7aa58b-aa31-43e5-a3af-81b7b83e1122" class="" dir="auto">And in fact, in terms of user interface design, there&#x27;s an optimal line length. Too long and it gets a</p><figure id="96b1d05c-dd90-48b1-9ef8-0c8d0a6ef128" class="image" data-notion-image="Untitled%208.png" dir="ltr"><a href="Untitled%208.png"><img style="width:1366px" src="Untitled%208.png"/></a></figure><p id="2a5214cf-7eb3-49e8-9b26-71187adfd1a7" class="" dir="auto">little bit tedious to read. But too short it feels a bit too choppy and it&#x27;s a bit awkward to read.</p><p id="c1b655b5-026a-431f-baf7-aa7122799528" class="" dir="auto">So you want to aim for something around 40 to 60 characters per line so that it feels comfortable to</p><p id="03705da9-1a7f-4ad4-82fe-2d55a373ec0e" class="" dir="auto">the user and they&#x27;ll be able to get through the information and still be interested in your website.</p><hr id="e22de885-1163-4e10-b727-5d8b67433f2b" dir="auto"/><p id="63c73e4b-9783-4de6-bf68-d90280455e43" class="" dir="auto">Now when you have good layout like Grammarly&#x27;s website, it&#x27;s not only interesting but it also chops</p><figure id="db8120b0-2714-4f25-8918-9731c0c7e2d4" class="image" data-notion-image="Untitled%209.png" dir="ltr"><a href="Untitled%209.png"><img style="width:1366px" src="Untitled%209.png"/></a></figure><p id="66705b77-3394-4650-b72b-599d0b862812" class="" dir="auto">up the content into smaller pieces so that you actually get through more of the website and you take</p><p id="3f438d73-7130-4d33-ae18-611c20655cf8" class="" dir="auto">more of it in.</p><hr id="163d8634-7f22-4f99-bfcc-27a997e43eee" dir="auto"/><p id="00db7f22-9ff8-436f-ac80-6cdeb6b30996" class="" dir="auto">Now another thing I want to talk about is alignment.</p><figure id="7e73df63-fc52-4d7f-9b78-5d6a6e954e23" class="image" data-notion-image="Untitled%2010.png" dir="ltr"><a href="Untitled%2010.png"><img style="width:1366px" src="Untitled%2010.png"/></a></figure><p id="f4cebae1-13fe-46cd-97d3-650e08806eb8" class="" dir="auto">This has to do with how you position each of the elements on the screen relative to each other.</p><p id="689f2aa5-2262-44f1-a078-5f056df06a7d" class="" dir="auto">So take a look at the example on the left. The top title is center-aligned whereas the body text is</p><p id="f5198b7f-03d2-4808-b9cf-bed1f4ebfcb3" class="" dir="auto">left-aligned. And it makes it look a little bit awkward like they&#x27;re not really meant to be together.</p><p id="c939ae28-ef29-4aef-9e0f-5beafaafcf3a" class="" dir="auto">Now on the right however just by shifting the alignment so that both starting points are the same for</p><p id="11d25cdb-83ad-43b8-a48d-f74890cf5765" class="" dir="auto">the title and the body, it suddenly looks a lot more consistent and a lot more designed.</p><hr id="32133a6b-94b2-4c9d-8689-03d94e3cbd5f" dir="auto"/><p id="f2eefc2b-1bf1-4152-8bbe-7286ba169fc9" class="" dir="auto">Now one of the easiest ways of making any sort of design you create look professional is just to reduce</p><p id="b88d4e62-d6f1-4d0d-b609-dc8b65a3b31f" class="" dir="auto">the number of alignment points.</p><p id="1d84f67e-8af7-4ab7-af5f-a91de41187d8" class="" dir="auto">So let&#x27;s say that you&#x27;re creating a slide deck for your next presentation or you&#x27;re creating a poster</p><p id="b86b926f-4e72-403b-b5ee-07e40e7340b7" class="" dir="auto">for your birthday party,</p><figure id="0145446a-efdd-48e8-8c68-8002d9ecf029" class="image" data-notion-image="Untitled%2011.png" dir="ltr"><a href="Untitled%2011.png"><img style="width:1366px" src="Untitled%2011.png"/></a></figure><p id="5b47e542-9b69-405c-9da8-942873688706" class="" dir="auto">take a look at all the things that are on the design and identify a line which goes through the beginning</p><p id="f84bb09f-ef19-4dda-9abe-173f70274898" class="" dir="auto">of each item.</p><p id="d28d5feb-b757-4773-863f-bb2135eef171" class="" dir="auto">Now if you can reduce the number of lines like we have done here on the right then suddenly the design</p><p id="e6df4667-e55a-46cf-841e-4dad7f5084b1" class="" dir="auto">looks a lot more coherent like all the pieces are meant to be together.</p><p id="bed9f49a-1509-4569-ba38-f433e42a91aa" class="" dir="auto">And it just looks a lot more professional.</p><hr id="f6d6985b-6841-4f87-a91d-fdd8e3791ff8" dir="auto"/><p id="8b3616b4-49be-4563-aef6-b28a085718eb" class="" dir="auto">So use these grid lines in your designed to help you visualize where the starting points of each element</p><figure id="e8942c4d-fd07-4512-b097-63e7a00383d4" class="image" data-notion-image="Untitled%2012.png" dir="ltr"><a href="Untitled%2012.png"><img style="width:1366px" src="Untitled%2012.png"/></a></figure><p id="6ea40894-8a0e-4846-b0bd-cdf71d6ef48d" class="" dir="auto">is and try to line them all up.</p><hr id="9eddd3ca-abb7-407c-aa0c-e2e78320a936" dir="auto"/><p id="d42d9eef-e958-4195-8b69-e2fdbe18237f" class="" dir="auto">Because even if you do nothing else but just alignment, you can see in this case the left looks a lot</p><figure id="e2ba2dfd-b82a-4eb5-88fb-f6cbf4d0f547" class="image" data-notion-image="Untitled%2013.png" dir="ltr"><a href="Untitled%2013.png"><img style="width:1366px" src="Untitled%2013.png"/></a></figure><p id="d582ce37-7d40-466e-a397-f7869a617545" class="" dir="auto">more sloppy and the right looks a lot more designed and more professional. And all that&#x27;s changed, there&#x27;s</p><p id="f1c176f1-5d7e-4108-b8c5-f01c41fde3b4" class="" dir="auto">no change in the color, there&#x27;s no change in typography, it&#x27;s just the alignment. </p><hr id="73ee9c68-2d1a-4076-9e78-f90546442176" dir="auto"/><p id="b4d73b21-ba38-422c-87f7-3677fd7d4bf1" class="" dir="auto">Now a really important concept in all design is White Space. And white space refers to the empty space that&#x27;s around text or round your elements.</p><figure id="1f93d3c3-60b7-4665-a93f-737a8571643a" class="image" data-notion-image="Untitled%2014.png" dir="ltr"><a href="Untitled%2014.png"><img style="width:1366px" src="Untitled%2014.png"/></a></figure><p id="6735993f-db58-4546-b9b6-729deebb3085" class="" dir="auto">Now sometimes when I&#x27;m on the high street I come across one of these luxury handbag or shoe shops and</p><p id="ed3a2718-6811-4069-a761-6c8976f7903a" class="" dir="auto">I look through the window.</p><p id="427603ba-8b32-43a2-a5f8-cfdf817b2697" class="" dir="auto">Now here&#x27;s an experiment.</p><p id="82a121f8-6366-439d-b86d-705d494e4eaa" class="" dir="auto">Take a look at this shop that sells handbags and take a look at this one.</p><figure id="8f7e089b-a3d9-4ee3-acd4-ae38cbb75043" class="image" data-notion-image="Untitled%2015.png" dir="ltr"><a href="Untitled%2015.png"><img style="width:1366px" src="Untitled%2015.png"/></a></figure><figure id="5d32fbf6-3011-4497-a6df-004862c4e5e7" class="image" data-notion-image="Untitled%2016.png" dir="ltr"><a href="Untitled%2016.png"><img style="width:1366px" src="Untitled%2016.png"/></a></figure><p id="fc86872d-042d-4a76-8417-7f781d5cc849" class="" dir="auto">Now how much are you willing to pay for a handbag from this shop versus this one.</p><p id="4b690fe1-1783-47e6-96e2-5ae7f9435403" class="" dir="auto">Now this is really a use case for white space.</p><p id="e241683b-a3ef-48f2-8344-2a6e305e4bee" class="" dir="auto">A lot of luxury shops, luxury designer stores,</p><p id="d344262b-8549-4446-8d3c-935c23c63050" class="" dir="auto">one of their simplest tools is just injecting white space around their products, space things out and it</p><p id="f5ca9d93-6e4b-4381-97fe-481bdc4d07d8" class="" dir="auto">makes everything suddenly look a lot more expensive. Whereas when you have everything all tightly crammed</p><p id="81ed5593-6c08-4fe3-8362-05de2d212bf6" class="" dir="auto">together and you have a lot of product on show, it makes it look like it&#x27;s some sort of discount store.</p><hr id="93de62cf-ff48-478a-a9dc-10d9db7df2a5" dir="auto"/><p id="e3aa57e3-1fed-441b-85d3-07102e5e4eef" class="" dir="auto">And the same principle applies when it comes to digital design as well.</p><p id="28ff8e52-438e-4f9f-b94c-6f96b9a62264" class="" dir="auto">Let&#x27;s say you have an ad for noise cancelling headphones.</p><figure id="599b9aa3-7b18-47d5-85b0-0d1973a2fac1" class="image" data-notion-image="Untitled%2017.png" dir="ltr"><a href="Untitled%2017.png"><img style="width:1366px" src="Untitled%2017.png"/></a></figure><p id="7c8e8fda-4afb-4510-a8e0-c0bba262b4b4" class="" dir="auto">If you have loads of things on screen, there&#x27;s &quot;New&quot;, &quot;Only $20&quot;, &quot;100% noise cancellation&quot;.</p><p id="473a43ec-b60e-458b-8c1a-bc4f83ed9d9c" class="" dir="auto">It makes the product look really cheap. Whereas if you injected some white space, all of a sudden it looks</p><p id="8566a08f-80b7-4eeb-be96-aae7384c5a8f" class="" dir="auto">like Apple made it right? Just by adding that space around each element on the screen</p><p id="3053553b-3592-4402-91f3-40c2a0a22203" class="" dir="auto">you can make your design a lot more minimalist and at the same time elevate it.</p><hr id="8e7c43d0-9f90-4619-ad82-d55829d98eb9" dir="auto"/><p id="0349a5a5-d072-4a83-ac78-d32a03e0c2d2" class="" dir="auto">Now the last thing on User Interface design I want to talk about and probably the most important is</p><p id="c6cca220-6fb3-4701-92b5-322d68f8a4db" class="" dir="auto">design for your audience.</p><figure id="a64f459c-6c9a-477f-84af-393671e71759" class="image" data-notion-image="Untitled%2018.png" dir="ltr"><a href="Untitled%2018.png"><img style="width:1366px" src="Untitled%2018.png"/></a></figure><p id="a187790c-c90f-4b2e-b7c7-509190499c5b" class="" dir="auto">A lot of things I&#x27;ve said, including not using comic-sans,</p><p id="38e9e593-12b4-42da-acb9-ae28e63eb55b" class="" dir="auto">it really depends on your audience.</p><hr id="beb2d364-b5c6-4b23-aea6-303888184461" dir="auto"/><p id="79154070-f135-47e6-aaaf-87947b4a38b1" class="" dir="auto">Let&#x27;s say you&#x27;re designing a children&#x27;s concert poster, the one on the right looks like something that</p><figure id="4bf3119c-ab54-472b-a2fc-b7045d56c94d" class="image" data-notion-image="Untitled%2019.png" dir="ltr"><a href="Untitled%2019.png"><img style="width:1366px" src="Untitled%2019.png"/></a></figure><p id="f42a9df6-616a-4dca-8cf4-4dc3d8d2acb0" class="" dir="auto">children might actually want to go to. The one on the left looks a bit like a funeral advertisement.</p><p id="967dc33c-af0e-4a72-ada9-ede2e5064c78" class="" dir="auto">It&#x27;s so serious. It&#x27;s so black and white and it&#x27;s so severe looking that no child is kind of want to</p><p id="8bc16d6b-5ba6-4986-a629-e02ba5aeeec9" class="" dir="auto">go to that concert.</p><p id="27556543-449e-45ba-862f-0d04c644fa49" class="" dir="auto">So think about your audience.</p><p id="35ac07a2-0713-4946-9c42-5b5de162b916" class="" dir="auto">Think about what would appeal to them and what&#x27;s important to convey to them. That it&#x27;s going to be a</p><p id="7699c2b5-c75f-4756-a173-0f297e5e845f" class="" dir="auto">fun concert or that it&#x27;s going to be boring adults who are going to be reading newspapers and some sort</p><p id="d97a0cb9-5f0a-4e2b-b277-13a58ca98fa2" class="" dir="auto">of classical band in the background. </p><hr id="86dd0c34-5c7f-42c2-897a-f771071ac168" dir="auto"/><p id="9e16a490-9ffd-48f5-8a0c-73b6daa11492" class="" dir="auto">When you&#x27;re designing websites design it for your audience even</p><figure id="ca3b8e43-e22d-4b8b-82e1-613a58324f11" class="image" data-notion-image="Untitled%2020.png" dir="ltr"><a href="Untitled%2020.png"><img style="width:1366px" src="Untitled%2020.png"/></a></figure><p id="41da8030-5187-4952-89a9-64d37435f31c" class="" dir="auto">if it&#x27;s something a little bit messier, a little bit bolder in terms of color, as long as it fits your</p><p id="58eb9af5-ff3b-4739-89c8-a4501d14f0e3" class="" dir="auto">audience and that&#x27;s perfectly fine.</p><p id="bfa75926-6075-41d8-90be-5a70a65bfc77" class="" dir="auto">So have the flexibility in your design so that you&#x27;re not just creating one style all the time. You&#x27;re</p><p id="39dd2781-6530-4a91-866c-621a7e2c897c" class="" dir="auto">creating one style for a particular audience like teenagers who want to buy clothes and you&#x27;re creating</p><figure id="6351b8a7-1d0b-4a52-a3b1-b753d55dc388" class="image" data-notion-image="Untitled%2021.png" dir="ltr"><a href="Untitled%2021.png"><img style="width:1366px" src="Untitled%2021.png"/></a></figure><p id="dad04824-c0bd-4e54-b00a-6963cb751089" class="" dir="auto">a different style for people who want to buy and sell cryptocurrency or have a medical website.</p><p id="4a5503dc-1aeb-4882-8d46-0c8a8e325eed" class="" dir="auto">So the flexibility in your design skills is really important when it comes to User Interface design.</p><p id="5a956989-3716-4c0b-9717-aaf6cd189181" class="" dir="auto">But keep in mind those </p><p id="b3139aae-80b2-4144-ab6a-6f83802b893b" class="" dir="auto"><strong>Five things: </strong></p><p id="550a9d4d-b4ff-43aa-8bb3-a6498156303c" class="" dir="auto"><strong>1</strong>.H<strong>ierarchy,</strong></p><figure id="cdfa8c07-cc03-47a8-a176-4bbc1c641f53" class="image" data-notion-image="Untitled%2022.png" dir="ltr"><a href="Untitled%2022.png"><img style="width:1366px" src="Untitled%2022.png"/></a></figure><p id="e424d247-5722-4388-9beb-a466f31be5c3" class="" dir="auto"><strong>2.layout,</strong></p><figure id="60e90cf2-2d95-4c92-b765-ec7e14e7c327" class="image" data-notion-image="Untitled%2023.png" dir="ltr"><a href="Untitled%2023.png"><img style="width:1366px" src="Untitled%2023.png"/></a></figure><p id="80ee1b40-accb-4e6c-9bd0-ee28bedbdc8d" class="" dir="auto"><strong>3.alignment,</strong></p><figure id="fb10fed9-b932-4053-8e37-72c303a83e2d" class="image" data-notion-image="Untitled%2024.png" dir="ltr"><a href="Untitled%2024.png"><img style="width:1366px" src="Untitled%2024.png"/></a></figure><p id="92908db5-0f78-4ea1-897d-046976208833" class="" dir="auto"><strong>4.white space</strong> and </p><figure id="2163a2e1-f538-4fd8-bdd4-a1cee0a53647" class="image" data-notion-image="Untitled%2025.png" dir="ltr"><a href="Untitled%2025.png"><img style="width:1366px" src="Untitled%2025.png"/></a></figure><p id="9582f744-8f24-4e43-b682-edf862760518" class="" dir="auto"><strong>5.your audience</strong> </p><p id="08b926a6-0e41-45bd-8181-6383e4d7db9c" class="" dir="auto">and you&#x27;ll be well on the way to creating more beautiful user interfaces for your websites.</p><hr id="8db5d31e-60d9-4325-90f6-974b242853b4" dir="auto"/></div></details><details id="b0e96312-7d9d-4f26-9f12-89551be1509c" open="" class="toggle" dir="auto"><summary>User Experience (UX) Design</summary><div class="indented"><h3 id="a89dbe89-d504-4cf4-a999-2ca21cd72e70" class="" dir="auto">Overview:-</h3><ol type="1" id="8b86d73d-13e2-4fe4-b557-5d650654b91c" class="numbered-list" start="1" dir="auto"><li><a href="Create%20a%20Website%20that%20People%20Love%E2%80%A6%2071f1bab05f2d4237a1b44f2041ebf9cf.html">SIMPLICITY</a></li></ol><ol type="1" id="6bd6aca8-fadf-4ea2-a787-2480e0d25393" class="numbered-list" start="2" dir="auto"><li><a href="Create%20a%20Website%20that%20People%20Love%E2%80%A6%2071f1bab05f2d4237a1b44f2041ebf9cf.html">CONSISTENCY </a></li></ol><ol type="1" id="d94dcd52-5f90-435c-b7c7-4cae6e097957" class="numbered-list" start="3" dir="auto"><li><a href="Create%20a%20Website%20that%20People%20Love%E2%80%A6%2071f1bab05f2d4237a1b44f2041ebf9cf.html">READING PATTERNS</a></li></ol><ol type="1" id="061ca9b5-2fbd-4425-a8b1-dcc1e6047860" class="numbered-list" start="4" dir="auto"><li><a href="Create%20a%20Website%20that%20People%20Love%E2%80%A6%2071f1bab05f2d4237a1b44f2041ebf9cf.html">ALL PLATFORM DESIGN</a></li></ol><ol type="1" id="ba1d77cc-792c-453c-9c27-2ef1dc353da0" class="numbered-list" start="5" dir="auto"><li><a href="Create%20a%20Website%20that%20People%20Love%E2%80%A6%2071f1bab05f2d4237a1b44f2041ebf9cf.html">DON’T USE DARK PATTERNS</a></li></ol><p id="b734f38d-f79f-4a33-84de-074aff72c4e8" class="" dir="auto">Now, so far we&#x27;ve talked about the three pillars of web design: Color Theory, Typography, User Interface</p><p id="2432d6b0-1af0-4c1d-afa4-b1648b481af7" class="" dir="auto">design and now I want to talk about the last pillar, <strong><span style="border-bottom:0.05em solid">User Experience design.</span></strong></p><figure id="29309081-191a-4813-8fad-89f985067f6d" class="image" data-notion-image="Untitled%2026.png" dir="ltr"><a href="Untitled%2026.png"><img style="width:1366px" src="Untitled%2026.png"/></a></figure><p id="2068bdf7-2230-40f8-8721-fd3c42b93213" class="" dir="auto">Now a lot of people often get confused about <strong><span style="border-bottom:0.05em solid">what exactly is UX or User Experience?</span></strong></p><figure id="e1c19cd9-5e78-45ec-ae81-956e1964e414" class="image" data-notion-image="Untitled%2027.png" dir="ltr"><a href="Untitled%2027.png"><img style="width:1366px" src="Untitled%2027.png"/></a></figure><p id="c2ba3b71-3a69-487d-876b-4d4ce2edaa7d" class="" dir="auto">And one of the best ways I&#x27;ve heard it explained is through the story of the renovation of a college.</p><p id="1a215b8c-97b4-43d1-a376-0f4fa06c39c8" class="" dir="auto">So this is a picture of Reed College in the US and let&#x27;s just use it as our imaginary backdrop.</p><figure id="f81b33a8-d708-4825-8f7d-f16f06cdfbbd" class="image" data-notion-image="Untitled%2028.png" dir="ltr"><a href="Untitled%2028.png"><img style="width:1366px" src="Untitled%2028.png"/></a></figure><p id="1a64450f-9d13-4f85-a676-2737b78640a8" class="" dir="auto">So this college decided that it needed to undergo serious renovation. Tearing down the buildings, building</p><p id="540de02f-edf7-432a-b217-e1394d4b5308" class="" dir="auto">new ones and completely reform the campus.</p><p id="88407760-252e-4fdb-ad8c-0b14834e4604" class="" dir="auto">So they invited this well-known architect who is very respected in his field.</p><p id="a4d48698-0120-4bdc-9cc0-8f8b37d8a3eb" class="" dir="auto">He came and he did a great job with all the buildings and the provost was really really happy.</p><p id="94ae618c-bd4e-4123-bf9d-59e572767025" class="" dir="auto">He was like &quot;This looks great.&quot;</p><p id="af29c223-d942-465d-be6e-f39f2660a365" class="" dir="auto">But he had one question.</p><p id="2993cfe3-90af-40c8-bd1c-89a379ee563e" class="" dir="auto">&quot;Hey Mr. Architect. It seemed like you&#x27;ve just left lawn across the entire campus. Where are all the path that</p><p id="41be274b-d5e9-4811-9ae9-2281e8175ce7" class="" dir="auto">people are going to walk on to get between the buildings?&quot; At this point</p><p id="5bdd0522-b846-4bbf-998d-3b3b4590b89d" class="" dir="auto">the architect says &quot;Don&#x27;t worry. I&#x27;ll come back in a year and all will be revealed.&quot;</p><p id="81ea8bdc-a69d-4c5e-bf33-2027f10f041b" class="" dir="auto">So in a year the paths where people need to naturally walk becomes trotted down and the grass gets worn</p><p id="7028fb80-56d0-4eef-b96f-ccc48ca13e81" class="" dir="auto">down revealing these paths that people need.</p><figure id="c77464fa-9e3e-4155-8fed-8cb52bf5f171" class="image" data-notion-image="Untitled%2029.png" dir="ltr"><a href="Untitled%2029.png"><img style="width:1366px" src="Untitled%2029.png"/></a></figure><p id="26e2775b-2da2-410e-bbe6-e11702e7db0f" class="" dir="auto">And it&#x27;s at this point when the architect actually lays down all the tiles and paves these paths.</p><p id="c499b3ac-116c-4e2e-bacc-a6e27df329c6" class="" dir="auto">So this is kind of the difference between user experience and design. Design</p><p id="84493bbe-5728-4187-a18f-01f6a20a0cf9" class="" dir="auto">we often think of having an aesthetic, what we think looks good and enforcing that on the user.</p><p id="f5ccc524-4018-4d86-9d02-faf3ad69de6b" class="" dir="auto">Now user experience is meant to be invisible.</p><p id="ed07daf9-ff31-4fd8-ab2b-7f08cc6b006d" class="" dir="auto">If you have a good experience with a website it&#x27;s meant to be unobtrusive and it just lets you do your</p><p id="ecbe7c4c-231c-4d16-acc3-6acb176788e8" class="" dir="auto">thing and it feels like as if everything is easy and everything is effortless.</p><hr id="b946642b-ccb2-4816-8561-7471838630d0" dir="auto"/><p id="9ca9f889-b5d4-4692-8651-7938e65cb971" class="" dir="auto">So this is what we&#x27;re aiming for.</p><p id="f4b946f1-9dea-4fd9-b54e-cec9186765e2" class="" dir="auto">And in order to do that we have to think about again five things.</p><p id="c247e738-cdf8-4237-9f17-e68ce95f276a" class="block-color-red" data-notion-highlight="red" dir="auto"><strong><span style="border-bottom:0.05em solid">The first is simplicity. </span></strong></p><figure id="9ec95f3e-2cf1-4ca3-b179-c71e9024dc8d" class="image" data-notion-image="Untitled%2030.png" dir="ltr"><a href="Untitled%2030.png"><img style="width:1366px" src="Untitled%2030.png"/></a></figure><p id="160dfe50-cc37-4a57-9c58-ad9bf433feb8" class="" dir="auto">Keeping things simple is always better than making it more complex or more cluttered.</p><p id="3df52118-b20e-4ecb-bff9-523e2c048767" class="" dir="auto">So this is a website called Sina and it&#x27;s one of the biggest News websites in China.</p><figure id="7f0b97fc-454c-4e64-bdf8-5083403b3a64" class="image" data-notion-image="Untitled%2031.png" dir="ltr"><a href="Untitled%2031.png"><img style="width:1366px" src="Untitled%2031.png"/></a></figure><p id="080a44b0-d4f4-4b63-8c2c-4b7fc12162cb" class="" dir="auto">Now every time I look at it though I get a headache because it is just so dense.</p><p id="63e4eca3-c2d9-4799-bc7c-719f3fa0bf04" class="" dir="auto">There are so many links and my brain gets overwhelmed and I say &quot;Nope, can&#x27;t do it.&quot;</p><p id="672c29f4-9c74-44d8-b75f-e44ec1fec6ab" class="" dir="auto">So take a look at this alternative.</p><figure id="9c622879-38b6-4daf-a334-12f3482b9f6c" class="image" data-notion-image="Untitled%2032.png" dir="ltr"><a href="Untitled%2032.png"><img style="width:1366px" src="Untitled%2032.png"/></a></figure><p id="fa644dc1-18c4-47a5-84ed-fb777217c474" class="" dir="auto">This is Monocle, which is also a News website.</p><p id="68829539-c79a-447e-998b-345eb2546968" class="" dir="auto">But look at how they&#x27;ve managed to chop up the content, provides some interest for the eyes.</p><p id="a81f8f96-60e2-4ef9-be06-9d8b866b3bf3" class="" dir="auto">There&#x27;s a little bit of dialogue, some images, some videos, a little bit of text.</p><p id="2be851bb-d7cf-4813-a5c0-f373cdbcdb44" class="" dir="auto">It&#x27;s never overwhelming.</p><p id="558996e8-cfeb-4a15-b4d1-49811913b099" class="" dir="auto">And with that consistent color scheme and typography, it&#x27;s really delightful to actually read rather</p><p id="b9c17043-4b81-41a3-8b3f-28dcc36beb19" class="" dir="auto">than this experience of sort of hurting your eyes with design.</p><p id="3edc3fd3-167b-4a8a-b5d3-51488fafe5f1" class="" dir="auto">This is a much nicer user experience because it&#x27;s simple.</p><p id="fa46d20b-7e93-4dd8-a495-ef885f6b46c2" class="" dir="auto">So whenever you&#x27;re having to choose, should I make it more complex or should I make it more simple,</p><p id="3ac3aa98-ddab-49ed-881b-b402184aeccb" class="" dir="auto">always try to pare it down.</p><hr id="9037b92a-92c5-4f58-a8a6-873a3fc26a2c" dir="auto"/><p id="a1019a88-a83e-4ed9-b461-acb8149346f3" class="block-color-red" data-notion-highlight="red" dir="auto"><strong><span style="border-bottom:0.05em solid">The second point is consistency.</span></strong></p><figure id="7613dcfe-ddca-4001-9bfd-a8b1432cf117" class="image" data-notion-image="Untitled%2033.png" dir="ltr"><a href="Untitled%2033.png"><img style="width:1366px" src="Untitled%2033.png"/></a></figure><p id="02632970-bb11-4f11-8da7-24c21398911b" class="" dir="auto">Keep your designs consistent but also keep the functionality of your product consistent.</p><p id="52651eba-5284-4e97-a5d9-0c599d1da6f7" class="" dir="auto">So here&#x27;s an example.</p><p id="6080e699-68e5-47aa-b8e5-2c7d456217e6" class="" dir="auto">This is the webpage for Xfinity. Xfinity is a really big communications company in the US and they</p><figure id="b50d61f0-8c15-4cb4-a7bd-252232ce5193" class="image" data-notion-image="Untitled%2034.png" dir="ltr"><a href="Untitled%2034.png"><img style="width:1366px" src="Untitled%2034.png"/></a></figure><p id="1364cf46-c0fa-42e3-9bc9-903b6dde53a3" class="" dir="auto">are responsible for various things like providing TV and providing internet.</p><p id="a1ce58d7-ba00-4ca4-8c51-73b8fe35fc87" class="" dir="auto">Here are three screenshots from various parts of their website.</p><p id="ae0851b5-d98f-40b6-a0fb-00f4495f0ce0" class="" dir="auto">One is their home page,</p><p id="3c149688-439e-4477-89c3-7ca5f395e01a" class="" dir="auto">the second is their TV offerings and the last one is their News site.</p><p id="94834f08-a9e2-4b5e-8c0d-871e5d276ca5" class="" dir="auto">And if you take a look at the top navigation bar not only do you see that they&#x27;ve changed up the design</p><p id="6d7f27d7-fb2b-4f06-94a6-96419b7a2c34" class="" dir="auto">of the navigation bar between the different parts of their website,</p><p id="5bee8ca3-dbf5-45d3-8af3-055b19ec0c49" class="" dir="auto">they also made it work a little bit differently.</p><p id="69c3f28c-1e7e-447e-802d-4609623c2db3" class="" dir="auto">The buttons are not all in the same place, the search bar moves around.</p><p id="1daf5753-2734-4c65-b2e6-c6541c0db37c" class="" dir="auto">And that inconsistency means that a user is going to be confused when they go from one part of the website</p><p id="c71a2461-5684-4fde-9b4e-9d6bbde77fa0" class="" dir="auto">to another, having to re-learn how to use your website.</p><p id="4c8c83a8-9754-4531-9343-2bbf62169088" class="" dir="auto">If you think about the target audience of this company Xfinity, a lot of them are going to be a little</p><p id="2a720fc2-12d7-4580-a45d-aa2f9f2006e8" class="" dir="auto">bit older right?</p><p id="76ed892e-af44-4754-84a8-052392989838" class="" dir="auto">And having this inconsistent functionality and inconsistent design will really make those users have</p><p id="7dbc55f8-89b4-47c0-8d9d-337d700a69a7" class="" dir="auto">a bad experience with this website.</p><hr id="e8672950-b075-4a74-9fed-68bcfdf9bfc7" dir="auto"/><p id="3019e83d-9ce3-4522-9979-1a8c1c1681e7" class="" dir="auto">Now the next thing to think about when you&#x27;re designing your website is to take into account people&#x27;s</p><p id="dd91e0d1-a0ac-4b53-b728-7aaa47fe1890" class="block-color-red" data-notion-highlight="red" dir="auto"><strong><span style="border-bottom:0.05em solid">Reading patterns.</span></strong></p><figure id="2b19ac48-1796-4b8c-b4b2-39c72d5f2c4a" class="image" data-notion-image="Untitled%2035.png" dir="ltr"><a href="Untitled%2035.png"><img style="width:1366px" src="Untitled%2035.png"/></a></figure><p id="1d4811e8-d64c-440e-8181-47aa3fea760d" class="" dir="auto">Now they&#x27;ve looked at how human eyes track a webpage and which parts they look at when they&#x27;re browsing.</p><p id="08028987-9559-4746-a59f-a62078736c0b" class="" dir="auto">And one of the most common reading patterns is what&#x27;s called the F-pattern where the eye starts at the</p><p id="46f98d3c-37a5-498e-9ce9-3d41b84163e1" class="" dir="auto">top left of the corner and then it tracks the right and then it flips back again</p><p id="d5fec84a-734f-4c60-8aa2-c5f4d01110ff" class="" dir="auto">browsing down the left gutter.</p><p id="bd2cd3e5-889d-404c-856f-500be314bc12" class="" dir="auto">So you have often things like bullet points or pictures or icons, buttons, they&#x27;re all on the left.</p><p id="2305e516-2d1e-491d-9a03-cfc1cd633d6d" class="" dir="auto">So you can design for this by using the F-layout.</p><figure id="f44064cf-14be-4224-9569-d44a9c228f04" class="image" data-notion-image="Untitled%2036.png" dir="ltr"><a href="Untitled%2036.png"><img style="width:1366px" src="Untitled%2036.png"/></a></figure><p id="a76646ce-1365-49f9-8157-c5cfc0af2114" class="" dir="auto">So have the most important parts of your content on the left gutter, have the logo at the top and have</p><p id="a93bed41-e724-44e7-a447-07e231fcb653" class="" dir="auto">everything follow this pattern.</p><hr id="4e27914e-83e5-493d-84ab-c16e4168eccd" dir="auto"/><p id="4ac74385-cba0-4734-9647-d583539a84db" class="" dir="auto">For example like this website for Big-commerce.</p><figure id="35429887-0c9a-4000-8c96-8f7f0a4275a9" class="image" data-notion-image="Untitled%2037.png" dir="ltr"><a href="Untitled%2037.png"><img style="width:1366px" src="Untitled%2037.png"/></a></figure><p id="eb65fdbc-5bf5-4aab-a066-0433c54f429f" class="" dir="auto">See how the eye is being naturally accommodated going from left to right.</p><hr id="d391589e-473e-4573-893c-3c7b1931117d" dir="auto"/><p id="ffa0d238-450a-4c5b-ac1b-6ad1975238c6" class="" dir="auto">Now another really common pattern for reading is the Z-pattern where our eyes go from left to right and then</p><p id="47ded616-31f9-483d-ba2c-8467883113c9" class="" dir="auto">zigzagging down all the way the website.</p><figure id="fd929674-1d71-4368-ab2f-e89b1733255f" class="image" data-notion-image="Untitled%2038.png" dir="ltr"><a href="Untitled%2038.png"><img style="width:1366px" src="Untitled%2038.png"/></a></figure><p id="77d5e27c-e051-46b0-a743-4892e86a6f26" class="" dir="auto">Now this of course depends on the type of website.</p><p id="828117bf-75bc-4f09-9775-52b345899591" class="" dir="auto">So you have something that&#x27;s more sparse with more video content or if somebody is trying to browse</p><p id="fc23139c-910c-4b80-be63-a16ec3c8da60" class="" dir="auto">a website a little bit faster,</p><p id="dbfacde1-c496-4bca-bfeb-4cd5d76af83a" class="" dir="auto">you see them using this layout. And this layout is used pretty famously in the Facebook website</p><figure id="193457ec-61c8-422e-ac11-02b23671173d" class="image" data-notion-image="Untitled%2039.png" dir="ltr"><a href="Untitled%2039.png"><img style="width:1366px" src="Untitled%2039.png"/></a></figure><p id="65ce8f65-5e6d-4ca7-a2c0-1faeb16e638c" class="" dir="auto">using that Z-pattern to accommodate for people&#x27;s natural reading pattern.</p><p id="90e185e1-d879-4b81-9723-3b4c2a3de95b" class="" dir="auto">So have a think about this. Have a think about how people naturally looks at the page and place your</p><p id="391a03cf-0bab-426e-aaae-55e97143d460" class="" dir="auto">content in that pattern to make it easier for people who are using your website.</p><hr id="3073789c-70be-4304-9e86-aea31b05a1a5" dir="auto"/><p id="d9a9491e-83b1-4c04-9864-a04cd0e7d2ad" class="" dir="auto">Now in today&#x27;s day and age, it&#x27;s really important to think about </p><p id="989a147a-413d-453b-b91e-2556d950c035" class="block-color-red" data-notion-highlight="red" dir="auto"><span style="border-bottom:0.05em solid"><strong>All Platform Design.</strong></span></p><figure id="55dd6ce4-7cc4-4752-9e79-3a899403cbfe" class="image" data-notion-image="Untitled%2040.png" dir="ltr"><a href="Untitled%2040.png"><img style="width:1366px" src="Untitled%2040.png"/></a></figure><p id="1c61d426-e55c-449d-b333-8f2e3e7ce8eb" class="" dir="auto">It&#x27;s not enough anymore to just design a website that&#x27;s meant to go into a desktop computer.</p><p id="0be23b88-5d7f-45a3-ac8b-69e18aab80ff" class="" dir="auto">Instead you have to think about mobile as well.</p><figure id="18d82466-536e-4ff2-80ce-e2096aa159f9" class="image" data-notion-image="Untitled%2041.png" dir="ltr"><a href="Untitled%2041.png"><img style="width:1366px" src="Untitled%2041.png"/></a></figure><p id="70a0fe77-a4af-4d60-97fe-fbf028b16bf0" class="" dir="auto">So having a website that scales up nicely onto mobile, what we call mobile responsive, is really important.</p><p id="8e496c9d-2f73-48b0-8b89-8e31a093cc20" class="" dir="auto">You don&#x27;t want a big website that&#x27;s designed to take up a landscape kind of screen to be crammed into</p><p id="5cf5e35d-fcae-4dbe-92e5-506c23406e1e" class="" dir="auto">a phone</p><p id="67c86187-ffb3-4587-bc74-a823baccd20b" class="" dir="auto">that&#x27;s actually more like a portrait shape.</p><p id="174b181f-7082-4405-9fe2-cc43752ea0bd" class="" dir="auto">This looks really bad.</p><p id="059a51f9-c1b4-488d-a32a-164145183456" class="" dir="auto">It&#x27;s very hard to read the individual links and, more often than not, my fingers are actually too big to tap</p><p id="f2a24f65-98db-43a9-ba0b-3014f8f099db" class="" dir="auto">onto the length that I want.</p><p id="3b815f02-e8b9-4045-b10e-b409f9bca7dc" class="" dir="auto">So this is a really bad user experience.</p><hr id="0699c28b-10de-404b-abe5-318374009c20" dir="auto"/><p id="1c958d1d-5109-47fa-99a0-f60ce29b4cf9" class="" dir="auto">Now this can happen the opposite way as well.</p><p id="c8cfc930-0f1c-46ba-89e1-f1f5600b76ae" class="" dir="auto">So a design that looks much better on mobile but then when it&#x27;s rendered on a desktop with a wide kind</p><p id="067ecf58-f6c4-4a39-8770-ea6f465d78c6" class="" dir="auto">of screen, it doesn&#x27;t use up enough of the screen real estate. For example,</p><figure id="aced2863-f90c-486f-81eb-9ce35185846e" class="image" data-notion-image="Untitled%2042.png" dir="ltr"><a href="Untitled%2042.png"><img style="width:1366px" src="Untitled%2042.png"/></a></figure><p id="25b5b8fd-a965-41d6-b204-4d7adc5d1174" class="" dir="auto">this is the Facebook latest redesign of their website.</p><p id="e745644d-b645-49df-b405-ffbb30056cc8" class="" dir="auto">And you&#x27;ve got all of this empty space that&#x27;s not being used at all and everything is crammed into the</p><p id="8da48656-5c51-40aa-ba3b-ecb63825c56f" class="" dir="auto">middle.</p><p id="2712021f-d7f4-42e7-b3e1-0b46ab7e78c5" class="" dir="auto">This is not very efficient. So have a think about how you&#x27;re using the available space and make sure</p><p id="b8834eb4-4a1a-425a-ab8f-1b710400098d" class="" dir="auto">that your website rearranges itself when it&#x27;s being rendered on a portrait smaller screen vs. a larger desktop screen. </p><hr id="fd75bc34-5453-4f55-bee8-675c19d08e45" dir="auto"/><p id="49fdd3bf-d62b-4b09-a8ee-c6e2f086c645" class="" dir="auto">And try to avoid one of my pet peeves in terms of design which is having so many banners</p><figure id="fd7db931-1138-4796-a56d-b6f466c2cc37" class="image" data-notion-image="Untitled%2043.png" dir="ltr"><a href="Untitled%2043.png"><img style="width:1366px" src="Untitled%2043.png"/></a></figure><p id="5369a9da-d73b-4d64-9d1e-0023cb228db9" class="" dir="auto">on your website that show up on the mobile version that your content becomes impossibly small.</p><p id="58bbf55d-4b56-44a5-9950-8f1ac55e4995" class="" dir="auto">And even when you&#x27;re scrolling it&#x27;s like you&#x27;re scrolling it on an Apple Watch or something.</p><p id="08f7b2f8-0ef9-42da-bdb0-a6bf38163364" class="" dir="auto">Whereas all of this extra content is taken up by warnings and banners and cookies and it&#x27;s just not</p><p id="33fba915-7edc-463c-9426-3a418d2d435e" class="" dir="auto">a very good user experience.</p><p id="c59f4894-9703-4e0b-8de4-831bdacb3e32" class="" dir="auto">But on the other hand, don&#x27;t go crazy either.</p><figure id="af76bc50-8a0b-4f66-81a9-1868a6e0d3a9" class="image" data-notion-image="Untitled%2044.png" dir="ltr"><a href="Untitled%2044.png"><img style="width:1366px" src="Untitled%2044.png"/></a></figure><p id="6f269ddf-25cb-4c13-9b1b-c8b8baeded93" class="" dir="auto">Don&#x27;t make your entire website just one part like a picture or a piece of text scaling it up massively</p><p id="a1840909-5bc2-46c7-b0d0-b4c5b1be8e67" class="" dir="auto">like this is also very very awkward because then I have to just keep scrolling until forever before</p><p id="680115c6-d137-4da4-8be9-4bc3e654fad7" class="" dir="auto">I can actually read and take in all of the content.</p><p id="1402af02-78f3-44a9-938d-4dc8cf19fa40" class="" dir="auto">So strike a happy medium.</p><p id="6e6f463f-21ae-4c9d-8ee2-92039fe4ce96" class="" dir="auto">And most importantly test, test, test.</p><p id="d6f04702-071d-4578-a121-70c1435c5fb0" class="" dir="auto">Give it to other users.</p><p id="f64611e0-9d6e-415e-860c-909f4fe6813a" class="" dir="auto">You can employ professional testers to try out your website and give you feedback.</p><p id="d61869fa-a73c-4095-b354-9050a140de15" class="" dir="auto">Now if you can&#x27;t afford that, just use your family and friends. And bake some cookies for them,</p><p id="33bcf718-f053-471b-9815-5244b87d98b1" class="" dir="auto">get them to test out your website and start getting some feedback on how you can improve the design.</p><hr id="63fd7b87-d8b0-466f-ae88-3519cedc4d52" dir="auto"/><p id="adef692f-ee08-443c-9429-3f05957d8ed5" class="" dir="auto">Now finally we&#x27;ve talked a lot about user experience and how to get people to have a good time.</p><p id="fe8c4676-be81-4501-adbe-3fe938155316" class="" dir="auto">Now some designers though use the knowledge they have about human psychology and User Interface and</p><figure id="2a98e46c-ad53-4049-9429-560e7b10dc6a" class="image" data-notion-image="Untitled%2045.png" dir="ltr"><a href="Untitled%2045.png"><img style="width:1366px" src="Untitled%2045.png"/></a></figure><p id="67fe294a-90eb-41c9-a2ca-323d83e11ab8" class="" dir="auto"><strong><span style="border-bottom:0.05em solid">User Experience design to do bad things.</span></strong></p><p id="ee4f7e15-7790-43a5-927f-8af06890e057" class="" dir="auto">And in the design world, we call these <strong><span style="border-bottom:0.05em solid">dark patterns.</span></strong> So patterns which get a user to perform an action</p><p id="a3aca32c-8fad-405e-a232-3fbe2e0a95d7" class="" dir="auto">or behavior that is beneficial to the company or the designer</p><p id="2f25d4e9-0ca2-4dd1-9295-4c2ca63e42a0" class="" dir="auto">but it&#x27;s not necessarily what the user wants.</p><p id="8dc11a11-0091-4586-91b9-31e534871c4e" class="" dir="auto">And this I would say is another form of bad user experience.</p><hr id="fc400ba6-b42e-4dd8-a28e-32d175f7634a" dir="auto"/><p id="ef0bf8cb-7d92-4506-b4e0-bbbf34ace70d" class="" dir="auto">So let me give you some examples.</p><p id="bc88f7bd-832e-4537-aa7b-3f918f12428c" class="" dir="auto">This is a real life example. Let&#x27;s say that you walked into Waitrose which is a big supermarket in the</p><p id="d07dd623-7550-401f-88bd-763f68a065ff" class="" dir="auto">UK and you bought yourself a sandwich.</p><figure id="b727401e-e052-4a26-9258-612d92fb7d3e" class="image" data-notion-image="Untitled%2046.png" dir="ltr"><a href="Untitled%2046.png"><img style="width:1366px" src="Untitled%2046.png"/></a></figure><p id="5892260a-1bce-4bf9-808e-c9396c13dffe" class="" dir="auto">Now when you look at it at the point when you&#x27;re buying it, it looks like this sandwich is going to be</p><p id="1dc800f8-3e32-4f00-8d1a-c2bfddde56e5" class="" dir="auto">full length from edge to edge</p><p id="a89dc04d-80b7-4b86-9972-cc1cfb6cf573" class="" dir="auto">right?</p><p id="e2884f72-a5c7-4e0c-ba06-6df35af2318e" class="" dir="auto">But then when you rip open the packaging you&#x27;re disappointed when you find that actually all that&#x27;s</p><p id="65d2e477-8f32-4ce1-8318-045063ea24e9" class="" dir="auto">in the middle is just air and your sandwich turns out to be a lot smaller than you initially thought.</p><p id="3f66168b-6976-4b02-863f-233f7856f1e3" class="" dir="auto">It is the worst feeling in the world.</p><p id="78b90697-c817-4fa7-be8f-f9ea3e57b251" class="" dir="auto">This is a feeling that I can&#x27;t stand when my food suddenly gets reduced in size.</p><p id="570e663c-7be0-484b-b988-f7aa35dbdcbf" class="" dir="auto">It&#x27;s like as if somebody came along and took food out of your plate. </p><hr id="5baf0d0d-af57-4ee5-af4e-ac644a89a45b" dir="auto"/><p id="095ca419-fb1d-4048-80e8-9de8d2ecfd6a" class="" dir="auto">In the digital world,</p><p id="0bc69a65-0651-4f1c-9c4d-ae46c6cb8a67" class="" dir="auto">people do the same thing. The same kind of trickery that&#x27;s meant to get you to perform an action that</p><p id="ccbeaf95-463e-4063-8a06-b2de3345e24a" class="" dir="auto">you don&#x27;t necessarily want and you end up feeling really disappointed and really upset. With Amazon every</p><p id="3b2cd54b-e3a2-4364-a4a5-78faa5be5c9f" class="" dir="auto">single time</p><figure id="a3c9d8e4-e471-404a-8972-d01d06f63de3" class="image" data-notion-image="Untitled%2047.png" dir="ltr"><a href="Untitled%2047.png"><img style="width:1366px" src="Untitled%2047.png"/></a></figure><p id="7f9e1475-182c-417e-9601-31506b0cac79" class="" dir="auto">I have to re-click the free delivery button which I&#x27;ve earned by buying so much product from them.</p><p id="6cfdd4a1-6ffd-42ea-8112-48cd2f4c46e1" class="" dir="auto">But they still try to trick you using the things that we&#x27;ve learned about hierarchy</p><p id="1dae6112-5bd7-4087-ab00-8fe4d4925789" class="" dir="auto">for example. Here the button that makes the more money &quot;Express delivery&quot; is highlighted in orange.</p><p id="ed0c31e5-0564-40af-8260-64067611e2c4" class="" dir="auto">It pops out a lot more.</p><p id="fcd0c4f9-8afa-42ce-ae09-37dd674d7781" class="" dir="auto">It&#x27;s a lot more likely that you&#x27;ll want to click on it.</p><p id="c1e7e9b2-fd3d-46db-90e0-af5c8151b322" class="" dir="auto">But in all likelihood, you&#x27;re probably happy with just normal delivery and you&#x27;re now tricked into paying</p><p id="29ddfe72-076f-4079-938f-e1dddb90f1fd" class="" dir="auto">more for this delivery.</p><hr id="630a49af-47d8-4a32-8c5e-0d55e53c6340" dir="auto"/><p id="db20621a-e633-4dbc-bdd6-6b78d1821670" class="" dir="auto">Now here&#x27;s another example</p><figure id="2c625d5f-6773-4872-8ce2-5df5830a78dc" class="image" data-notion-image="Untitled%2048.png" dir="ltr"><a href="Untitled%2048.png"><img style="width:1366px" src="Untitled%2048.png"/></a></figure><p id="57e64c1b-2e65-4183-a38e-36d30c970557" class="" dir="auto">that&#x27;s actually true the evil.</p><p id="12f9f681-f4e4-44c7-9e2a-9383490ea843" class="" dir="auto">This is a Snapchat ad for some shoes.</p><p id="6fd44f71-a1dc-4303-9b10-8f0de72f7b40" class="" dir="auto">But what the designer has cleverly done on the advertising is they&#x27;ve placed a one pixel curved line</p><p id="0dfc77fd-a5b5-4504-b721-05b39f3ec424" class="" dir="auto">on this ad which makes it kind of look a bit like a hair is on your screen. But when you go into that</p><p id="e3832663-e783-4566-a9b7-1b89bd83577a" class="" dir="auto">screen and you try to get rid of that piece of hair, well you&#x27;ve tapped on an avenue.</p><p id="9f11a5d8-7f92-4c2f-8a06-6ef1bc7dcde5" class="" dir="auto">So the ad takes you to the website and the advertisers make money off each click.</p><p id="99ebf6e2-114a-4a5b-a241-3d3a283dddbf" class="" dir="auto">And this is truly a dog pattern because it&#x27;s just tricking you to do something you didn&#x27;t want to.</p><p id="5e0c9295-cdee-406c-a8ad-242b7c78dc68" class="" dir="auto">Whereas good design is about helping people do what they want to do and giving them a good experience</p><p id="de1860d5-6a73-42e4-91ff-10c1897095ff" class="" dir="auto">while they&#x27;re at it.</p><hr id="9561b468-f498-48e0-8d18-20f982cb380e" dir="auto"/><p id="e6afc8d3-eb51-4381-8f86-852331154b5f" class="" dir="auto">Now the king of dog patterns is Ryan-Air and it&#x27;s a low cost airline in Europe which is really known for</p><figure id="4ae9e445-596b-471f-86b4-fd39afe95c6a" class="image" data-notion-image="Untitled%2049.png" dir="ltr"><a href="Untitled%2049.png"><img style="width:1366px" src="Untitled%2049.png"/></a></figure><p id="9c0d8bc7-9c86-4c23-869a-80c085530525" class="" dir="auto">sort of charging you for every single little thing.</p><p id="afa87040-ef95-47e2-83fa-4dd86ea4a415" class="" dir="auto">I wouldn&#x27;t be surprised if tomorrow they suddenly charged you for using the toilet on the plane.</p><p id="2aed7ffc-3956-43be-bae2-1ef3aa080458" class="" dir="auto">But here&#x27;s what the website looks like when you tried to buy an airplane ticket. </p><figure id="0961e182-c482-45a6-bd94-87954211bd13" class="image" data-notion-image="Untitled%2050.png" dir="ltr"><a href="Untitled%2050.png"><img style="width:1366px" src="Untitled%2050.png"/></a></figure><p id="04239ed0-681b-44f1-996d-618712895c2a" class="" dir="auto">In order to buy your airplane ticket you have to go through all of these extra addon’s including saying &quot;No I don&#x27;t want to</p><p id="e7336b7f-19a6-4c7b-a3b2-da95dde6baf5" class="" dir="auto">buy travel insurance.&quot; But look at how they&#x27;ve hidden it inside this big dropdown list and it&#x27;s not even</p><p id="4a3233f0-3433-4531-8e76-ed646fe1bdf6" class="" dir="auto">at the beginning of the list.</p><figure id="8f395c32-82c5-4619-8e43-8de40cfad22f" class="image" data-notion-image="Untitled%2051.png" dir="ltr"><a href="Untitled%2051.png"><img style="width:1366px" src="Untitled%2051.png"/></a></figure><p id="37a3eceb-3969-407a-9165-941991e5237b" class="" dir="auto">It&#x27;s actually sorted alphabetically below Denmark for some reason.</p><p id="ae11e1f2-6dc8-4797-950f-dd15c2d146b4" class="" dir="auto">And this just makes it so much harder for you to find that option</p><p id="d4cc5e8a-8e71-4f96-8ac6-aed683e8659d" class="" dir="auto">and for you to actually accidentally end up buying travel insurance.</p><hr id="eb4e6f7b-fd47-491f-bd44-ab25c4aaabf7" dir="auto"/><p id="7bb732a5-597d-4114-8fb5-9d4a84cd257b" class="" dir="auto">Now the final example and probably one of the dog patterns I dislike the most is these checkboxes. You</p><p id="2f6db2a4-bacf-4d23-9f4e-f825cda321e3" class="" dir="auto">know right below you filled in a form,</p><p id="884c1279-9e25-406b-8be2-35ae4cb52992" class="" dir="auto">you get these checkboxes and sometimes the wording is so confusing that I really don&#x27;t know what I&#x27;m</p><p id="4784ce4b-4a42-4d68-90e6-bacce9185dbe" class="" dir="auto">signing up for.</p><figure id="104399b2-17e8-4e02-8dd0-55f761c8235c" class="image" data-notion-image="Untitled%2052.png" dir="ltr"><a href="Untitled%2052.png"><img style="width:1366px" src="Untitled%2052.png"/></a></figure><p id="c85cf6b0-95f5-497a-9c2d-f03797537b3c" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>chat-GPT Response</strong></span><strong>:-</strong></p><figure id="73e8ddc2-f182-45e1-a601-9c2c1721c536" class="image" data-notion-image="Untitled%2053.png" dir="ltr"><a href="Untitled%2053.png"><img style="width:1106px" src="Untitled%2053.png"/></a></figure><p id="4a7ca38f-916b-4cdb-9002-57530d1a006d" class="" dir="auto">Like this one: If you would like us to no longer continue to stop not sending you special deals and offers</p><p id="8b582c10-4ecb-4836-bf51-2955e90816b0" class="" dir="auto">every week, please indicate you are inclined to yes</p><p id="19257807-da51-49db-971d-cdb4a84ea1fd" class="" dir="auto">by not checking the box. I have no idea what clicking that box does.</p><p id="e4d134d7-a0a3-4df3-9d71-ed885b1491a8" class="" dir="auto">I really just... I don&#x27;t know.</p><p id="d92fe332-d1ac-4e4e-9d15-378e8ebfd365" class="" dir="auto">I might click it, I might not.</p><p id="73f38982-c3cb-464b-b575-079cbfb709ba" class="" dir="auto">I don&#x27;t know what it does. But it&#x27;s horribly confusing and it&#x27;s not a good user experience at all.</p><p id="61c23be6-74ae-48bb-b003-365c4232fd75" class="" dir="auto">I will bet you that after I sign up I&#x27;m never going to come back to this website again</p><p id="e5c47af0-8a6b-42f0-b04a-277b623f1b3d" class="" dir="auto">right?</p><p id="cbe42ba9-7ccb-4e97-9522-235fb049a99e" class="" dir="auto">Are you with me? </p><hr id="725d1431-7c62-4030-824a-173030dd2e60" dir="auto"/><p id="003b25ed-7d37-4e0c-839a-5e2227a46023" class="" dir="auto">Now</p><p id="006ee8f5-edc8-470d-824c-dc27dfea66ba" class="" dir="auto">we&#x27;ve seen what good websites look like.</p><figure id="dd259c16-80f5-458c-b575-d16c565f1164" class="image" data-notion-image="Untitled%2054.png" dir="ltr"><a href="Untitled%2054.png"><img style="width:1366px" src="Untitled%2054.png"/></a></figure><p id="0c694091-20b6-424c-ae8e-280507f582e2" class="" dir="auto">We&#x27;ve seen what bad websites look like.</p><figure id="7b11ff10-578f-4f75-bcaf-3587146b3564" class="image" data-notion-image="Untitled%2055.png" dir="ltr"><a href="Untitled%2055.png"><img style="width:1366px" src="Untitled%2055.png"/></a></figure><p id="8fa0b560-e93e-49f5-aeb1-39eb72f5c157" class="" dir="auto">We&#x27;ve even seen what evil websites look like.</p><figure id="0c3cd418-fc75-49b4-a6a8-fd10df113373" class="image" data-notion-image="Untitled%2056.png" dir="ltr"><a href="Untitled%2056.png"><img style="width:1366px" src="Untitled%2056.png"/></a></figure><p id="fbcece20-6ad2-4c45-ab3c-e30102ce654a" class="" dir="auto">But it&#x27;s time to put our knowledge to the test by designing our own website from scratch and applying</p><p id="eb71d955-3d4e-4427-bf5f-7036d01bb637" class="" dir="auto">these four pillars of web design to this project.</p><figure id="df38a7e0-1244-4be3-a6e9-ccbf56a0d634" class="image" data-notion-image="Untitled%2057.png" dir="ltr"><a href="Untitled%2057.png"><img style="width:1366px" src="Untitled%2057.png"/></a></figure><p id="9419fb40-b8b3-4db8-ba2d-0e3a488f8afe" class="" dir="auto">So have a think about what you&#x27;ve learned so far and apply it to your own website.</p><hr id="8ca4c06c-690d-44da-be77-408e7642cea0" dir="auto"/></div></details><p id="bb1b8557-1a18-4a6c-b55a-ee9378689b4d" class="" dir="auto"><a href="Create%20a%20Website%20that%20People%20Love%E2%80%A6%2071f1bab05f2d4237a1b44f2041ebf9cf.html">Go to Top</a>👆</p><p id="c1ae0a2c-4d32-4377-8084-ece4b9c58bda" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

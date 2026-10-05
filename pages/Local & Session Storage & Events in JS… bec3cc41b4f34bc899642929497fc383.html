@@ -1,0 +1,844 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Local &amp; Session Storage &amp; Events in JS…</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="bec3cc41-b4f3-4bc8-9964-2929497fc383" class="page sans" data-notion-page-icon="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e03bc641-111e-4ea0-a782-36e7c6c200b8/folder.png"><header><div class="page-header-icon undefined"><img class="icon" src="folder.png"/></div><h1 class="page-title" dir="auto">Local &amp; Session Storage &amp; Events in JS…</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><h3 id="23244f69-481c-4978-b9ae-ce329cd12e3c" class="" dir="auto">Q. Explain me Local Storage in simple words with examples.</h3><p id="3ee6bc8a-67ce-428f-a835-8f61465e8f4f" class="" dir="auto">Certainly! Local Storage is a feature in web browsers that allows you to store data locally on a user&#x27;s computer. It provides a way to persistently store key-value pairs within the user&#x27;s browser.</p><p id="c40832b9-3067-4d01-ba7c-cf64ba609d18" class="" dir="auto">Think of Local Storage as a small storage box that you have in your room. You can put things in the box and they will stay there even if you leave the room and come back later. Similarly, in web development, Local Storage allows you to store data that will persist even if the user closes the browser or navigates away from the website. The data will remain accessible when they revisit the same website.</p><p id="d4dbf7b2-ad34-4f5b-8f68-90437f4d7485" class="" dir="auto">Here&#x27;s an example to illustrate how Local Storage works:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js" integrity="sha512-m3JYEI6gx5fh9jF10FjGoMzVKcV2N6nchcDcqPCdI1L3R2WQV7br2XVNR8iTLb2daOMRl3zldbcfT40xU2ntVw==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="73fa21cb-f4c7-40f8-8d41-02e1d24a8c7d" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">// Storing data in Local Storage
+localStorage.setItem(&quot;username&quot;, &quot;John Doe&quot;);
+localStorage.setItem(&quot;age&quot;, &quot;25&quot;);
+
+// Retrieving data from Local Storage
+var username = localStorage.getItem(&quot;username&quot;);
+var age = localStorage.getItem(&quot;age&quot;);
+
+console.log(username); // Output: &quot;John Doe&quot;
+console.log(age); // Output: &quot;25&quot;
+</code></pre><p id="d84ea6f6-d70d-42c1-993f-798b86c6e7c3" class="" dir="auto">In this example, we use the <code>localStorage</code> object to store two key-value pairs: &quot;username&quot; with the value &quot;John Doe&quot; and &quot;age&quot; with the value &quot;25&quot;. The <code>setItem()</code> method is used to store the data.</p><p id="3f44b01f-4c80-4a73-a182-a81b48fca7b8" class="" dir="auto">Later, we retrieve the data from Local Storage using the <code>getItem()</code> method by providing the key. The retrieved values are then assigned to the <code>username</code> and <code>age</code> variables, and we log them to the console.</p><p id="7e217507-51b8-43fb-908d-467215f942bd" class="" dir="auto">Local Storage provides a simple way to store and retrieve data, making it useful for various scenarios like remembering user preferences, caching data, or maintaining a user&#x27;s session state.</p><p id="5e584e17-9cf8-4e3a-8217-89028e3ef78b" class="" dir="auto">It&#x27;s important to note that Local Storage is limited to storing data as strings. If you need to store complex data types like objects or arrays, you can convert them to JSON strings using <code>JSON.stringify()</code> before storing and parse them back to their original form using <code>JSON.parse()</code> when retrieving.</p><p id="56d146a8-8aa6-43e4-869e-f76c133afa12" class="" dir="auto">Also, keep in mind that Local Storage has a size limit (usually around 5MB) and the stored data is accessible only within the same domain and protocol from which it was stored.</p><p id="c13a6475-a02c-4a40-b7dc-acac975ac766" class="" dir="auto">I hope this explanation helps you understand Local Storage in simple terms!</p><h3 id="6f8f1b22-64a9-4468-bbae-7f9738482495" class="" dir="auto">Q. Give me a example of using JSON.stringify() and JSON.parse() in JS.</h3><p id="a54a54ca-ff6f-49c2-b55c-8a766803092d" class="" dir="auto">Certainly! Here&#x27;s an example that demonstrates the usage of <code>JSON.stringify()</code> and <code>JSON.parse()</code> to store and retrieve complex data types like objects using Local Storage:</p><pre id="6b043d39-326c-4e6a-bb69-9c4b3fb5d34b" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">// Storing an object in Local Storage
+var user = {
+  name: &quot;John Doe&quot;,
+  age: 25,
+  email: &quot;johndoe@example.com&quot;
+};
+
+localStorage.setItem(&quot;user&quot;, JSON.stringify(user));
+
+// Retrieving and parsing the object from Local Storage
+var storedUser = localStorage.getItem(&quot;user&quot;);
+var parsedUser = JSON.parse(storedUser);
+
+console.log(parsedUser.name); // Output: &quot;John Doe&quot;
+console.log(parsedUser.age); // Output: 25
+console.log(parsedUser.email); // Output: &quot;johndoe@example.com&quot;
+</code></pre><p id="1a550a8e-5a62-4740-9086-34d24ff60fab" class="" dir="auto">In this example, we have an object <code>user</code> containing properties like name, age, and email. We convert this object into a JSON string using <code>JSON.stringify()</code> before storing it in Local Storage using <code>localStorage.setItem()</code>.</p><p id="f36062cf-7cf6-4534-8405-e7d059d0b931" class="" dir="auto">Later, when we retrieve the string from Local Storage using <code>localStorage.getItem()</code>, we parse it back into its original form as an object using <code>JSON.parse()</code>. The resulting <code>parsedUser</code> object can be accessed and used just like any other JavaScript object.</p><p id="01d19a7d-e252-46c8-a3db-2e8f5f57c39a" class="" dir="auto">By using <code>JSON.stringify()</code> and <code>JSON.parse()</code>, we can easily store complex data types in Local Storage as strings and retrieve them in their original format.</p><p id="61c22e6e-5412-49c4-ad2e-164a459fb2d6" class="" dir="auto">Remember that Local Storage is limited to storing strings, so it&#x27;s necessary to convert complex data types into strings before storing them. JSON (JavaScript Object Notation) provides a convenient way to serialize objects into strings and deserialize them back into objects.</p><p id="77500247-f6ea-4f0e-9dc6-2e4e41fa984e" class="" dir="auto">I hope this example clarifies the usage of <code>JSON.stringify()</code> and <code>JSON.parse()</code> for storing and retrieving complex data types in Local Storage!</p><hr id="df6846c9-4ead-49a3-8901-d1b5ab90d5b8" dir="auto"/><h3 id="5e582ae8-1f53-410e-815e-98da688ea0f7" class="" dir="auto">Q. Explain me <code>Session storage</code> in js, in simple words with examples.</h3><p id="b80c10c0-a9de-4502-9835-b8b949541e38" class="" dir="auto">Certainly! Session Storage is similar to Local Storage, but with one key difference: the data stored in Session Storage is only accessible within the same browser tab or window session. Once the session ends (when the user closes the tab or window), the data is cleared and no longer accessible.</p><p id="4b60fbb8-3505-4390-a561-7f00b2210cee" class="" dir="auto">Think of Session Storage as a temporary whiteboard that you have in a room. You can write notes or draw pictures on the whiteboard, and they will stay there as long as you are in the room. However, once you leave the room, the whiteboard is wiped clean, and the information is no longer available.</p><p id="8d9ea77b-9edf-4b74-8ff7-1245e4c5dbac" class="" dir="auto">Here&#x27;s an example to illustrate how Session Storage works:</p><pre id="6f8c4449-81af-445f-a817-0180549ec9e2" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">// Storing data in Session Storage
+sessionStorage.setItem(&quot;username&quot;, &quot;John Doe&quot;);
+sessionStorage.setItem(&quot;age&quot;, &quot;25&quot;);
+
+// Retrieving data from Session Storage
+var username = sessionStorage.getItem(&quot;username&quot;);
+var age = sessionStorage.getItem(&quot;age&quot;);
+
+console.log(username); // Output: &quot;John Doe&quot;
+console.log(age); // Output: &quot;25&quot;
+</code></pre><p id="3fbc7e01-751e-432c-852b-88af3c71c877" class="" dir="auto">In this example, we use the <code>sessionStorage</code> object to store two key-value pairs: &quot;username&quot; with the value &quot;John Doe&quot; and &quot;age&quot; with the value &quot;25&quot;. The <code>setItem()</code> method is used to store the data.</p><p id="8f4a3094-63cf-40cc-896b-9f8d4048eb7a" class="" dir="auto">Later, we retrieve the data from Session Storage using the <code>getItem()</code> method by providing the key. The retrieved values are then assigned to the <code>username</code> and <code>age</code> variables, and we log them to the console.</p><p id="0e8d3791-e86c-4de4-bda6-3c0f11602120" class="" dir="auto">Session Storage is useful when you need to store temporary data during a user&#x27;s browsing session, such as maintaining state between different pages within the same tab. It&#x27;s worth noting that Session Storage is limited to the specific browser tab or window where it was set, and the data is cleared when the tab or window is closed.</p><p id="028129c7-e359-4039-b506-54d240bede03" class="" dir="auto">Just like Local Storage, Session Storage also stores data as strings. If you need to store complex data types like objects or arrays, you can use <code>JSON.stringify()</code> to convert them into strings before storing and <code>JSON.parse()</code> to parse them back into their original form when retrieving.</p><p id="e91cb370-0f41-4ae5-a4fd-33e4c62d995d" class="" dir="auto">I hope this explanation helps you understand Session Storage in simple terms!</p><hr id="030c6193-0e1b-452c-8bbb-fe252eb55bf6" dir="auto"/><h3 id="66b3f593-2f5e-4a4d-8ea1-7fda125e37d4" class="" dir="auto">Q. Explain me <code>Storage Event</code> in js, in simple words with examples.</h3><p id="19dfe09e-6cfe-4fb6-957f-7a09e100ba26" class="" dir="auto">Certainly! The Storage Event in JavaScript is an event that gets triggered when changes are made to the Local Storage or Session Storage within the same browser tab or window. It allows you to listen for changes in storage and perform actions in response to those changes.</p><p id="ffcc4e39-216f-432f-9fbc-3c5639eaf670" class="" dir="auto">Imagine you have two tabs open in your browser, and you update a value in Local Storage on one tab. The Storage Event allows the other tab to be notified of the change and respond accordingly.</p><p id="0c01f957-f7c1-4d17-87bd-7ccd9aed5cdf" class="" dir="auto">Here&#x27;s an example to illustrate how the Storage Event works:</p><pre id="42cc2ffa-e216-4e05-9a3b-1bd6053ae8ea" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">// Add an event listener for the Storage Event
+window.addEventListener(&quot;storage&quot;, function(event) {
+  if (event.key === &quot;username&quot;) {
+    console.log(&quot;Username has changed!&quot;);
+    console.log(&quot;New value: &quot; + event.newValue);
+    console.log(&quot;Old value: &quot; + event.oldValue);
+  }
+});
+
+// Update the value in Local Storage
+localStorage.setItem(&quot;username&quot;, &quot;John Doe&quot;);
+</code></pre><p id="b2c6b7a5-2809-4c0e-81f0-9bf8e44d425e" class="" dir="auto">In this example, we add an event listener to the <code>window</code> object, listening for the &quot;storage&quot; event. When a change occurs in the storage (e.g., Local Storage), the event is triggered.</p><p id="872b682b-012a-4fce-a572-4a9e6c330423" class="" dir="auto">Inside the event listener function, we check if the key that changed is &quot;username&quot;. If it is, we log a message indicating that the username has changed, along with the new and old values.</p><p id="fec2fbc0-616c-471f-a17e-10e88cd333c6" class="" dir="auto">After adding the event listener, we update the value of &quot;username&quot; in Local Storage using <code>localStorage.setItem()</code>. This change triggers the Storage Event, and the event listener responds by logging the appropriate messages.</p><p id="b36c5e9b-0291-44bc-9369-3d4796db2dcc" class="" dir="auto">The Storage Event is useful when you want to synchronize data between multiple tabs or windows in real-time. It allows different parts of your application to stay in sync and react to changes made in one tab from another tab.</p><p id="b0a78e34-d5ea-40e5-8ca2-02396fc6301c" class="" dir="auto">It&#x27;s important to note that the Storage Event is only triggered when changes are made within the same origin (same domain, protocol, and port). Changes made by different origins (e.g., different websites) will not trigger the Storage Event due to security restrictions.</p><p id="2beedfbb-e9d2-4a06-83ef-92dd119cba79" class="" dir="auto">I hope this explanation helps you understand the Storage Event in simple terms!</p><hr id="b1a6e6ec-79ed-4548-b453-f195e7909e5b" dir="auto"/></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

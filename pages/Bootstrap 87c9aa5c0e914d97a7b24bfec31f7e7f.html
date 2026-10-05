@@ -1,0 +1,802 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Bootstrap</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="87c9aa5c-0e91-4d97-a7b2-4bfec31f7e7f" class="page sans" data-notion-page-icon="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/94361e6c-9916-4fe6-9e3d-fdce965175a1/bootstrap.svg"><header><div class="page-header-icon undefined"><img class="icon" src="bootstrap.svg"/></div><h1 class="page-title" dir="auto">Bootstrap</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><p id="5757460b-93de-47fe-9ad3-4d1044a4b0e2" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>CONTENT</strong></span><strong>:-</strong> </p><nav id="d3443198-a2e7-47c7-9f87-4af15766170a" class="block-color-gray table_of_contents" data-notion-highlight="gray" data-notion-toc="" dir="ltr"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#165b3e7a-72e2-49e0-9f27-f920e0296f66"><span style="border-bottom:0.05em solid">Introduction</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bed16365-be21-4daf-b028-e97204d1e9ba">what are CSS Framework’s?</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e9fab2a5-9156-4491-98bc-b6e3156405d8">Usage percentages of different frameworks</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#51563349-dff0-4a80-94b4-6e881e524459"><strong>The Advantages of Bootstrap are:</strong></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6ab3bad9-9bd6-4411-9946-bf0dad939cc6"><strong>The Disadvantages of Bootstrap are:</strong></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9ca22cb4-706c-4119-913c-e60d9291e2d8"><span style="border-bottom:0.05em solid">When to/When Not to</span> use Bootstrap framework?</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5aaa420b-153a-4211-b50d-eafe6869952f">How to use Bootstrap? &amp; CDN</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1c3cb7b4-386a-460c-90ab-92a77a77a83e"><span style="border-bottom:0.05em solid">Bootstrap Layout</span> </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d8f088fc-a26a-44c9-a9d7-3d55ad22f018">12 Column System</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#07f8f364-ac77-4c41-b949-a329d53b29d1"><span style="border-bottom:0.05em solid">Wire Framing</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2cb58f49-8108-4b6e-862d-8834cdad5984"><span style="border-bottom:0.05em solid">Bootstrap Components</span></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0b388cce-ca0e-4096-8312-0cfdfa2fd55a">BUTTONS</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0fdbd871-2496-49f7-aa3b-3374eb02939a">CARD</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8356591b-70f0-4abd-bbb5-84899d1c45fa">NAV BAR</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9bda4553-280c-4fcf-ab30-9591b6912255">⚒Do it YOURSELF…</a></div></nav><h1 id="165b3e7a-72e2-49e0-9f27-f920e0296f66" class="" dir="auto"><span style="border-bottom:0.05em solid">Introduction</span></h1><p id="c0fab149-e49e-4de9-bded-e6e62f3df74a" class="" dir="auto">Bootstrap is a CSS framework created in 2010 by two Twitter developers Mark Otto and Jacob Thornton.</p><div id="a9c72cc5-56e4-4939-8651-8b1ba0f46149" class="column-list" data-notion-column-list="" dir="auto"><div id="8ca29b0e-96de-4255-94c9-b6cb14a7b5bb" style="width:37.5%" class="column" data-notion-column-ratio="0.375" dir="auto"><figure id="570b0a0c-2c55-4d25-8a4e-faaa4ce2aca8" class="image" style="text-align:left" data-notion-image="coding-all-in-one-mark-otto-jacob-thornton.jpg" dir="ltr"><a href="coding-all-in-one-mark-otto-jacob-thornton.jpg"><img style="width:240px" src="coding-all-in-one-mark-otto-jacob-thornton.jpg"/></a></figure></div><div id="dd722f71-6039-4b2c-83fd-a3bbd2b425e4" style="width:62.5%" class="column" data-notion-column-ratio="0.625" dir="auto"><p id="f9053997-dc6f-4de6-933c-ad919a6621a5" class="" dir="auto">Now the power of Bootstrap and the reason why it became so popular is it contained pre-made CSS files,</p><p id="211ebb41-ff63-42ad-9be9-bf591f82247b" class="" dir="auto">which you can simply include into your project in order to use their pre-built components and styling.</p><p id="90b3642a-f739-47e9-afdc-c61cf08d3cd6" class="" dir="auto">On top of that, one of the biggest reasons why bootstrap took off is because of their 12 column layout system built on top of Flexbox. That makes it really easy to create responsive websites and websites that simply just work and look great on mobile as well as desktop, the so-called mobile first approach.</p></div></div><p id="e9a93c34-d709-4efa-ae25-6f41c201b04d" class="" dir="auto"><strong>So how exactly does it work?</strong> Well, let&#x27;s say you had a button which just said home. You can see that the standard button rendered from HTML doesn&#x27;t look fantastic. </p><figure id="f9873f99-cebb-41ab-a66f-3951a7c6ed1a" class="image" data-notion-image="Annotation_2023-05-07_200904.png" dir="ltr"><a href="Annotation_2023-05-07_200904.png"><img style="width:720px" src="Annotation_2023-05-07_200904.png"/></a></figure><p id="cc4d2b7a-ff86-41be-b703-94de7bbf0488" class="" dir="auto">But if we included just five classes which come from the bootstrap CSS, so we include the pre-built CSS into our project and we add the styling and the components by adding these classes to our HTML. Then all of a sudden what you&#x27;ll end up with is something that looks beautiful and pre styled like this.</p><figure id="133b3c88-c1e2-4615-bffb-ce919f61a9c1" class="image" data-notion-image="Annotation_2023-05-07_201145.png" dir="ltr"><a href="Annotation_2023-05-07_201145.png"><img style="width:723px" src="Annotation_2023-05-07_201145.png"/></a></figure><p id="f0060448-9e59-4ec7-a6fc-1e6442cdeccc" class="" dir="auto">And because we don&#x27;t have to worry about writing all of the CSS code, all we need to know is which classes we need to add to our HTML. Then it makes everything so much easier and so much quicker when we want to build components into our website.</p><h1 id="bed16365-be21-4daf-b028-e97204d1e9ba" class="" dir="auto">what are CSS Framework’s?</h1><p id="ebcfcb25-bf72-4e27-94b4-97927204efde" class="" dir="auto">What exactly are these? Well, they&#x27;re pre-made CSS files which you can include into your projects. If we had a look at the bootstrap GitHub and because bootstrap is completely open source, then all of the code is visible and you can see it&#x27;s got styling defined for all of the different components.</p><figure id="bd51b528-2b59-4c01-8453-50a2040bf931" class="image" data-notion-image="Annotation_2023-05-07_205220.png" dir="ltr"><a href="Annotation_2023-05-07_205220.png"><img style="width:985px" src="Annotation_2023-05-07_205220.png"/></a></figure><p id="8d6350ea-7e42-4be0-b019-a1aee1a53cf9" class="" dir="auto">For example, this is inside the card component and it&#x27;s got classes that define what a card body should look like, what kind of layout it should have, what kind of color it should have, as well as what the card title should look like, subtitle. And it&#x27;s got all of this predefined CSS, which we can simply insert straight into our HTML.</p><p id="b7f61b86-cd4c-425e-9a72-7c2cc31d2439" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Framework file</strong></span><strong>:-</strong></p><figure id="82aeda42-4ad0-428b-bb3a-cc1df4d94746" dir="ltr"><div class="source"><a href="bootstrap-4.3.1-dist.zip" data-notion-file="bootstrap-4.3.1-dist.zip" data-notion-file-alias="bootstrap-4.3.1-dist.zip">bootstrap-4.3.1-dist.zip</a></div></figure><h1 id="e9fab2a5-9156-4491-98bc-b6e3156405d8" class="" dir="auto">Usage percentages of different frameworks</h1><p id="ce743325-bf8d-49d7-8d5c-5c4b73c18ee8" class="" dir="auto">If we look at the usage percentages across the Internet, you can see that the biggest CSS external framework is still bootstrap with close to 80% of the market share. But just because we learn about bootstrap, it doesn&#x27;t mean that everything we learned about CSS is null and void. In fact, if you look at the top here, when we look at the absolute usage percentages of all of the different frameworks across the Internet, you can see the largest percentage are still websites that don&#x27;t use any external CSS frameworks. What does it mean when there are no CSS frameworks being used? Well, it means you&#x27;re probably using native CSS like Flexbox and Grid and Float and all of the great things that we learnt before. So bootstrap doesn&#x27;t replace any of that knowledge and in fact we should be in a situation where we don&#x27;t actually need to depend on any sort of external framework, but they are really useful when we want to develop websites quickly and easily and we don&#x27;t want to spend a ton of time designing our websites because it comes with all of the pre-made styling and all of the styling rules that we can easily conform to by using their components.</p><figure id="3453fa91-5f9c-49ee-a9f3-257c1eb9b3d3" class="image" data-notion-image="Annotation_2023-05-08_151538.png" dir="ltr"><a href="Annotation_2023-05-08_151538.png"><img style="width:720px" src="Annotation_2023-05-08_151538.png"/></a></figure><h1 id="51563349-dff0-4a80-94b4-6e881e524459" class="" dir="auto"><strong>The Advantages of Bootstrap are:</strong></h1><ol type="1" id="2e45fa3a-8132-4d4b-a1f0-2d2344addf73" class="numbered-list" start="1" dir="auto"><li><strong>Fewer Cross browser bugs</strong></li></ol><ol type="1" id="c639b6a9-f587-4f21-9311-2b10e331857f" class="numbered-list" start="2" dir="auto"><li><strong>A consistent framework that supports major of all browsers and CSS compatibility fixes</strong></li></ol><ol type="1" id="5c91c1fd-9825-4c2f-93cb-0851f2b2e126" class="numbered-list" start="3" dir="auto"><li><strong>Lightweight and customizable</strong></li></ol><ol type="1" id="9e021bf2-fb8d-4885-b092-a13f88560ebb" class="numbered-list" start="4" dir="auto"><li><strong>Responsive structures and styles</strong></li></ol><ol type="1" id="131e68c8-3b5a-4b3c-a431-7fb1703e42c7" class="numbered-list" start="5" dir="auto"><li><strong>Several JavaScript plugins using the jQuery</strong></li></ol><ol type="1" id="03d29cbf-195d-4dee-be3e-2444318b0dfd" class="numbered-list" start="6" dir="auto"><li><strong>Good documentation and community support</strong></li></ol><ol type="1" id="5a1d233d-3582-46c0-b66f-21eaaf8f3974" class="numbered-list" start="7" dir="auto"><li><strong>Loads of free and professional templates, WordPress themes and plugins</strong></li></ol><ol type="1" id="6690dc42-e3a7-4b9b-9c37-c6de8d33efa6" class="numbered-list" start="8" dir="auto"><li><strong>Great grid system</strong></li></ol><h1 id="6ab3bad9-9bd6-4411-9946-bf0dad939cc6" class="" dir="auto"><strong>The Disadvantages of Bootstrap are:</strong></h1><ol type="1" id="8a72b3d2-9022-4ff2-84cc-fd4d640fadea" class="numbered-list" start="1" dir="auto"><li><strong>There will be requirement of lots of style overrides or rewriting files that can thus lead to a lot of time spent on designing and coding the website if the design tends to deviate from the customary design used in Bootstrap.</strong></li></ol><ol type="1" id="03320fb0-57de-48f0-b503-beb897d9768f" class="numbered-list" start="2" dir="auto"><li><strong>You would have to go the extra mile while creating a design otherwise all the websites will look the same if you don’t do heavy customization.</strong></li></ol><ol type="1" id="17d5cd4b-8aea-422e-a066-004cffce59a3" class="numbered-list" start="3" dir="auto"><li><strong>Styles are verbose (using or containing more words than are needed) and can lead to lots of output in HTML which is not needed.</strong></li></ol><ol type="1" id="3f9c8287-3449-418a-b932-3bb18b5b9848" class="numbered-list" start="4" dir="auto"><li><strong>JavaScript is tied to jQuery and is one of the commonest library which thus leaves most of the plugins unused.</strong></li></ol><ol type="1" id="5a915376-fecd-4ad6-ac13-cd0fc4d35821" class="numbered-list" start="5" dir="auto"><li>(failing to act in accordance with a wish or command.)<strong>Non-compliant HTML.</strong></li></ol><h1 id="9ca22cb4-706c-4119-913c-e60d9291e2d8" class="" dir="auto"><span style="border-bottom:0.05em solid">When to/When Not to</span> use Bootstrap framework?</h1><figure id="a81f3499-6575-444e-ac4d-d7a5c7e49211" class="image" data-notion-image="Annotation_2023-05-08_153856.png" dir="ltr"><a href="Annotation_2023-05-08_153856.png"><img style="width:981px" src="Annotation_2023-05-08_153856.png"/></a></figure><p id="7b0b14c7-5a6c-4501-87f2-592e0e6a5384" class="" dir="auto">So when should you use the CSS frameworks like Bootstrap and when should you not? Well, when you are building a mobile first responsive website that you want to put online very quickly and access beautiful components designed by professional designers, keeping everything on your website looking slick and uniform, then you probably want to consider using bootstrap. But if you&#x27;re building a very simple website where you just need HTML and CSS and you can quickly throw it up, or if you&#x27;re building a really complex custom design website and you want complete control over the design, then it&#x27;s probably not a good idea to use an external CSS framework like Bootstrap.</p><h1 id="5aaa420b-153a-4211-b50d-eafe6869952f" class="" dir="auto">How to use Bootstrap? &amp; CDN</h1><p id="2138424c-df93-4a68-b986-0052debc21aa" class="" dir="auto">how do you actually use it?</p><figure id="59dea9a6-f178-4920-acdc-445bc04b6b8a" class="image" data-notion-image="Annotation_2023-05-08_154405.png" dir="ltr"><a href="Annotation_2023-05-08_154405.png"><img style="width:962px" src="Annotation_2023-05-08_154405.png"/></a></figure><figure id="f073ffbe-d506-416b-80a8-2171089c4f3d" class="image" data-notion-image="Annotation_2023-05-08_155922.png" dir="ltr"><a href="Annotation_2023-05-08_155922.png"><img style="width:1345px" src="Annotation_2023-05-08_155922.png"/></a></figure><p id="59960c05-eaa8-418d-9f5f-7cd29044c7f2" class="" dir="auto">Well, one of the easiest ways is to include it via a link. We&#x27;ve seen how we can use the link tag in order to add our stylesheets. And in a similar way we can use these link tags that simply gets hold of the stylesheet from an external resource.</p><figure id="b7f82e1c-f740-4d8d-8f24-bfeae6721d72" class="image" data-notion-image="what_is_a_cdn_distributed_server_map.png" dir="ltr"><a href="what_is_a_cdn_distributed_server_map.png"><img style="width:5667px" src="what_is_a_cdn_distributed_server_map.png"/></a></figure><div id="6a3b35f2-62e1-4ed4-99f4-68e803daa217" class="column-list" data-notion-column-list="" dir="auto"><div id="ad08f3f3-3b1f-4853-bc0c-207ea859ec78" style="width:50%" class="column" data-notion-column-ratio="0.5" dir="auto"><figure id="7f6cbcdd-908e-4c30-8bdc-8a148a2e00ba" class="image" data-notion-image="world-submarine-cable-map-980x459.png" dir="ltr"><a href="world-submarine-cable-map-980x459.png"><img style="width:384px" src="world-submarine-cable-map-980x459.png"/></a></figure></div><div id="ebf3a193-3bd4-4da1-92d6-6812443c502b" style="width:50%" class="column" data-notion-column-ratio="0.5" dir="auto"><figure id="fe61f57d-bb5b-4112-b9f4-80519ed8c63d" class="image" data-notion-image="unnamed.jpg" dir="ltr"><a href="unnamed.jpg"><img style="width:512px" src="unnamed.jpg"/></a></figure></div></div><p id="3800f31b-904a-45b8-832c-c7faeb46e856" class="" dir="auto">So in this case it&#x27;s through CDN, which stands for Content Delivery Network. And what these are is little hubs all across the entire world and it knows where your users are located. So when they load up your website and try to access this particular CSS file that contains all of the bootstrap code, then it can find the closest location with the shortest distance to the server that has that content. And that just means that even though this has to be downloaded from somewhere, it can be delivered to your user and rendered very, very quickly. And from our point of view as developers, all we need to do is simply include this link into the head section of our HTML. And if we want any of the functionality like dropdown menus or clickable buttons, then we want to include the bootstrap script just before the end of the body section. </p><h1 id="1c3cb7b4-386a-460c-90ab-92a77a77a83e" class="" dir="auto"><span style="border-bottom:0.05em solid">Bootstrap Layout</span> </h1><h2 id="d8f088fc-a26a-44c9-a9d7-3d55ad22f018" class="" dir="auto">12 Column System</h2><figure id="958bc8a1-403c-4190-999d-0dc13323a132" class="image" data-notion-image="l1.png" dir="ltr"><a href="l1.png"><img style="width:970px" src="l1.png"/></a></figure><p id="1e665704-06a6-40e3-8941-ee69fe689293" class="" dir="auto">So now that we&#x27;ve had a little bit of a taste of what Bootstrap can do, let&#x27;s dive deep into one of</p><p id="d102efb3-3475-4435-8f31-68c301c74da5" class="" dir="auto">the most powerful features of Bootstrap, which is the 12 column layout system.</p><p id="55ff15d9-f6e6-4a0d-a786-fc737c1ce599" class="" dir="auto">The 12 column system is made of three components.</p><p id="4081e82d-b33c-4976-b8ab-d0e18c7931e1" class="" dir="auto">Firstly, we need a div that has a class of container and this is going to be the starting point.</p><p id="b93cbf50-eeab-48fe-ae89-49736d0ad3a5" class="" dir="auto">Next inside that container we need another div which is going to be of class row and inside the row</p><p id="3174f04a-a404-4512-8bbb-f0ba0a67cfd2" class="" dir="auto">is where we will have our items and they will be laid out using the column system.</p><p id="420ff4bc-61b5-4fcc-aa3d-558dcc3f5d0e" class="" dir="auto">So what does this look like in code?</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c75dc03-3b0a-43af-ae95-23ef2718f0c6" class="code code-wrap" data-notion-code-syntax="html"><code class="language-html" style="white-space:pre-wrap;word-break:break-all">&lt;div class=&quot;container&quot;&gt;
+   &lt;div class=&quot;row&quot;&gt;
+        &lt;div class=&quot;col&quot;&gt;Hello&lt;/div&gt;
+   &lt;/div&gt;
+&lt;/div&gt;</code></pre><p id="d9636dc2-c714-4d26-8e22-87c7e2544015" class="" dir="auto">Well, it&#x27;s pretty simple.</p><p id="ed1fcb87-1cd1-4162-b9d0-d802e9f8095e" class="" dir="auto">We have a container that contains a single row and then within the row we can have as many items as</p><p id="d875adf7-5bf2-4ed3-8dc3-7e04ef66b2ba" class="" dir="auto">we like.</p><p id="5603e2d2-919d-43fe-9cbd-4a4cb1f48654" class="" dir="auto">And they&#x27;re laid out using the column class.</p><p id="a75427b0-f4f5-465a-a2c1-36e9f3326cc6" class="" dir="auto">Pretty simple so far.</p><figure id="4205cc90-7ae0-49ee-a7b7-9fde2f4c2ff3" class="image" data-notion-image="Untitled.png" dir="ltr"><a href="Untitled.png"><img src="Untitled.png"/></a></figure><p id="9cb539ab-cf4d-4652-8ab2-df99cde4cba3" class="" dir="auto">And you&#x27;re probably thinking, well, there&#x27;s nothing very groundbreaking here.</p><p id="ac44b4e8-6be1-4a73-898e-3c5ef6a2d168" class="" dir="auto">Now, the interesting thing starts happening when you have multiple columns laid out inside these rows,</p><p id="a0047d86-9430-475d-983a-ae15f63bf640" class="" dir="auto">because automatically Bootstrap will try to give every column inside the row equal spacing and space</p><p id="343d37f1-7a8b-4295-add3-ade9e96892f1" class="" dir="auto">them across the entire width of the container.</p><p id="4d31f621-16d7-4c40-b15e-57d30efe80c1" class="" dir="auto">So if you had a container which included a row that had one, two, three, four, five, six divs in</p><p id="22f5d993-d702-4bd7-8d2d-39f178cc259c" class="" dir="auto">there, each with the class set as call short for column, then it will divide up the entire width by</p><p id="99d78a27-c200-4970-8013-4d269760226e" class="" dir="auto">six.</p><p id="b5e60dd0-a098-4330-9c66-6fe712a0746c" class="" dir="auto">And if you had three of them then it would give each of them a third of the space.</p><figure id="c76c12b4-5ebd-416f-8f30-16fbbd06f8d1" class="image" data-notion-image="Annotation_2023-05-13_075727.png" dir="ltr"><a href="Annotation_2023-05-13_075727.png"><img style="width:998px" src="Annotation_2023-05-13_075727.png"/></a></figure><p id="7e6b23ee-5417-4f94-9ee7-cc4235bbb5a5" class="" dir="auto">Also bootstrap container is responsive.</p><p id="b6cb8d00-6ba2-4ae6-a5fc-52cdc9de4fa2" class="" dir="auto">The layout system gets more interesting when we start using sized columns.</p><figure id="0292bc91-f5c1-47ab-9bc3-0d402b82d9c6" class="image" data-notion-image="l3.png" dir="ltr"><a href="l3.png"><img style="width:980px" src="l3.png"/></a></figure><p id="54a21a26-26e7-478d-ac25-82d0503e2e11" class="" dir="auto">Instead of just writing Col as the class, we can actually set the class as for example, Col dash two</p><p id="d69c51ef-f485-4276-94b3-f933dec316b2" class="" dir="auto">or cold dash four.</p><p id="3939a82d-e840-4b6f-8ed4-5ad461776b55" class="" dir="auto">And what this is saying is if we think of each of our rows as having 12 columns and we split them all</p><p id="b6a80572-1ed1-48f5-a7c5-6264a2174cd0" class="" dir="auto">up into the 12 equal size columns like this.</p><p id="19c89030-b797-471a-89be-81066105dbc6" class="" dir="auto">So if you count this is actually a total of 12.</p><p id="dd1b8c8b-673e-45b4-ab4e-9710f8b293f8" class="" dir="auto">Then when we create a div we can specify well how many of these columns do we want to occupy?</p><p id="5896e8df-4d3e-42fd-9973-3cb290888d16" class="" dir="auto">In this case this div wants two of those columns and then this one wants four of them and then the final</p><p id="2798fa55-2689-4d9f-bc17-1d24f9b43bf1" class="" dir="auto">one wants six.</p><p id="2859c922-625e-4e62-91c3-ab7d613f64cc" class="" dir="auto">Based on the classes that you choose, Bootstrap will know how much space to allocate each div on a</p><p id="52967243-4e7a-4e0d-8864-3f4d88353543" class="" dir="auto">percentage basis.</p><p id="91947805-be7e-4546-b2cd-f5e4acdd0f5f" class="" dir="auto">So you could view the COL six as a 50% and the col two as one sixth of the entire width and so on and</p><p id="049f05d2-1b44-4985-8148-dfea93bb8cea" class="" dir="auto">so forth.</p><p id="097fc0b8-f5dd-43e8-8188-26f13d2da948" class="" dir="auto">So you can use all of the numbers col one all the way up to col 12 and you can split up the proportion</p><p id="d0e9bdd9-9c47-4f21-9b0f-128ab1712770" class="" dir="auto">of your screen and the content inside.</p><p id="8ab0c9d0-ddee-4f90-a17d-39695ba50105" class="" dir="auto">So maybe you would have a navigation section on the left that you only want to take up two out of 12</p><p id="38fd651d-d4c7-45a3-9a20-1aa48c6477de" class="" dir="auto">width and then the main content here maybe could take up ten out of 12 of the width and so on and so</p><p id="ab35969f-aa41-4001-a66c-3da8a78743db" class="" dir="auto">forth.</p><p id="995e9082-5a62-48a4-a607-b68b98a9bc09" class="" dir="auto">And this is a really, really easy and intuitive way of sizing your content using bootstrap, and this</p><p id="6eaef000-6335-4055-82a8-1d7f2843b284" class="" dir="auto">is what the code would look like.</p><figure id="b044820f-92e2-46de-b1fe-cb64806dec3e" class="image" data-notion-image="l4.png" dir="ltr"><a href="l4.png"><img style="width:991px" src="l4.png"/></a></figure><p id="31809b2e-1acc-4eef-a571-2ae661c883ce" class="" dir="auto">So we have three divs and we&#x27;re giving this one two out of 12, four out of 12, six out of 12.</p><p id="5c46c61e-1318-4c50-b10c-3285b2dceabf" class="" dir="auto">And this is the layout that we end up with.</p><p id="e9031b96-cccc-4519-9e03-62a88e6c1e42" class="" dir="auto">And we didn&#x27;t have to write any CSS.</p><p id="36d3da6f-5896-429a-85b8-b20af3469882" class="" dir="auto">All we had to do was add in the pre-built layout classes.</p><p id="b5f1e2b1-16c1-4f6e-a01a-a5856099c505" class="" dir="auto">Again, it&#x27;s really important to know that Bootstrap has predefined breakpoints and these dimensions</p><figure id="75586485-2146-4d10-9b16-6af49dd1cf7a" class="image" data-notion-image="Mobile.png" dir="ltr"><a href="Mobile.png"><img style="width:876px" src="Mobile.png"/></a></figure><p id="b3f8ff25-1987-4e8c-9216-255f08a3dc3a" class="" dir="auto">are defined based on common screen sizes.</p><p id="1829e26a-cf49-4b8d-b9a7-8884aafb0d9e" class="" dir="auto">And even though these numbers are constantly changing, generally I would say that small is for mobile</p><p id="d0175ce4-e516-4d72-bf0d-b5e408b9cdbb" class="" dir="auto">devices, medium is for tablets and iPads.</p><p id="34bc4745-f41f-4d22-a10e-aa6845280918" class="" dir="auto">A large is for laptop, extra large is for desktop, and extra extra large is for anything crazy like</p><p id="99b7ccb4-9fbe-4d62-81e7-edb0da2e01d0" class="" dir="auto">maybe a TV or something.</p><p id="3694f698-c129-41f0-a81c-fd3581688253" class="" dir="auto">An extra small is for devices that are maybe longer than they are wide.</p><p id="646c163d-8611-47e7-aa9d-ca54823331d4" class="" dir="auto">So maybe foldable phones and even really narrow phone screens.</p><figure id="d2844820-443b-4b44-afb0-4cc854f1398c" class="image" data-notion-image="download_(4).png" dir="ltr"><a href="download_(4).png"><img style="width:1748px" src="download_(4).png"/></a></figure><p id="da3c5d9d-8dca-42ff-9262-3a07a6df5695" class="" dir="auto">Now, one thing I want to draw your attention to is the directionality of the signs here.</p><p id="a6a3a21b-f619-41e3-bfc3-e3d345a250b6" class="" dir="auto">All of these breakpoints, which will often use, for example, coal dash, SM dash two.</p><p id="614d4af0-5d46-45e6-838b-d4108021c7af" class="" dir="auto">This section refers to the screens which are greater than this dimension.</p><p id="257e721f-8eec-40c5-81bd-499bc6102e3d" class="" dir="auto">So that means the small breakpoint is between here and here and covers the range between 576 and 768,</p><p id="f1e0f59d-0fd9-4396-b9a8-1855bbae31e1" class="" dir="auto">and each of them always go up.</p><p id="55d16872-c0c1-4fd4-bcd5-9bfab4eab408" class="" dir="auto">So this is important point to keep in mind when you&#x27;re dealing with the bootstrap breakpoints.</p><p id="f3354f5b-4ba2-4e00-bde0-1cebbfb80991" class="" dir="auto">Now, one of the great things about bootstrap breakpoints is we don&#x27;t really need the media queries</p><p id="e92290de-259b-49c7-8ae6-a91fe3dc20d1" class="" dir="auto">as much because this covers pretty much a lot of the different device dimensions and we don&#x27;t have to</p><p id="8108e0f5-52ca-4911-b0fb-f8c17bd16f34" class="" dir="auto">manually write all the pixel sizes and add media queries into our CSS.</p><p id="fa0a6259-db6b-4389-b87e-dd29a7776f85" class="" dir="auto">We can target the different sizes and make our website responsive by using the pre-built breakpoints.</p><p id="666068c2-5bb4-47af-b7fa-2024a087c71b" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>PRACTICE</strong></span><strong>:-</strong></p><p id="c84b0b58-5e88-4882-8739-01be0a44528c" class="" dir="auto">So in order for you to practice, I&#x27;ve created a website at <a href="http://github.io/">github.io</a> forward slash bootstrap dash layout,</p><figure id="1008e5f4-16ef-4a81-8a70-244010d9c9a9" dir="ltr"><div class="source"><a href="https://appbrewery.github.io/bootstrap-layout/">https://appbrewery.github.io/bootstrap-layout/</a></div></figure><figure id="2e2cc5dd-8d7a-42c1-9bb5-707434689835" dir="ltr"><a href="https://appbrewery.github.io/bootstrap-layout/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Bootstrap Layout Exercises</div></div><div class="bookmark-href">https://appbrewery.github.io/bootstrap-layout/</div></div></a></figure><hr id="bc8ac1b5-6294-4057-8a61-a97c482f9a7d" dir="auto"/><h2 id="07f8f364-ac77-4c41-b949-a329d53b29d1" class="" dir="auto"><span style="border-bottom:0.05em solid">Wire Framing</span></h2><aside class="block-color-yellow callout" data-notion-callout="" data-notion-callout-icon="💡" data-notion-callout-background="yellow" style="white-space:pre-wrap;display:flex" id="cf7b3f9d-6195-45eb-92de-5f6b1729e485" dir="ltr"><div style="font-size:1.5em"><span class="icon" data-emoji="💡"></span></div><div style="width:100%">Q. What is wire framing?                                                                Ans: A wireframe is <strong>a two-dimensional illustration of a page&#x27;s interface that specifically focuses on space allocation and prioritization of content, functionalities available, and intended behaviors</strong>. For these reasons, wireframes typically do not include any styling, color, or graphics.</div></aside><ul id="326503a2-2686-4314-b114-892fc0691b13" class="bulleted-list" dir="auto"><li style="list-style-type:disc">First make a Mock-up (replica) of the web-site before making it.</li></ul><ul id="2d56add8-7d60-4b3a-9679-c5265b0365d7" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Take some inspiration from other’s website.</li></ul><ul id="4df9a1ff-46a5-469a-8d64-c5a94c338047" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="http://ui-patterns.com/">ui-patterns.com</a> to see different types of website.</li></ul><ul id="b493f824-c091-4791-9c9b-29cf83f32deb" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Physically making the sketch of the website’s.</li></ul><ul id="03a64823-5cd7-4d56-8325-e7579dc08733" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="https://dribbble.com/">Dribbble.com</a> for different websites to take inspiration from.</li></ul><ul id="51edb1d6-f0d8-458f-99d0-508a43137c6a" class="bulleted-list" dir="auto"><li style="list-style-type:disc">You can also download the templates from <a href="https://sneakpeekit.com/">https://sneakpeekit.com</a> and print it to make the sketch.</li></ul><ul id="28186ff0-e943-4b7e-9551-52692a7b654d" class="bulleted-list" dir="auto"><li style="list-style-type:disc">If you want to be more advanced, you can visit the <a href="https://balsamiq.cloud/">https://balsamiq.cloud/</a> website to make the framework of the website.</li></ul><figure id="d3b38062-9e46-4970-a706-86dfd5df7b76" class="image" data-notion-image="Annotation_2023-05-13_094650.png" dir="ltr"><a href="Annotation_2023-05-13_094650.png"><img style="width:1365px" src="Annotation_2023-05-13_094650.png"/></a></figure><hr id="a6002b95-4727-42cb-ae94-edd4c3e457f9" dir="auto"/><h1 id="2cb58f49-8108-4b6e-862d-8834cdad5984" class="" dir="auto"><span style="border-bottom:0.05em solid">Bootstrap Components</span></h1><p id="24f9590b-1ce1-45d0-b09d-803baeac2172" class="" dir="auto"><strong>Learn to use the pre-built and pre-styled Components…</strong></p><h2 id="0b388cce-ca0e-4096-8312-0cfdfa2fd55a" class="" dir="auto">BUTTONS</h2><figure id="2f19f994-ec28-44a8-9169-0170ddb1a667" class="image" data-notion-image="Buttons.png" dir="ltr"><a href="Buttons.png"><img style="width:1357px" src="Buttons.png"/></a></figure><p id="48a07d3c-20d8-4277-b004-de4533f6fed0" class="" dir="auto">Let&#x27;s start with one of the most commonly used components, which is the bootstrap button.</p><p id="1b5d41e3-8543-41d8-b240-05b87022108f" class="" dir="auto">And this is a really good place to start because you also see the default bootstrap styling and the</p><p id="6b60bc18-37a4-427b-af46-cc000f92a05d" class="" dir="auto">color scheme in most of the components that you&#x27;ll get access to through bootstrap.</p><p id="e7ea4880-918b-46a1-9e23-648535b32279" class="" dir="auto">If you want to give it a particular color.</p><p id="bfd981bf-eebc-4dfa-9db7-45411452758e" class="" dir="auto">It&#x27;s really easy to access all of these default colors by simply using their name in most cases in a</p><p id="27ae1132-f726-4c8b-9044-b75a8a4bcedf" class="" dir="auto">bootstrap design website, the primary button, the go to, you know, the buy or the contact us or</p><p id="62da2e36-abf0-457b-847f-08ea8cf53a8f" class="" dir="auto">download whatever will be this blue color and you can access all of the other colors through each of</p><p id="7b8f369d-c872-4d28-90da-2e3deea92752" class="" dir="auto">their bootstrap names and they give you a little bit of a hint as to what they&#x27;re used for.</p><p id="4ed7ea75-377a-4f77-a794-ff22cead3b8f" class="" dir="auto">So success is usually like an okay button danger.</p><p id="e8a35381-41de-4c70-82e8-da1f36b1359b" class="" dir="auto">Maybe if you click this button, something really bad happens or warning, etcetera, and you get access</p><p id="1b3aa910-5f5e-438d-a685-05651e078190" class="" dir="auto">to this button and this button styling simply by creating a button HTML element, giving it the class</p><p id="a76a8fde-a6fd-418e-9e70-1d30216ccc88" class="" dir="auto">BTN for a bootstrap button, and then adding the class for the color scheme from this list that you</p><p id="569b027b-ffb2-4dd5-9e72-b74653755ad9" class="" dir="auto">want to choose.</p><p id="b481b594-56f7-46a3-9af8-39a0331b70d3" class="" dir="auto">Let&#x27;s try this out.</p><p id="be88f063-6d5e-4fab-812e-7678dc7cecb4" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Example</strong></span><strong>:-</strong></p><figure id="b322b76b-690f-4410-9a52-5e09f94f07b8" class="image" data-notion-image="Annotation_2023-05-14_062828.png" dir="ltr"><a href="Annotation_2023-05-14_062828.png"><img style="width:1366px" src="Annotation_2023-05-14_062828.png"/></a></figure><h2 id="0fdbd871-2496-49f7-aa3b-3374eb02939a" class="" dir="auto">CARD</h2><p id="46d7dcfd-1398-4850-99e9-97110a16005f" class="" dir="auto">The next component I want to talk about is a really useful one, which is the card which you already</p><p id="3835e3f0-1279-4a1a-8b84-bb572880e322" class="" dir="auto">saw in the previous lessons exercise.</p><figure id="eb03abaa-c76c-4c9c-801e-1a67bec15b68" class="image" data-notion-image="Annotation_2023-05-14_064336.png" dir="ltr"><a href="Annotation_2023-05-14_064336.png"><img style="width:1366px" src="Annotation_2023-05-14_064336.png"/></a></figure><p id="b2642ef9-8b8b-4e48-b661-370dffacfe44" class="" dir="auto">And as always, all we need to do is go to that particular component&#x27;s page and then we can simply copy</p><figure id="3f17ad72-b7bd-46dd-b54c-79b2720f41ca" class="image" data-notion-image="Annotation_2023-05-14_064512.png" dir="ltr"><a href="Annotation_2023-05-14_064512.png"><img style="width:1366px" src="Annotation_2023-05-14_064512.png"/></a></figure><p id="843838d3-5a14-4ec3-b678-6f426017371d" class="" dir="auto">the code, paste it into our website and replace certain parts of the code, such as the image source</p><p id="8b6f88c2-a444-4aba-8a87-da1d40d497be" class="" dir="auto">or the alt text.</p><h2 id="8356591b-70f0-4abd-bbb5-84899d1c45fa" class="" dir="auto">NAV BAR</h2><figure id="b011ffa8-5723-4d19-9d0c-ff7952e7ac06" class="image" data-notion-image="Annotation_2023-05-14_065048.png" dir="ltr"><a href="Annotation_2023-05-14_065048.png"><img style="width:1366px" src="Annotation_2023-05-14_065048.png"/></a></figure><p id="ac9fa865-2112-4cf2-bc00-77af70dfb217" class="" dir="auto">Now, one component that you&#x27;re probably going to be using whenever you&#x27;re building a website is a nav</p><p id="21d6e800-8429-431c-96a8-e24114dc6ce3" class="" dir="auto">bar, and the bootstrap nav bars are some of the best designed nav bars I&#x27;ve seen.</p><p id="754fb770-2f81-40da-9c24-41a5487ad907" class="" dir="auto">And it also is super easy to include simply using their example snippet codes.</p><p id="c3b7dd5c-cb4a-49a3-a3dd-7f388c748c85" class="" dir="auto">If you head over to the nav bar, you can read on how it works And also what&#x27;s some of the examples</p><figure id="ceacb407-6b72-46b3-b576-39baeb889884" dir="ltr"><div class="source"><a href="https://getbootstrap.com/docs/5.2/components/navbar/#how-it-works">https://getbootstrap.com/docs/5.2/components/navbar/#how-it-works</a></div></figure><p id="4d77e1f3-3c49-4061-a900-f45154a2331b" class="" dir="auto">they have are for example, this one with a search bar with some dropdowns, and this one which describes</p><p id="3d050286-c172-40c6-a14f-7c57713d4239" class="" dir="auto">how you can have the brand at the top left or if you want an image, image and text brand and you can</p><p id="dfda0d01-ede4-46b7-8b06-dbde4997bc12" class="" dir="auto">scroll through this to find the kind of nav bar you want to create and to use the example code.</p><p id="e0b90bd6-779b-47ee-b860-ee0f386aec73" class="" dir="auto">Now another area for the nav bars is if you head over to examples and you go to the header section,</p><p id="72b978d5-fe76-435d-b35a-4054d482ff6a" class="" dir="auto">you can see some even more Fancily laid out nav bars here.</p><figure id="e5d4116d-fc34-43b4-87af-ba2e2f522862" class="image" data-notion-image="screencapture-getbootstrap-docs-5-2-examples-headers-2023-05-14-06_55_12.png" dir="ltr"><a href="screencapture-getbootstrap-docs-5-2-examples-headers-2023-05-14-06_55_12.png"><img style="width:1366px" src="screencapture-getbootstrap-docs-5-2-examples-headers-2023-05-14-06_55_12.png"/></a></figure><p id="b678f08d-8dea-4335-a329-8e70cbb74dd7" class="" dir="auto">Just copy it and paste it…</p><h2 id="9bda4553-280c-4fcf-ab30-9591b6912255" class="" dir="auto">⚒Do it YOURSELF…</h2><p id="d6bff261-5100-4190-aecf-817e36778b35" class="" dir="auto">Now there are hole lot of Components in bootstrap like navbar, carousel, buttons, dropdowns, card, alerts etc. Soo we have covered some of them and for rest of the properties you can go to the bootstrap documentation and learn about them:-</p><figure id="8babff3f-dc48-430c-b0bf-52b404f7544d" dir="ltr"><div class="source"><a href="https://getbootstrap.com/docs/5.2/getting-started/introduction/">https://getbootstrap.com/docs/5.2/getting-started/introduction/</a></div></figure><p id="057c6406-b80a-4ca6-8168-de9d84708314" class="" dir="auto">You can also see the udemy’s <strong><span style="border-bottom:0.05em solid">66. Bootstrap Components</span></strong> video:-</p><figure id="0ee75f52-ced2-4ff7-9b4e-78d52fa0c60a" dir="ltr"><a href="https://www.udemy.com/course/the-complete-web-development-bootcamp/learn/lecture/37389818#announcements" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href">https://www.udemy.com/course/the-complete-web-development-bootcamp/learn/lecture/37389818#announcements</div></div></a></figure><hr id="9ff00d0e-d04b-4bf0-a70b-c1a72b79343f" dir="auto"/><p id="c7b1ca6c-02d7-4e42-98e7-7b8183dde8ae" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

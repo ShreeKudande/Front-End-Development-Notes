@@ -1,0 +1,837 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>When to use Flexbox and when to use CSS Grid…</title><meta name="data-notion-page-icon" content="🌐"/><link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ctext%20y%3D%22.9em%22%20font-size%3D%2290%22%3E%F0%9F%8C%90%3C%2Ftext%3E%3C%2Fsvg%3E"/><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="4efe62ba-b77e-40ac-8db9-0c291bda88b3" class="page sans" data-notion-page-icon="🌐"><header><div class="page-header-icon undefined"><span class="icon" data-emoji="🌐"></span></div><h1 class="page-title" dir="auto"><strong>When to use Flexbox and when to use CSS Grid…</strong></h1><p class="page-description" dir="auto"></p></header><div class="page-body"><figure id="eb47f130-b5fa-4311-a0e7-c699f272be79" class="image" data-notion-image="https://blog.logrocket.com/wp-content/uploads/2020/04/css-flexbox-vs-css-grid.png" dir="ltr"><a href="https://blog.logrocket.com/wp-content/uploads/2020/04/css-flexbox-vs-css-grid.png"><img style="width:700px" src="https://blog.logrocket.com/wp-content/uploads/2020/04/css-flexbox-vs-css-grid.png"/></a></figure><p id="878f79bc-f962-4d41-beca-699dcf21542c" class="" dir="auto"><em><strong>Editor’s note</strong></em><em>: This article comparing </em><a href="https://blog.logrocket.com/responsive-image-gallery-css-flexbox/"><em>Flexbox</em></a><em> and </em><a href="https://blog.logrocket.com/css-grid-getting-started/"><em>CSS Grid</em></a><em> was last reviewed and updated on 6 January 2023.</em></p><p id="a541f11b-ac81-4ce9-844c-f1076792ec6e" class="" dir="auto">The way you display your content can say a lot about you or your company. Having high-quality content and knowing how to display it in a clean way that your user can understand is important.</p><p id="283ce363-e6b8-43f4-819a-55e97acc1ffe" class="" dir="auto">So how do we choose how we’re going to show our content? The responsibility of showing our content in a pretty and decent way is through our CSS code.</p><p id="f2ece76b-fe62-4b73-b23d-02c10e1b706b" class="" dir="auto">CSS has always been one of the most important parts of web development, we’ve been building and improving new ways to work with it since the beginning of browsers. A few years ago, creating web page layouts was a very hard job. We were using some CSS properties such as <code>float</code>, positioning a lot of elements with <code>position</code>, and inline-block styling.</p><p id="472464a9-a550-41dc-8d64-304180b21719" class="" dir="auto">Now, we don’t depend on those properties anymore to create our web pages, it’s getting easier now to create different experiences on our web pages. The evolution of the web has come to a point that now we have two CSS layout systems that we can work with: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout">Flexbox</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout">CSS Grid</a>.</p><p id="dae8ee17-64e1-4e67-99b4-b250cbc3a983" class="" dir="auto">Thinking about which layout system is best for your project early can really help you achieve a better result and well-written CSS code. In this post, we will look at when to use Flexbox and when to use CSS Grid. It’s not a very hard question to answer but it can save you some time in the future with maintenance and refactoring.</p><p id="522c48a5-2f53-45eb-9eee-ca48b17ed616" class="" dir="auto">Jump ahead:</p><ul id="99f00aa6-1d35-4f61-be6e-6278f531f043" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="https://blog.logrocket.com/css-flexbox-vs-css-grid/#what-flexbox">What is Flexbox?</a></li></ul><ul id="b210618c-bc1a-49ab-ad12-bbca328cc27b" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="https://blog.logrocket.com/css-flexbox-vs-css-grid/#what-css-grid">What is CSS Grid?</a></li></ul><ul id="db37d19f-7ed2-4847-b672-0dfee441bd3f" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="https://blog.logrocket.com/css-flexbox-vs-css-grid/#properties-flexbox-grid-share">Properties that Flexbox and Grid share</a></li></ul><ul id="55b11d7a-c7d3-4fa3-8c3e-a00e0adeb61e" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="https://blog.logrocket.com/css-flexbox-vs-css-grid/#css-grid-layout-flexbox-alignment">CSS Grid is for layout; Flexbox is for alignment</a></li></ul><ul id="49255329-d1db-4d83-9d45-b26abf330a63" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="https://blog.logrocket.com/css-flexbox-vs-css-grid/#when-use-css-flexbox">When to use CSS Flexbox</a></li></ul><ul id="6b3dc60e-4905-4b5b-9432-b0733c328566" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="https://blog.logrocket.com/css-flexbox-vs-css-grid/#when-use-css-grid">When to use CSS Grid</a></li></ul><h2 id="bae815ac-b834-4a1f-a208-33fa481a3978" class="" dir="auto"><strong>What is Flexbox?</strong></h2><p id="b7f39a9c-8d5a-4b28-af47-32272fcf98b6" class="" dir="auto"><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout">Flexbox</a> was introduced in 2009 as a new layout system, with the goal to help us build responsive web pages and organize our elements easily, and, since then, it’s gained more and more attention. It turns out it’s now used as the main layout system for modern web pages.</p><p id="47f4bd83-5aa2-4269-963a-69025dd2f195" class="" dir="auto">Flexbox is a one-dimensional layout system that we can use to create a row or a column axis layout. It makes our life easier to design and build responsive web pages without having to use tricky hacks and a lot of float and position properties in our CSS code.</p><p id="461b18f9-ed4f-498b-9e24-da14aa8434fd" class="" dir="auto">Before we get into when you should use Flexbox and Grid, let’s go over a few properties that make these two concepts stand apart from each other. If you want to go into further properties of Flexbox and Grid, or how to start out with them, you can check out these beginner friendly articles on <a href="https://blog.logrocket.com/responsive-image-gallery-css-flexbox/">Flexbox</a> and <a href="https://blog.logrocket.com/css-grid-getting-started/">G</a><a href="https://blog.logrocket.com/css-grid-getting-started/">rid,</a> respectively.</p><p id="90081543-dcbf-4a04-83d5-fb5fd98c00ee" class="" dir="auto">Say we have a <code>&lt;div&gt;</code> in our HTML that serves as a container for three child elements. All you need to do is create a flex container using the <code>display: flex</code> property. After that, every element that you have inside that flex container turns into a flex item.</p><p id="0eb6df55-9089-49c6-8ac3-6d9950de7d24" class="" dir="auto">The corresponding code would be:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="526d314f-704e-406f-bef0-d97343faffc9" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">&lt;div class=&quot;container&quot;&gt;
+  &lt;div id=&quot;one&quot;&gt;1&lt;/div&gt;
+  &lt;div id=&quot;two&quot;&gt;2&lt;/div&gt;
+  &lt;div id=&quot;three&quot;&gt;3&lt;/div&gt;
+&lt;/div&gt;
+
+
+.container{
+  display: flex;
+}</code></pre><figure id="0a77554e-755c-43bc-8f64-147387feba00" class="image" data-notion-image="https://blog.logrocket.com/wp-content/uploads/2023/01/items-inside-container-flex-applied.png" dir="ltr"><a href="https://blog.logrocket.com/wp-content/uploads/2023/01/items-inside-container-flex-applied.png"><img style="width:487px" src="https://blog.logrocket.com/wp-content/uploads/2023/01/items-inside-container-flex-applied.png"/></a></figure><p id="7efa4fc9-0f2c-4199-b561-175cabeb48ec" class="" dir="auto">In our flex container, we could decide to set a direction for the items in our container. The most frequently used flex directions are <code>row</code> and <code>column</code>. Our corresponding CSS would look like this:</p><pre id="bfa62400-fca2-4442-8de9-2a56625c1300" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">.container{
+  flex-direction: row | column;
+}</code></pre><figure id="9ff19d8d-49c4-461d-8134-4ef8b7c297e1" class="image" data-notion-image="https://blog.logrocket.com/wp-content/uploads/2023/01/flex-direction.png" dir="ltr"><a href="https://blog.logrocket.com/wp-content/uploads/2023/01/flex-direction.png"><img style="width:700px" src="https://blog.logrocket.com/wp-content/uploads/2023/01/flex-direction.png"/></a></figure><p id="924a775c-8113-4aa3-ae73-8b68462a883f" class="" dir="auto">In some cases, <code>flex-direction</code> could be set to <code>row-reverse</code> or <code>column-reverse</code>. One important thing to note under flex directions is the concept of axes. Depending on the flex direction, we can have a main axis and a cross axis. In the case where the flex-direction is row, the main axis is in the horizontal direction, and the cross axis is in the vertical. The opposite is of the case when the flex-direction is column. This will be useful when we look into aligning:</p><figure id="daeae62c-a033-4762-9a8a-a87841675a27" class="image" data-notion-image="https://blog.logrocket.com/wp-content/uploads/2023/01/flex-direction-aligning-rows-columns.png" dir="ltr"><a href="https://blog.logrocket.com/wp-content/uploads/2023/01/flex-direction-aligning-rows-columns.png"><img style="width:700px" src="https://blog.logrocket.com/wp-content/uploads/2023/01/flex-direction-aligning-rows-columns.png"/></a></figure><p id="826bc726-8ba0-4eeb-9994-993735e6c486" class="" dir="auto">Another interesting property is <code>flex-wrap</code>, which lets items in a flex container move on to the next line when there is no more room:</p><pre id="4ce030d9-39e2-4a63-b0ae-01168eda10e2" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">.container{
+  flex-wrap: wrap | nowrap| wrap-reverse;
+}</code></pre><figure id="0de826c5-e050-486d-a95b-1648337c759c" class="image" data-notion-image="https://blog.logrocket.com/wp-content/uploads/2023/01/flex-wrap-visualization.png" dir="ltr"><a href="https://blog.logrocket.com/wp-content/uploads/2023/01/flex-wrap-visualization.png"><img style="width:303px" src="https://blog.logrocket.com/wp-content/uploads/2023/01/flex-wrap-visualization.png"/></a></figure><p id="2aad6be6-8eb5-45d6-b540-913b546ed3c2" class="" dir="auto">The problem with <code>flex-wrap</code>, however, is that when the items wrap, they form their own flex line below the ones above, and so are not perfectly aligned with the items above them. You see that <code>item4</code> and <code>item5</code> spread out to fill all the room below the elements above them.</p><p id="5b18457c-0ffb-49e9-9e3d-b694e6beb78f" class="" dir="auto">Flexbox has a lot of other properties that we can use to create awesome things. We can order the elements the way we want, reverse the order of elements, determine if our elements should grow or shrink, etc. One concept that makes Flexbox so useful is the power of alignment of items within the flex container.</p><p id="4fb3846c-2bf4-4de7-a0b1-de31cec6bd5e" class="" dir="auto">To demonstrate this, let’s look at a few alignment-related properties of Flexbox such as <code>align-self</code> and <code>justify-content</code>.</p><p id="a1e00dd3-33b1-4329-bf8b-efdd0e31b43f" class="" dir="auto">For example, let’s imagine that our <code>container</code> div now has four elements, with the same width and height:</p><pre id="bfb3e89e-2a97-4269-8b80-a090e8b19a04" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">&lt;div id=&quot;container&quot;&gt;
+  &lt;div id=&quot;one&quot;&gt;1&lt;/div&gt;
+  &lt;div id=&quot;two&quot;&gt;2&lt;/div&gt;
+  &lt;div id=&quot;three&quot;&gt;3&lt;/div&gt;
+  &lt;div id=&quot;four&quot;&gt;4&lt;/div&gt;
+&lt;/div&gt;</code></pre><p id="7603f9a0-244f-4b0e-963b-f29ec13eaea9" class="" dir="auto">In our CSS, we can use <code>align-self</code> to align these items within their container. That is, we can give a different alignment to each item:</p><pre id="0629e532-d892-4739-8a6d-2db3b93c61f7" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">#one{
+  align-self: flex-start | flex-end | center | stretch
+}</code></pre><figure id="ecfd42e3-5684-428b-b05c-89d2b105e7d7" class="image" data-notion-image="https://blog.logrocket.com/wp-content/uploads/2023/01/align-self-property-1.png" dir="ltr"><a href="https://blog.logrocket.com/wp-content/uploads/2023/01/align-self-property-1.png"><img style="width:700px" src="https://blog.logrocket.com/wp-content/uploads/2023/01/align-self-property-1.png"/></a></figure><p id="dad5bec4-5dd4-4a83-841d-4feeeaf2d7fd" class="" dir="auto">Instead of aligning each individual item, say we wanted to align all items together within the container. For that, we’ll use <code>justify-content</code>. Let’s assume that instead of four, we have three items again in our container:</p><pre id="e3cc38be-4d33-49e3-8db0-87eb9ca857fc" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">.container{
+  justify-content: flex-start | flex-end | center | space-between | space-around
+}</code></pre><figure id="567b91b1-0b84-436a-9107-ade2334c1d43" class="image" data-notion-image="https://blog.logrocket.com/wp-content/uploads/2023/01/justify-content-property.png" dir="ltr"><a href="https://blog.logrocket.com/wp-content/uploads/2023/01/justify-content-property.png"><img style="width:561px" src="https://blog.logrocket.com/wp-content/uploads/2023/01/justify-content-property.png"/></a></figure><p id="31144d44-c5b4-4112-984d-6d27b9a65f66" class="" dir="auto">You can notice how easy it is to align content within flex containers. Whether it be the individual items within the container, or all the items together. The above features only show a few common properties of Flexbox, and how easy it is to manage small parts of your layout.</p><p id="e6a061f6-d384-4c15-b54b-ab29cb6dd826" class="" dir="auto">Now that we know that Flexbox is a one-dimensional layout system, let’s briefly learn about how CSS Grid works and the differences between these layout systems.</p><hr id="dce1faab-e6cf-4774-b820-3b66caf44899" dir="auto"/><h2 id="f6096cbc-d1c4-474c-9e43-ef3ba1d41fd5" class="" dir="auto"><strong>What is CSS Grid?</strong></h2><p id="8bdbc841-d658-45c4-b49c-fcf012f5ed70" class="" dir="auto">If Flexbox is a powerful layout system because it’s a one-dimensional system (meaning that we can work with rows or columns), CSS Grid is now considered the most powerful layout system available.</p><p id="23fae5f7-f138-42ee-aaf6-e5b3413cad4d" class="" dir="auto">CSS Grid is a two-dimensional layout system, we can work with rows and columns together, which means that it opens a lot of different possibilities to build more complex and organized design systems, without having to fall back to some “hacky ways” that we were using in the past.</p><p id="74f19358-4ee4-4a56-811d-1f83d04c6230" class="" dir="auto">Let’s use the HTML snippet below, and see how we can get a grid layout out of it:</p><pre id="868db0b6-1bb3-4961-8522-47e999467d6a" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">&lt;div class=&quot;container&quot;&gt;
+  &lt;div id=&quot;one&quot;&gt;1&lt;/div&gt;
+  &lt;div id=&quot;two&quot;&gt;2&lt;/div&gt;
+  &lt;div id=&quot;three&quot;&gt;3&lt;/div&gt;
+  &lt;div id=&quot;four&quot;&gt;4&lt;/div&gt;
+  &lt;div id=&quot;five&quot;&gt;5&lt;/div&gt;
+&lt;/div&gt;</code></pre><p id="486ed607-6730-4347-aaaa-68c4e8e9dc18" class="" dir="auto">To define a grid container, all you need to do is pass a <code>display: grid</code> property to your block element. Now you have a grid, so you should define how many rows and columns you want.</p><p id="ab672da7-84e2-4dfc-a8c9-94df448ed511" class="" dir="auto">To create rows and columns, we use the <code>grid-template-rows</code> and <code>grid-template-columns</code> properties, and pass values that tell how much our grid items will span through the container:</p><pre id="9b635395-13a5-4c98-8b19-a559bfdcd898" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">grid-template-columns: 60px 60px;
+grid-template-rows: auto;</code></pre><p id="d5548119-e93d-4e08-ac31-34b57a051201" class="" dir="auto">From above, we can see that our layout will be set to two columns, each occupying 60px of the container, and since there are five elements, we’ll have three columns spanning the entire container due to the <code>auto</code> attribute:</p><figure id="cc49baa9-f18a-4b2b-b518-0d5e352fb1ef" class="image" data-notion-image="https://blog.logrocket.com/wp-content/uploads/2023/01/editing-column-layout.png" dir="ltr"><a href="https://blog.logrocket.com/wp-content/uploads/2023/01/editing-column-layout.png"><img style="width:524px" src="https://blog.logrocket.com/wp-content/uploads/2023/01/editing-column-layout.png"/></a></figure><p id="c0fe5316-2830-4d54-a40e-9c671d456cb7" class="" dir="auto">Just like now, Grid also has some properties that let you align items within the container. An example is the <code>justify-self</code> property. This property aligns a grid item within its cell, along the row axis:</p><pre id="e9dfc68c-632c-4b55-823e-dcb07d97b86a" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">#one{
+  justify-self: start | end | center | stretch
+}</code></pre><p id="7cb5d8cb-57a1-4a64-a90e-f9be8bb98efe" class="" dir="auto">Taking the first item in our grid container as an example:</p><figure id="bb6384c8-1121-45e0-b48c-89c214f9fb47" class="image" data-notion-image="https://blog.logrocket.com/wp-content/uploads/2023/01/justify-self-property.png" dir="ltr"><a href="https://blog.logrocket.com/wp-content/uploads/2023/01/justify-self-property.png"><img style="width:657px" src="https://blog.logrocket.com/wp-content/uploads/2023/01/justify-self-property.png"/></a></figure><p id="3aa8d9db-8c49-4589-ab6c-24a44d102a95" class="" dir="auto">It is worth noting that <code>justify-self</code> is not the only alignment property that grid has. We could also use <code>justify-content</code>, <code>justify-items</code>, <code>align-items</code>, and <code>align-self</code>. You can easily notice that grid provides more flexibility when it comes to aligning and creating complex layouts.</p><h2 id="8b4f5639-5fab-449b-b059-439fd5973bab" class="" dir="auto"><strong>Properties that Flexbox and Grid share</strong></h2><p id="888d53df-965b-47bb-b55d-9ac7c5b5b9b7" class="" dir="auto">Despite the many differences that Flexbox and Grid have, they do have some properties in similar.</p><p id="4a5b3703-089a-412e-a72a-731b5a814527" class="" dir="auto">The first and biggest thing they share in common is the fact that they are both used for layouts. Before, developers had to struggle with floats. With the help of Flexbox and Grid today, it is possible to easily create all sorts of complex layouts.</p><p id="0f2d2054-6025-44a5-9132-1263f4a495e9" class="" dir="auto">As for the properties that Flexbox and grid share, these include <code>justify-content</code>, <code>align-content</code>, <code>align-self</code> and <code>align-items</code>.</p><p id="c556b0a5-769a-499e-9b1b-42a1f9b843b7" class="" dir="auto">Now that we have seen how they work, we’ll emphasize the differences and best use cases for each tool.</p><hr id="7bc89c5c-f10d-4597-8def-089dcb5ccedf" dir="auto"/><h2 id="8afca31a-c8e3-4ab3-b694-01e54a6ff2f5" class="" dir="auto"><strong>CSS Grid is for layout; Flexbox is for alignment</strong></h2><p id="1385536b-69bf-4ba0-b779-2b748c015877" class="" dir="auto">When Flexbox was first released, we thought that it could be the best layout system to use to build our web pages, but it wasn’t.</p><p id="76cb037b-679b-497f-8518-a49faa22edce" class="" dir="auto">Flexbox helped developers start to create more responsive and maintainable web applications, but the main idea of a one-dimensional layout system doesn’t make sense when you need to build a more complex layout design.</p><p id="f94902ae-2ac3-417a-ba81-d1b287fbbd69" class="" dir="auto">CSS Grid really came to help us build more complex layout designs using a two-dimensional way, using both rows and columns. We should aim to use both of them together, but for different purposes. For your layout, use CSS Grid, for alignment of your elements, use Flexbox.</p><p id="3760e013-8e44-4cec-bb60-6b762438f60a" class="" dir="auto">To master and know exactly when you’re going to need and how to use CSS Grid, you should first learn the basics and how Flexbox works, because when you need alignment of elements in your application, it’s Flexbox that you’re going to want to use.</p><h2 id="f90bb349-9c2f-4acf-bcfc-8a294ae8bebd" class="" dir="auto"><strong>When to use CSS Flexbox</strong></h2><ul id="69939ff2-9227-4c63-a48a-59b186cdccba" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>You have a small design to implement</strong>: Flexbox is ideal when you have a small layout design to implement, with a few rows or a few columns</li></ul><ul id="1a314a91-1940-46f4-b517-b5eb879d4478" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>You need to align elements</strong>: Flexbox is perfect for that, the only thing we should do is create a flex container using <code>display: flex</code> and then define the flex-direction that we want</li></ul><ul id="3ed71951-5d40-46b1-aefa-954f022b4bde" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>You need a content-first design</strong> : Flexbox is the ideal layout system to create web pages if you don’t know exactly how your content is going to look, so if you want everything just to fit in, Flexbox is perfect for that</li></ul><p id="dc32e734-6081-4bc5-acb8-b17d30aa284f" class="" dir="auto">Of course, you can build your whole application using only Flexbox and get the same result as if you were building with CSS grid. But for a better CSS approach, to have a more concise, well-written, and maintainable application in the long-term, to create and fit your layout perfectly, the ideal method is to use CSS Grid.</p><h2 id="af19e2f9-84df-4ce3-93cd-55079146a59d" class="" dir="auto"><strong>When to use CSS Grid</strong></h2><ul id="cc93ebcc-5b19-4c17-a830-e8d00a8c726e" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>You have a complex design to implement</strong>: In some use cases, we have complex designs to implement, and that’s when the magic of CSS Grid shows itself. The two-dimensional layout system here is perfect to create a complex design. We can use it in our favor to create more complex and maintainable web pages</li></ul><ul id="7fc1f3d2-37e8-4b56-803d-293988cf254c" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>You need to have a gap between block elements</strong>: Another thing that’s very helpful in CSS Grid, that we don’t have in Flexbox, is the gap property. We can define the gap between our rows or columns very easily, without having to use the margin property, which can cause some side effects especially if we’re working with many breakpoints</li></ul><ul id="0e5b350e-4c56-40e5-b77a-4a9c138f8752" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>You need to overlap elements</strong>: Overlapping elements using CSS Grid is very easy, you just need to use the <code>grid-column</code> and <code>grid-row</code> properties and you can have overlapping elements very easily. On the other hand, with Flexbox we still need to use some hacks such as margins, transforms, or absolute positioning</li></ul><ul id="2b40d5a2-e9a4-4819-81b2-d67b4d5bdb6a" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><strong>You need a layout-first design</strong>: When you already have your layout design structure, it’s easier to build with CSS Grid, and the two-dimensional layout system helps us a lot when we’re able to use rows and columns together, and position the elements the way we want</li></ul><p id="c63670b1-dbe0-451c-935e-9e2001f316db" class="" dir="auto">Before you decide which one you should use, don’t forget:</p><blockquote id="d808f4ea-12b3-44ae-84ed-376b64653512" class="" dir="auto">CSS Grid is for layout; Flexbox is for alignment.</blockquote><p id="ce111d04-22bc-43e6-bcfb-bfa755e8b843" class="" dir="auto">Here’s an example of the right use of CSS Grid. Let’s imagine that we’re going to build a simple application, and the barebones of our applications is going to look a bit like this:</p><figure id="79d6d0fc-47b3-4b4a-8140-d63e047b2cb7" class="image" data-notion-image="https://blog.logrocket.com/wp-content/uploads/2023/01/css-grid-example.png" dir="ltr"><a href="https://blog.logrocket.com/wp-content/uploads/2023/01/css-grid-example.png"><img style="width:700px" src="https://blog.logrocket.com/wp-content/uploads/2023/01/css-grid-example.png"/></a></figure><p id="e63c011f-1c9d-493c-af1c-f74a1b7786a5" class="" dir="auto">We have a header, an aside menu, main block content, and a footer. To create this layout using CSS Grid, we just need to create our elements:</p><pre id="ec5c877b-54d2-476b-873f-d241a122db8e" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">&lt;div id=&quot;container&quot;&gt;
+  &lt;header&gt;Header&lt;/header&gt;
+  &lt;aside&gt;Aside&lt;/aside&gt;
+  &lt;main&gt;Main&lt;/main&gt;
+  &lt;footer&gt;Footer&lt;/footer&gt;
+&lt;/div&gt;</code></pre><p id="c924bf93-c382-41f7-82ae-98468f2c3561" class="" dir="auto">Now, create a grid container using <code>display: grid</code> and then create some rows and columns.</p><p id="47ea5518-1b9a-467e-9386-04d8aba46024" class="" dir="auto">We create our design very simply, without having to use hacks such as <code>float</code> or positioning our elements, and without having to create many flex containers.</p><p id="dd347aff-7614-4488-973e-2bc5945c9210" class="" dir="auto">The best decision that you can take for your application in order to create a very decent and well-built web layout for your application is to use both together.</p><p id="e6d115fc-7dc5-4b6f-91c3-5b883e4effd4" class="" dir="auto">Let’s take our example and use both CSS Grid and Flexbox to show the power of both layout systems together. Inside our <code>header</code>, we’re going to create three <code>div</code> elements and align them in a row:</p><pre id="a597f745-8395-4972-ba9e-875b64157b21" class="code code-wrap"><code style="white-space:pre-wrap;word-break:break-all">&lt;header&gt;
+  &lt;div&gt;1&lt;/div&gt;
+  &lt;div&gt;2&lt;/div&gt;
+  &lt;div&gt;3&lt;/div&gt;
+&lt;/header&gt;</code></pre><p id="875ad394-d949-4397-9e51-f138e2b29946" class="" dir="auto">To do that, all we need to do is declare our <code>header</code> a flex container using the <code>display: flex</code> property, make the flex-direction a row using <code>flex-direction: row</code>, and align the items:</p><p id="5b9e6af5-3f22-4c5a-afd5-2825a9f9aed7" class="" dir="auto">Check out the <a href="https://codesandbox.io/s/wizardly-rumple-jnr5pe?file=/src/styles.css">corresponding Code Sandbox</a> for this code. Feel free to play around with the code, to see how different you can make the layout look.</p><p id="32c57efe-0327-466d-b3bd-87f7ee32add1" class="" dir="auto">For now, our small web page looks like this:</p><figure id="773c7d0a-57fc-41e8-9be3-9a9eb066c2f4" class="image" data-notion-image="https://blog.logrocket.com/wp-content/uploads/2023/01/web-page-header.png" dir="ltr"><a href="https://blog.logrocket.com/wp-content/uploads/2023/01/web-page-header.png"><img style="width:700px" src="https://blog.logrocket.com/wp-content/uploads/2023/01/web-page-header.png"/></a></figure><p id="25e83310-502e-40ec-a258-c485fb65af21" class="" dir="auto">For a major layout style, you could use CSS Grid, because it’s a two-dimensional layout system, and you can work with both rows and columns very easily. And for a more simple layout style, you can use <a href="https://codesandbox.io/s/wizardly-rumple-jnr5pe?file=/src/styles.css">Flexbox</a>, a one-dimensional system, as it’s very helpful when working with rows.</p><h2 id="05785fdd-44a7-437c-9d55-daca8d214a87" class="" dir="auto"><strong>Conclusion</strong></h2><p id="cdd3942f-8d2e-4373-bea9-89ce0eaf4f12" class="" dir="auto">In this article, we learned about the differences between CSS Flexbox and CSS Grid, how they work in modern browsers, and how we can use each one of them to accomplish different results in our CSS. We also demonstrated a use case where Flexbox and Grid can be used together.</p><hr id="9b98e4c2-d127-4a12-ba38-87a13bb4da0c" dir="auto"/></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

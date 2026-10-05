@@ -1,0 +1,798 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>JS</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="75fe1409-44be-40d4-b5a0-070998a72c0d" class="page sans" data-notion-page-icon="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/63330e08-a324-4d0b-a741-c9c99ac652fa/js.png"><header><div class="page-header-icon undefined"><img class="icon" src="js.png"/></div><h1 class="page-title" dir="auto">JS</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><p id="a30ba29e-a733-4dec-b5f9-e2dd4ab5e0d8" class="" dir="auto"><strong>CONTENT:-</strong></p><nav id="6d6fc8e7-b13f-4030-aa05-b8981cada179" class="block-color-gray table_of_contents" data-notion-highlight="gray" data-notion-toc="" dir="ltr"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9bae5cca-7fff-41e7-a6a9-5c856f2d5fbf">Introduction</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0b115370-9d44-4877-9c83-20e6487faa12">JS History</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#49158054-63b7-4c53-987d-eac6608e22e5">Q. What does ECMA stand for?</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#30df24d3-c6f1-4173-9b20-aaf42499ad87">Java VS JavaScript (key differences)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c61815e6-8f1c-4eea-83f3-8e0d48e565f3">Introduction to programming</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6138818b-9812-4146-bd85-675524c64a27">C1- <span style="border-bottom:0.05em solid">Variables &amp; Data</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7a4f7ccf-7d69-4944-b828-118241701d2d">C2- <span style="border-bottom:0.05em solid">Expressions &amp; Conditionals</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#bbb6fc1c-2306-4fce-9d6e-7174aa621faa">C3- <span style="border-bottom:0.05em solid">Loops &amp; Functions</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a934177c-a6e7-4685-a5d8-6791f1887a59">C4- <span style="border-bottom:0.05em solid">Strings</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#490d6062-3cf2-4177-afe2-19a62fdae635">C5- <span style="border-bottom:0.05em solid">Arrays</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6743a681-b25f-45f7-8efa-a481cd194966">C6- <span style="border-bottom:0.05em solid">JavaScript in the Browser</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4d6045fc-eee1-4728-aee3-7cc1a5ef0ac2">C7- <span style="border-bottom:0.05em solid">Walking the DOM</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#06f478b2-df20-449c-80c2-e86dfe7885c0">C8- <span style="border-bottom:0.05em solid">Events &amp; other DOM properties</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9c2c7683-c1de-4aca-8e4b-50f219fa355e">C9- <span style="border-bottom:0.05em solid">Callbacks, Promises &amp; async/await</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#28f7e983-96c6-447c-9094-8f3c864c46e2">C10- <span style="border-bottom:0.05em solid">Object Oriented Programming</span></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d716f36e-0d46-496c-9652-98654cd563d6">C11- <span style="border-bottom:0.05em solid">Advanced JavaScript</span></a></div></nav><h1 id="9bae5cca-7fff-41e7-a6a9-5c856f2d5fbf" class="" dir="auto">Introduction</h1><ul id="89cf7a4a-f598-45bb-a6f8-aa8545e394a2" class="bulleted-list" dir="auto"><li style="list-style-type:disc">JavaScript is a scripting or programming language that allows you to implement complex features on web pages — every time a web page does more than just sit there and display static information for you to look at — displaying timely content updates, interactive maps, animated 2D/3D graphics, scrolling video jukeboxes, etc. — you can bet that JavaScript is probably involved. It is the third layer of the layer cake of standard web technologies, two of which (<a href="https://developer.mozilla.org/en-US/docs/Learn/HTML">HTML</a> and <a href="https://developer.mozilla.org/en-US/docs/Learn/CSS">CSS</a>)</li></ul><ul id="ec852c9c-f2ae-441c-831e-ca125aeb27bf" class="bulleted-list" dir="auto"><li style="list-style-type:disc"><a href="https://developer.mozilla.org/en-US/docs/Glossary/JavaScript">JavaScript</a> is a scripting language that enables you to create dynamically updating content, control multimedia, animate images, and pretty much everything else. (Okay, not everything, but it is amazing what you can achieve with a few lines of JavaScript code.)</li></ul><h1 id="0b115370-9d44-4877-9c83-20e6487faa12" class="" dir="auto">JS History</h1><p id="7e94de36-432c-49ad-95ab-c90c394578f4" class="" dir="auto"><strong>JavaScript</strong> was invented by <strong>Brendan Eich</strong> in 1995.</p><div id="0293a415-2c3f-43dc-91ef-b644c037a560" class="column-list" data-notion-column-list="" dir="auto"><div id="a331207c-fa7b-422b-903d-11a7f1dcf6cb" style="width:37.5%" class="column" data-notion-column-ratio="0.375" dir="auto"><figure id="35e3beee-5f9d-494e-90e5-b05bce215142" class="image" style="text-align:left" data-notion-image="brendaneich25563.web_.jpg" dir="ltr"><a href="brendaneich25563.web_.jpg"><img style="width:240px" src="brendaneich25563.web_.jpg"/></a></figure></div><div id="536c2d2b-d49b-4291-8152-f4930325faba" style="width:62.5%" class="column" data-notion-column-ratio="0.625" dir="auto"><p id="50ca12ba-09d8-4c89-883a-9854c3bee6d9" class="" dir="auto">It was developed for <strong>Netscape 2</strong>, and became the <strong>ECMA-262</strong> standard in 1997.</p><p id="235217b5-eba5-4060-8867-2658a41be856" class="" dir="auto">After Netscape handed JavaScript over to ECMA, the Mozilla foundation continued to develop JavaScript for the Firefox browser. Mozilla&#x27;s latest version was 1.8.5. (Identical to ES5).</p></div></div><h1 id="49158054-63b7-4c53-987d-eac6608e22e5" class="" dir="auto">Q. What does ECMA stand for?</h1><p id="b7922232-63c7-4568-a4e7-3ead977e105d" class="" dir="auto"><strong>Ecma International</strong> (formally <em>European Computer Manufacturers Association</em>) is a non-profit organization that develops standards in computer hardware, communications, and programming languages. On the web it is famous for being the organization which maintain <a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-262/">the ECMA-262 specification</a> (aka. <a href="https://developer.mozilla.org/en-US/docs/Glossary/ECMAScript">ECMAScript</a>) which is the core specification for the <a href="https://developer.mozilla.org/en-US/docs/Glossary/JavaScript">JavaScript</a> language.</p><h1 id="30df24d3-c6f1-4173-9b20-aaf42499ad87" class="" dir="auto">Java VS JavaScript (key differences)</h1><figure id="5ef15391-72b5-4221-848c-1129f976b5ac" dir="ltr"><div class="source"><a href="https://www.youtube.com/watch?v=_C5AHaS1mOA">https://www.youtube.com/watch?v=_C5AHaS1mOA</a></div></figure><hr id="d74c46c1-6e41-476d-a4c9-697dc21f5e24" dir="auto"/><p id="155b071e-36aa-49e0-8db1-7ae59d092667" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>JavaScript</strong></span><strong> (Interpreter)</strong></p><ul id="7dda7c9f-be75-4ae4-aa7c-ef5ee9e15ef4" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Runs slowly</li></ul><ul id="b3c3304f-33b6-498e-811a-ba732cd302cf" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Starts right away</li></ul><ul id="e74c365d-e4b4-4059-9346-35e77ed6d0a9" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Let’s you see the Results</li></ul><p id="0eb28d04-823a-4c38-84cb-f7a70286f2be" class="" dir="auto">(Translates line by line)</p><hr id="2afb62a8-2eec-40b8-bcf5-a11ff79aca5d" dir="auto"/><p id="17bb94f3-3869-460c-a181-b5869e121bca" class="" dir="auto"><span style="border-bottom:0.05em solid"><strong>Java</strong></span><strong> (Compiler)</strong></p><ul id="42729240-64f7-47f1-8ae7-f31463cbf8d6" class="bulleted-list" dir="auto"><li style="list-style-type:disc">Extra preparation time</li></ul><ul id="9c61f343-1542-4c1b-b2a3-c9bed3fab8dd" class="bulleted-list" dir="auto"><li style="list-style-type:disc">But then program Runs very quickly</li></ul><p id="41862dc2-4046-4080-83c6-017634229b44" class="" dir="auto">(File’s together entire program translates all in one)</p><hr id="29e75521-86e9-46c3-9ac2-94233960e7f2" dir="auto"/><h1 id="c61815e6-8f1c-4eea-83f3-8e0d48e565f3" class="" dir="auto">Introduction to programming</h1><figure id="f1368f6d-4da0-44c7-8771-950b31ba3f01" class="image" data-notion-image="Untitled%2011.jpeg" dir="ltr"><a href="Untitled%2011.jpeg"><img style="width:2138px" src="Untitled%2011.jpeg"/></a></figure><figure id="d2b63075-1bc0-4f9a-9366-8909dc2100be" class="image" data-notion-image="Untitled%2012.jpeg" dir="ltr"><a href="Untitled%2012.jpeg"><img style="width:2034px" src="Untitled%2012.jpeg"/></a></figure><h1 id="6138818b-9812-4146-bd85-675524c64a27" class="" dir="auto">C1- <span style="border-bottom:0.05em solid">Variables &amp; Data</span></h1><figure id="17dc93f4-06e2-41b7-b6af-8e080f914185" class="image" data-notion-image="Untitled%2013.jpeg" dir="ltr"><a href="Untitled%2013.jpeg"><img style="width:2105px" src="Untitled%2013.jpeg"/></a></figure><figure id="ad2d64bd-d2f0-457e-8b9e-7225949d1eed" class="image" data-notion-image="Untitled%2014.jpeg" dir="ltr"><a href="Untitled%2014.jpeg"><img style="width:2067px" src="Untitled%2014.jpeg"/></a></figure><h1 id="7a4f7ccf-7d69-4944-b828-118241701d2d" class="" dir="auto">C2- <span style="border-bottom:0.05em solid">Expressions &amp; Conditionals</span></h1><figure id="fe1bed2a-9d7f-4ac6-945b-f55a7a05f57b" class="image" data-notion-image="Untitled%2015.jpeg" dir="ltr"><a href="Untitled%2015.jpeg"><img style="width:2034px" src="Untitled%2015.jpeg"/></a></figure><figure id="ddd2bc4d-488d-45aa-a5f3-61ba94868379" class="image" data-notion-image="Untitled%2016.jpeg" dir="ltr"><a href="Untitled%2016.jpeg"><img style="width:2055px" src="Untitled%2016.jpeg"/></a></figure><figure id="30afdce5-b9d1-4604-ac8b-c1a58da54e02" class="image" data-notion-image="Untitled%2017.jpeg" dir="ltr"><a href="Untitled%2017.jpeg"><img style="width:2046px" src="Untitled%2017.jpeg"/></a></figure><figure id="b6ece97b-db2e-4d38-aecd-ee5f8f883839" class="image" data-notion-image="Untitled%2018.jpeg" dir="ltr"><a href="Untitled%2018.jpeg"><img style="width:2105px" src="Untitled%2018.jpeg"/></a></figure><figure id="056183fd-afe4-4408-809f-d6a0a816c5c2" class="image" data-notion-image="Untitled%2019.jpeg" dir="ltr"><a href="Untitled%2019.jpeg"><img style="width:2017px" src="Untitled%2019.jpeg"/></a></figure><h1 id="bbb6fc1c-2306-4fce-9d6e-7174aa621faa" class="" dir="auto">C3- <span style="border-bottom:0.05em solid">Loops &amp; Functions</span></h1><figure id="bdd8dcd3-8c7a-412b-8796-f052ad873fa7" class="image" data-notion-image="Untitled%2020.jpeg" dir="ltr"><a href="Untitled%2020.jpeg"><img style="width:2080px" src="Untitled%2020.jpeg"/></a></figure><figure id="c9763651-2392-4344-8c4b-31afc2c4ffbd" class="image" data-notion-image="Untitled%2021.jpeg" dir="ltr"><a href="Untitled%2021.jpeg"><img style="width:2071px" src="Untitled%2021.jpeg"/></a></figure><figure id="90681dd2-ca07-4003-8e11-0b4c6908848d" class="image" data-notion-image="Untitled%2022.jpeg" dir="ltr"><a href="Untitled%2022.jpeg"><img style="width:2034px" src="Untitled%2022.jpeg"/></a></figure><figure id="43655e31-3758-4e58-8e6d-8c4cff318d2f" class="image" data-notion-image="Untitled%2023.jpeg" dir="ltr"><a href="Untitled%2023.jpeg"><img style="width:2121px" src="Untitled%2023.jpeg"/></a></figure><h1 id="a934177c-a6e7-4685-a5d8-6791f1887a59" class="" dir="auto">C4- <span style="border-bottom:0.05em solid">Strings</span></h1><figure id="d7c9f0c4-cb2d-4998-b318-8db7bdaf6952" class="image" data-notion-image="Untitled%2024.jpeg" dir="ltr"><a href="Untitled%2024.jpeg"><img style="width:2055px" src="Untitled%2024.jpeg"/></a></figure><figure id="41ba0047-80ee-4289-bfd7-cb4f2093e6ad" class="image" data-notion-image="Untitled%2025.jpeg" dir="ltr"><a href="Untitled%2025.jpeg"><img style="width:2025px" src="Untitled%2025.jpeg"/></a></figure><figure id="122be744-61d0-4b32-b4f1-2cfef388148e" class="image" data-notion-image="Untitled%2026.jpeg" dir="ltr"><a href="Untitled%2026.jpeg"><img style="width:2080px" src="Untitled%2026.jpeg"/></a></figure><h1 id="490d6062-3cf2-4177-afe2-19a62fdae635" class="" dir="auto">C5- <span style="border-bottom:0.05em solid">Arrays</span></h1><figure id="b00746e2-cbb0-42cc-9d3c-cecad85fdbc9" class="image" data-notion-image="Untitled%2027.jpeg" dir="ltr"><a href="Untitled%2027.jpeg"><img style="width:2075px" src="Untitled%2027.jpeg"/></a></figure><figure id="61c6fe23-c24b-4f4b-9fbb-90a39a15c630" class="image" data-notion-image="Untitled%2028.jpeg" dir="ltr"><a href="Untitled%2028.jpeg"><img style="width:2025px" src="Untitled%2028.jpeg"/></a></figure><figure id="9156829d-59e0-4c7a-baff-ae9bfb2c6cbd" class="image" data-notion-image="Untitled%2029.jpeg" dir="ltr"><a href="Untitled%2029.jpeg"><img style="width:2092px" src="Untitled%2029.jpeg"/></a></figure><figure id="b7da35f8-ecd8-444b-91e1-84bbce6b8aef" class="image" data-notion-image="Untitled%2030.jpeg" dir="ltr"><a href="Untitled%2030.jpeg"><img style="width:2117px" src="Untitled%2030.jpeg"/></a></figure><figure id="19d2b21b-5507-4b92-acff-8e5fb4c1ed2b" class="image" data-notion-image="Untitled%2031.jpeg" dir="ltr"><a href="Untitled%2031.jpeg"><img style="width:2071px" src="Untitled%2031.jpeg"/></a></figure><figure id="ee67e61d-fb15-4ffd-a05f-f837af44495b" class="image" data-notion-image="Untitled%2032.jpeg" dir="ltr"><a href="Untitled%2032.jpeg"><img style="width:2063px" src="Untitled%2032.jpeg"/></a></figure><h1 id="6743a681-b25f-45f7-8efa-a481cd194966" class="" dir="auto">C6- <span style="border-bottom:0.05em solid">JavaScript in the Browser</span></h1><figure id="09c9d037-2c6d-423d-a6fb-4d3975104332" class="image" data-notion-image="Untitled%2033.jpeg" dir="ltr"><a href="Untitled%2033.jpeg"><img style="width:2080px" src="Untitled%2033.jpeg"/></a></figure><figure id="3801eea4-e10f-428d-979a-1eda003e53bc" class="image" data-notion-image="Untitled%2034.jpeg" dir="ltr"><a href="Untitled%2034.jpeg"><img style="width:2092px" src="Untitled%2034.jpeg"/></a></figure><figure id="c0cfd60e-478a-4253-ac1c-193c4738cc1d" class="image" data-notion-image="Untitled%2035.jpeg" dir="ltr"><a href="Untitled%2035.jpeg"><img style="width:2067px" src="Untitled%2035.jpeg"/></a></figure><figure id="66141397-2c77-48a7-bebb-1571f196e7cd" class="image" data-notion-image="Untitled%2036.jpeg" dir="ltr"><a href="Untitled%2036.jpeg"><img style="width:2046px" src="Untitled%2036.jpeg"/></a></figure><h1 id="4d6045fc-eee1-4728-aee3-7cc1a5ef0ac2" class="" dir="auto">C7- <span style="border-bottom:0.05em solid">Walking the DOM</span></h1><figure id="cbc3c733-43cd-4dec-a6e7-04a106fdfde5" class="image" data-notion-image="Untitled%2037.jpeg" dir="ltr"><a href="Untitled%2037.jpeg"><img style="width:2034px" src="Untitled%2037.jpeg"/></a></figure><figure id="014a9aa8-e98b-4bd2-84e7-99848dc002f2" class="image" data-notion-image="Untitled%2038.jpeg" dir="ltr"><a href="Untitled%2038.jpeg"><img style="width:1950px" src="Untitled%2038.jpeg"/></a></figure><figure id="30f10bfe-f4a2-4461-a94e-dea33b432c34" class="image" data-notion-image="Untitled%2039.jpeg" dir="ltr"><a href="Untitled%2039.jpeg"><img style="width:2059px" src="Untitled%2039.jpeg"/></a></figure><figure id="602ce230-777b-41f1-987e-6907b51ed3f9" class="image" data-notion-image="Untitled%2040.jpeg" dir="ltr"><a href="Untitled%2040.jpeg"><img style="width:2021px" src="Untitled%2040.jpeg"/></a></figure><figure id="18f665fb-74ec-42a8-a085-4d920f92995b" class="image" data-notion-image="Untitled%2041.jpeg" dir="ltr"><a href="Untitled%2041.jpeg"><img style="width:2080px" src="Untitled%2041.jpeg"/></a></figure><figure id="0c1eed9f-964a-4c61-af4a-f77f4e8d69ee" class="image" data-notion-image="Untitled%2042.jpeg" dir="ltr"><a href="Untitled%2042.jpeg"><img style="width:2100px" src="Untitled%2042.jpeg"/></a></figure><h1 id="06f478b2-df20-449c-80c2-e86dfe7885c0" class="" dir="auto">C8- <span style="border-bottom:0.05em solid">Events &amp; other DOM properties</span></h1><figure id="fa0f8b6f-6022-4627-a75d-cee61205d741" class="image" data-notion-image="Untitled%2043.jpeg" dir="ltr"><a href="Untitled%2043.jpeg"><img style="width:2092px" src="Untitled%2043.jpeg"/></a></figure><figure id="16dc2973-d442-4335-9209-4fdc575b68db" class="image" data-notion-image="Untitled%2044.jpeg" dir="ltr"><a href="Untitled%2044.jpeg"><img style="width:2021px" src="Untitled%2044.jpeg"/></a></figure><figure id="ae75c7ad-0aa4-4d9f-b00f-8901e7ff6112" class="image" data-notion-image="Untitled%2045.jpeg" dir="ltr"><a href="Untitled%2045.jpeg"><img style="width:2067px" src="Untitled%2045.jpeg"/></a></figure><figure id="afaa3f91-e6c8-4454-a4e4-6fa20f1687f5" class="image" data-notion-image="Untitled%2046.jpeg" dir="ltr"><a href="Untitled%2046.jpeg"><img style="width:2009px" src="Untitled%2046.jpeg"/></a></figure><figure id="3ebffffd-02e1-4556-a94b-a3b607e982d7" class="image" data-notion-image="Untitled%2047.jpeg" dir="ltr"><a href="Untitled%2047.jpeg"><img style="width:2030px" src="Untitled%2047.jpeg"/></a></figure><figure id="1bdf6be1-6a5b-4a4c-8d15-3c2e2eb3b212" class="image" data-notion-image="Untitled%2048.jpeg" dir="ltr"><a href="Untitled%2048.jpeg"><img style="width:2105px" src="Untitled%2048.jpeg"/></a></figure><figure id="3247f6f0-7cdb-4e9b-accc-f9e040dda5d1" class="image" data-notion-image="Untitled%2049.jpeg" dir="ltr"><a href="Untitled%2049.jpeg"><img style="width:2030px" src="Untitled%2049.jpeg"/></a></figure><figure id="bdaebfde-3c83-4d3c-9ae3-a34aef25214e" class="image" data-notion-image="Untitled%2050.jpeg" dir="ltr"><a href="Untitled%2050.jpeg"><img style="width:2067px" src="Untitled%2050.jpeg"/></a></figure><h1 id="9c2c7683-c1de-4aca-8e4b-50f219fa355e" class="" dir="auto">C9- <span style="border-bottom:0.05em solid">Callbacks, Promises &amp; async/await</span></h1><figure id="0370fb0c-abf1-4a87-88a8-367189d0afd6" class="image" data-notion-image="Untitled%2051.jpeg" dir="ltr"><a href="Untitled%2051.jpeg"><img style="width:2480px" src="Untitled%2051.jpeg"/></a></figure><figure id="cc155e67-5223-4445-8594-c8d14155e8df" class="image" data-notion-image="Untitled%2052.jpeg" dir="ltr"><a href="Untitled%2052.jpeg"><img style="width:2480px" src="Untitled%2052.jpeg"/></a></figure><figure id="3c1e97c7-8918-473a-a526-3297e3d79b8e" class="image" data-notion-image="Untitled%2053.jpeg" dir="ltr"><a href="Untitled%2053.jpeg"><img style="width:2480px" src="Untitled%2053.jpeg"/></a></figure><figure id="f7abdd06-aa89-43c3-a6e1-a4c4cd1bfae7" class="image" data-notion-image="Untitled%2054.jpeg" dir="ltr"><a href="Untitled%2054.jpeg"><img style="width:2480px" src="Untitled%2054.jpeg"/></a></figure><figure id="5b30ecf7-c6d3-4dae-8261-009a985a112a" class="image" data-notion-image="Untitled%2055.jpeg" dir="ltr"><a href="Untitled%2055.jpeg"><img style="width:2480px" src="Untitled%2055.jpeg"/></a></figure><figure id="22610fe4-1aeb-4475-9890-76431f9676eb" class="image" data-notion-image="Untitled%2056.jpeg" dir="ltr"><a href="Untitled%2056.jpeg"><img style="width:2480px" src="Untitled%2056.jpeg"/></a></figure><figure id="38b1f79c-1808-41e8-836c-e37a9d6397e1" class="image" data-notion-image="Untitled%2057.jpeg" dir="ltr"><a href="Untitled%2057.jpeg"><img style="width:2480px" src="Untitled%2057.jpeg"/></a></figure><figure id="b7f093b1-c317-4367-a4a7-26116f518726" class="image" data-notion-image="Untitled%2058.jpeg" dir="ltr"><a href="Untitled%2058.jpeg"><img style="width:2480px" src="Untitled%2058.jpeg"/></a></figure><figure id="d83e4df3-bf87-4d6e-822a-cabcf987dd87" class="image" data-notion-image="Untitled%2059.jpeg" dir="ltr"><a href="Untitled%2059.jpeg"><img style="width:2480px" src="Untitled%2059.jpeg"/></a></figure><figure id="1e170c49-5f96-463a-9d17-fbf5ccdc61db" class="image" data-notion-image="Untitled%2060.jpeg" dir="ltr"><a href="Untitled%2060.jpeg"><img style="width:2480px" src="Untitled%2060.jpeg"/></a></figure><figure id="f1ca06e4-b2c8-49ec-9a94-24492961c693" class="image" data-notion-image="Untitled%2061.jpeg" dir="ltr"><a href="Untitled%2061.jpeg"><img style="width:2480px" src="Untitled%2061.jpeg"/></a></figure><h1 id="28f7e983-96c6-447c-9094-8f3c864c46e2" class="" dir="auto">C10- <span style="border-bottom:0.05em solid">Object Oriented Programming</span></h1><figure id="d771151d-7ff3-4be2-b681-86afc3545ad0" class="image" data-notion-image="Untitled%2062.jpeg" dir="ltr"><a href="Untitled%2062.jpeg"><img style="width:2505px" src="Untitled%2062.jpeg"/></a></figure><figure id="15c61bea-b74a-4880-b9b5-1e34dd54546e" class="image" data-notion-image="Untitled%2063.jpeg" dir="ltr"><a href="Untitled%2063.jpeg"><img style="width:2497px" src="Untitled%2063.jpeg"/></a></figure><figure id="99ccf3eb-f139-4c9c-bec6-3e20f45556d8" class="image" data-notion-image="Untitled%2064.jpeg" dir="ltr"><a href="Untitled%2064.jpeg"><img style="width:2498px" src="Untitled%2064.jpeg"/></a></figure><figure id="9a6c5c98-710d-4466-84cb-1ca778ea6467" class="image" data-notion-image="Untitled%2065.jpeg" dir="ltr"><a href="Untitled%2065.jpeg"><img style="width:2496px" src="Untitled%2065.jpeg"/></a></figure><figure id="5410a670-0de6-4e0c-a25d-4a5116ceda0b" class="image" data-notion-image="Untitled%2066.jpeg" dir="ltr"><a href="Untitled%2066.jpeg"><img style="width:2498px" src="Untitled%2066.jpeg"/></a></figure><figure id="a3898f52-4a5f-4a9f-8dd6-cdc5df9725b9" dir="ltr"><div class="source"><a href="https://youtu.be/SgT3XrAkoFQ">https://youtu.be/SgT3XrAkoFQ</a></div></figure><figure id="a4a7496d-84f6-49ca-bd42-a590be3bab1e" class="image" data-notion-image="Untitled%2067.jpeg" dir="ltr"><a href="Untitled%2067.jpeg"><img style="width:2504px" src="Untitled%2067.jpeg"/></a></figure><h1 id="d716f36e-0d46-496c-9652-98654cd563d6" class="" dir="auto">C11- <span style="border-bottom:0.05em solid">Advanced JavaScript</span></h1><figure id="3458fec0-6529-4a4c-980c-2071e43919d4" class="image" data-notion-image="Untitled%2068.jpeg" dir="ltr"><a href="Untitled%2068.jpeg"><img style="width:2500px" src="Untitled%2068.jpeg"/></a></figure><figure id="6d766004-67dc-44e9-bbff-e7d142720beb" class="image" data-notion-image="Untitled%2069.jpeg" dir="ltr"><a href="Untitled%2069.jpeg"><img style="width:2507px" src="Untitled%2069.jpeg"/></a></figure><figure id="afa07de4-b03b-4678-bfcb-6cd31a2e9bef" class="image" data-notion-image="Untitled%2070.jpeg" dir="ltr"><a href="Untitled%2070.jpeg"><img style="width:2504px" src="Untitled%2070.jpeg"/></a></figure><figure id="4d8206ed-47d7-47ed-83d6-280ca41f516e" class="image" data-notion-image="Untitled%2071.jpeg" dir="ltr"><a href="Untitled%2071.jpeg"><img style="width:2500px" src="Untitled%2071.jpeg"/></a></figure><figure id="ae27fc07-9d91-41f0-93c7-8ed9f43e3d26" class="image" data-notion-image="Hoisting_in_js.png" dir="ltr"><a href="Hoisting_in_js.png"><img style="width:1334px" src="Hoisting_in_js.png"/></a></figure><hr id="24af51b6-88da-430f-b5eb-a133216b5aec" dir="auto"/><p id="84129ec4-94ba-4927-92d0-ffc69ebba240" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

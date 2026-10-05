@@ -1,0 +1,814 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Fetch API’s</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+/* Override strong tags inside headings to maintain consistent weight */
+h1 strong,
+h2 strong,
+h3 strong {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 10px;
+	padding: 1rem;
+	/* Paint a complete callout box on every PDF page fragment. */
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+/* For default-background callouts, render the border outline. */
+.callout.block-color-default_background {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+/*
+ * Toggles and callouts hold arbitrary content, so they can easily be taller
+ * than a page. They must stay breakable: avoiding breaks inside them makes
+ * Chromium push the whole block onto the next page, which leaves the previous
+ * page mostly empty before every long toggle.
+ */
+details,
+aside {
+	margin: 1.25em 0;
+}
+
+/* Keep a toggle's title on the same page as the start of its content. */
+summary {
+	page-break-after: avoid;
+	break-after: avoid;
+}
+
+/*
+ * Toggle headings render as <h1/h2/h3 style="display:inline-block"> inside
+ * <summary>. Without this reset, the heading's margin-top pushes it below the
+ * ::marker (▼), so the triangle and the title appear on separate lines.
+ */
+summary h1,
+summary h2,
+summary h3,
+summary h4 {
+	margin-top: 0;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+
+	table.collection-content {
+		width: 100%;
+		table-layout: fixed;
+	}
+
+	table.collection-content th,
+	table.collection-content td {
+		overflow-wrap: anywhere;
+	}
+
+	table.collection-content td > .user,
+	table.collection-content td > time {
+		white-space: pre-wrap;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content-wrapper {
+	overflow-x: auto;
+}
+
+@media only print {
+	.collection-content-wrapper {
+		overflow-x: visible;
+	}
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	gap: 46px;
+}
+
+.column {
+	min-width: 0;
+	overflow: hidden;
+}
+
+.column > *:first-child {
+	margin-top: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding-inline: 0.125rem;
+	padding-block: 0.375rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+table {
+	border-collapse: collapse;
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol.numbered-list.numbered-list-digits-2 {
+	padding-inline-start: 2em;
+}
+
+ol.numbered-list.numbered-list-digits-3plus {
+	padding-inline-start: 2.4em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+/*
+ * Render emoji icons using a ::before pseudo-element to keep the glyph
+ * out of the DOM textContent traversal. This avoids double-rendering icons
+ * in callouts and page titles.
+ * NOTE(slim/html-export-pseudo-icons): I can't tagref this because it will
+ * flag as a duplicate tag after codegen.
+ */
+.icon[data-emoji]::before {
+	content: attr(data-emoji);
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.callout img.notion-static-icon {
+	width: 1em;
+	height: 1em;
+}
+
+.callout p {
+	margin: 0;
+}
+
+.callout h1,
+.callout h2,
+.callout h3 {
+	margin: 0 0 0.6rem;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	margin-right: 0.4em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.tab {
+	margin: 1.25em 0;
+	padding-inline: 1rem;
+	border: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", "Noto Sans Arabic", "Noto Sans Hebrew", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.highlight-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.highlight-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.highlight-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.highlight-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.highlight-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(42, 28, 0, 0.07);
+}
+.highlight-brown_background {
+	background: rgba(139, 46, 0, 0.086);
+}
+.highlight-orange_background {
+	background: rgba(224, 101, 1, 0.129);
+}
+.highlight-yellow_background {
+	background: rgba(211, 168, 0, 0.137);
+}
+.highlight-teal_background {
+	background: rgba(0, 100, 45, 0.09);
+}
+.highlight-blue_background {
+	background: rgba(0, 124, 215, 0.094);
+}
+.highlight-purple_background {
+	background: rgba(102, 0, 178, 0.078);
+}
+.highlight-pink_background {
+	background: rgba(197, 0, 93, 0.086);
+}
+.highlight-red_background {
+	background: rgba(223, 22, 0, 0.094);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(125, 122, 117, 1);
+	fill: rgba(125, 122, 117, 1);
+}
+.block-color-brown {
+	color: rgba(159, 118, 90, 1);
+	fill: rgba(159, 118, 90, 1);
+}
+.block-color-orange {
+	color: rgba(210, 123, 45, 1);
+	fill: rgba(210, 123, 45, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 148, 52, 1);
+	fill: rgba(203, 148, 52, 1);
+}
+.block-color-teal {
+	color: rgba(80, 148, 110, 1);
+	fill: rgba(80, 148, 110, 1);
+}
+.block-color-blue {
+	color: rgba(56, 125, 201, 1);
+	fill: rgba(56, 125, 201, 1);
+}
+.block-color-purple {
+	color: rgba(154, 107, 180, 1);
+	fill: rgba(154, 107, 180, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(207, 81, 72, 1);
+	fill: rgba(207, 81, 72, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(229, 242, 252, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 118, 217, 0.203); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style><style>@import url('https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex-swap.min.css')</style></head><body><article id="4ead85de-413d-4d25-bb82-68f8a26e9653" class="page sans" data-notion-page-icon="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/fb6dc779-ee2b-4e89-b73b-9dce844469b1/data-transfer.png"><header><div class="page-header-icon undefined"><img class="icon" src="data-transfer.png"/></div><h1 class="page-title" dir="auto">Fetch API’s</h1><p class="page-description" dir="auto"></p></header><div class="page-body"><h3 id="1d78cb63-2178-4191-8605-2a704ba9bc3f" class="" dir="auto">Q. What is JSON full form?</h3><p id="073ba43b-c14b-4aa0-8073-7e18c116cd78" class="" dir="auto"><strong>JavaScript Object Notation</strong> (JSON) is a standard text-based format for representing structured data based on JavaScript object syntax</p><hr id="c040a487-7011-44b2-82cf-780f297f3489" dir="auto"/><h3 id="4fb5eddb-15f7-48e7-aabb-08d0c25c79c7" class="" dir="auto">Q. What is JSON and why it is used?</h3><p id="44f5a6ec-e0a9-480f-83d6-d2ae8cbc135e" class="" dir="auto">It is <strong>a text-based way of representing JavaScript object literals, arrays, and scalar data</strong>. JSON is relatively easy to read and write, while also easy for software to parse and generate. It is often used for serializing structured data and exchanging it over a network, typically between a server and web applications.</p><hr id="5dc7bf92-dc80-4e39-bc11-293af96e105d" dir="auto"/><h3 id="a7bccc32-59db-4d86-89b4-f62d77a64cf4" class="" dir="auto">Q. Assume I am a child and explain me fetch API in JS.</h3><p id="ec631c02-32df-43e6-8885-c33ebef8db67" class="" dir="auto">Sure! I&#x27;d be happy to explain the Fetch API to you in a way that&#x27;s easy to understand.</p><p id="8766c617-7d72-41d1-8446-7f113a4b336f" class="" dir="auto">Imagine you&#x27;re sending your friend to a store to fetch some candy for you. You give your friend a note with the name of the candy you want and any other instructions. Your friend goes to the store, gets the candy, and brings it back to you. In this scenario, you are like the web page or application, and your friend is like the Fetch API.</p><p id="7b2ebd50-a768-4801-9bd2-1455ee410c07" class="" dir="auto">In JavaScript, the Fetch API is used to make requests to a server and retrieve data. It allows you to send HTTP requests and receive responses from a web server. This is useful when you want to retrieve data from an external source, such as an API (Application Programming Interface).</p><p id="22e747d9-b570-49dd-81d0-d4179570f8db" class="" dir="auto">To use the Fetch API, you need to follow these steps:</p><ol type="1" id="21bef20b-348d-4edb-b12f-719a96db6980" class="numbered-list" start="1" dir="auto"><li>Create a Fetch request: You start by creating a new request using the <code>fetch()</code> function. Inside the function, you provide the URL of the server you want to send the request to.</li></ol><ol type="1" id="dc85a7d0-d0c1-451a-91f0-6abe12262098" class="numbered-list" start="2" dir="auto"><li>Send the request: Once you have created the request, you need to send it to the server by calling the <code>fetch()</code> function. This initiates the communication with the server.</li></ol><ol type="1" id="1de9f5d6-bb7a-47e6-bf0d-fb4d10f19651" class="numbered-list" start="3" dir="auto"><li>Receive the response: After the server processes the request, it sends back a response. You can use the <code>then()</code> method to handle the response. Inside the <code>then()</code> method, you can access the data sent by the server and perform actions based on that data.</li></ol><ol type="1" id="4adcaf43-472f-473b-86a0-3e5c587ecc79" class="numbered-list" start="4" dir="auto"><li>Handle the data: Once you have the response from the server, you can extract and manipulate the data as needed. You can convert the response to different formats, such as JSON, and then use the data in your application.</li></ol><p id="342e609c-07b5-4ff7-b796-a13c954b2295" class="" dir="auto">Here&#x27;s an example of how you can use the Fetch API to retrieve data from an API:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js" integrity="sha512-m3JYEI6gx5fh9jF10FjGoMzVKcV2N6nchcDcqPCdI1L3R2WQV7br2XVNR8iTLb2daOMRl3zldbcfT40xU2ntVw==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><pre id="46efe597-731a-4b89-b5bc-b5b15d991420" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">fetch(&#x27;&lt;https://api.example.com/data&gt;&#x27;)
+  .then(response =&gt; response.json())
+  .then(data =&gt; {
+    // Do something with the data
+    console.log(data);
+  })
+  .catch(error =&gt; {
+    // Handle any errors that occurred during the request
+    console.log(&#x27;Error:&#x27;, error);
+  });
+</code></pre><p id="a0ed3535-13e5-4621-9a21-70b6b56db20e" class="" dir="auto">In this example, we are sending a GET request to <code>https://api.example.com/data</code>. The server processes the request and sends back a response. We use the <code>json()</code> method to convert the response to JSON format, and then we can access the data in the <code>then()</code> method.</p><p id="885d1d90-a305-4aa5-a33f-2af1d1a9f8a4" class="" dir="auto">Remember, just like your friend needed to wait for the store to give them the candy, the Fetch API works asynchronously. This means that the code execution continues while the request is being sent and the response is being received. That&#x27;s why we use the <code>then()</code> method to handle the response asynchronously.</p><p id="4988d424-ff15-4cb8-95ec-46a8cbf0a137" class="" dir="auto">I hope this explanation helps you understand the Fetch API! If you have any more questions, feel free to ask.</p><hr id="0b8a78db-6ede-4cc5-b50b-81c8475508fe" dir="auto"/><h3 id="8a8c39fa-8753-4702-8c97-3c094adbfd93" class="" dir="auto">Q. why we use .then 2 times in above example?</h3><p id="a493c469-dbf0-4836-8fcb-48eaf7fb08f3" class="" dir="auto">That&#x27;s a great question!</p><p id="9e973154-6740-4996-a10b-bfede4a5d691" class="" dir="auto">In the above example, we use <code>.then()</code> twice to handle the asynchronous nature of the Fetch API. Let&#x27;s break it down:</p><ol type="1" id="0eaaa09c-3a43-4349-b29e-0594ed14162f" class="numbered-list" start="1" dir="auto"><li>The first <code>.then()</code>:<ul id="91ebfb90-7003-475e-9f0b-d0ff51342262" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The first <code>.then()</code> is used to handle the response from the server.</li></ul><ul id="45df3df0-2f94-4ca0-8e5b-ca95ffcc0f8b" class="bulleted-list" dir="auto"><li style="list-style-type:disc">When the server sends back a response, it is passed as a parameter to the callback function inside the first <code>.then()</code>.</li></ul><ul id="8eac0325-8f43-4f81-b871-d0872beb6953" class="bulleted-list" dir="auto"><li style="list-style-type:disc">In the example, we use <code>response.json()</code> inside the first <code>.then()</code> to parse the response as JSON. The <code>json()</code> method returns a promise that resolves with the JSON data extracted from the response.</li></ul><ul id="95245ad4-3ff1-4ef1-b6f6-5324b3acf883" class="bulleted-list" dir="auto"><li style="list-style-type:disc">By returning this promise from the first <code>.then()</code>, we can chain another <code>.then()</code> to handle the extracted data.</li></ul></li></ol><ol type="1" id="5d00ed6e-9c55-46a1-931c-61e44784b060" class="numbered-list" start="2" dir="auto"><li>The second <code>.then()</code>:<ul id="a8b3315d-030b-4671-89ce-cd8f802d27b1" class="bulleted-list" dir="auto"><li style="list-style-type:disc">The second <code>.then()</code> is used to handle the extracted data from the response.</li></ul><ul id="18ba1080-b644-43e6-aecc-09c26b4a0cec" class="bulleted-list" dir="auto"><li style="list-style-type:disc">It takes the parsed JSON data as a parameter and allows us to perform actions on it.</li></ul><ul id="bc48ec24-647d-45e1-afd5-a7395aba00d5" class="bulleted-list" dir="auto"><li style="list-style-type:disc">In the example, we simply log the data to the console using <code>console.log(data)</code>, but you can perform any desired actions on the data at this point.</li></ul></li></ol><p id="627be485-068a-4183-ae13-9f5bb47a38e7" class="" dir="auto">Using <code>.then()</code> multiple times in this way allows us to handle the asynchronous flow of the Fetch API. Each <code>.then()</code> represents a step in the process: sending the request, receiving the response, and handling the data.</p><p id="2ef7f0fe-e3eb-4410-ba26-b522b9159846" class="" dir="auto">It&#x27;s important to note that the Fetch API returns Promises. Promises are a way to handle asynchronous operations in JavaScript, allowing us to chain multiple operations together using <code>.then()</code>.</p><p id="383b80be-975d-458a-8679-6167ff936b19" class="" dir="auto">I hope this clarifies why we use <code>.then()</code> twice in the example. Let me know if you have any further questions!</p><hr id="65b78ffa-3883-47a2-b1b0-5a8f0146a501" dir="auto"/><h3 id="93105839-0a2e-45d0-99ce-b49f042f1979" class="" dir="auto">Q. In above code why value1 and value2 is used?</h3><pre id="fefac0d1-1974-4b40-b1ed-1a68804a72b4" class="code code-wrap" data-notion-code-syntax="jsx"><code class="language-jsx" style="white-space:pre-wrap;word-break:break-all">let p = fetch(&#x27;https://holidays.abstractapi.com/v1/?api_key=e4a90ee7184b4680840328ef5439d589&amp;country=US&amp;year=2020&amp;month=12&amp;day=25&#x27;)
+
+p.then((value1) =&gt; {
+return value1.json()
+}).then((value2) =&gt; {
+console.log(value2)
+})</code></pre><p id="deb37884-f6df-4f70-bbcf-16dc9bd967c3" class="" dir="auto">In the given code, <code>value1</code> and <code>value2</code> are used as parameter names in the arrow functions to represent the values passed to those functions. Let&#x27;s break down the code to understand the flow:</p><ol type="1" id="63a9dcc3-a2b8-4e14-b63f-a883a80a74f7" class="numbered-list" start="1" dir="auto"><li>The <code>fetch()</code> function sends a GET request to the specified URL (<code>https://holidays.abstractapi.com/v1/?api_key=e4a90ee7184b4680840328ef5439d589&amp;country=US&amp;year=2020&amp;month=12&amp;day=25</code>) to retrieve holiday data.</li></ol><ol type="1" id="5115567d-e9e3-47dd-a671-b1875bffd48a" class="numbered-list" start="2" dir="auto"><li>The <code>fetch()</code> function returns a Promise, which represents the eventual completion (or failure) of the asynchronous operation.</li></ol><ol type="1" id="4fc3c245-60c5-4cca-b330-e91ed9881b4f" class="numbered-list" start="3" dir="auto"><li>The <code>.then()</code> method is called on the Promise returned by <code>fetch()</code>. It takes a callback function with a parameter <code>value1</code>, which represents the response from the server when it becomes available.</li></ol><ol type="1" id="cb8d6b4f-3db9-428f-8baa-5d9f4f3d2b6a" class="numbered-list" start="4" dir="auto"><li>Inside the first <code>.then()</code> callback function, <code>value1.json()</code> is called. This parses the response as JSON and returns a new Promise that resolves with the parsed JSON data. The <code>return</code> statement is used to pass this Promise to the next <code>.then()</code> in the chain.</li></ol><ol type="1" id="60e7972b-cb2c-4f31-b90e-4b1510426798" class="numbered-list" start="5" dir="auto"><li>The second <code>.then()</code> method is chained after the first one. It takes a callback function with a parameter <code>value2</code>, which represents the parsed JSON data when it becomes available.</li></ol><ol type="1" id="5d9b1f2b-5b0d-4a11-aca6-83a1ae74fea6" class="numbered-list" start="6" dir="auto"><li>Inside the second <code>.then()</code> callback function, <code>console.log(value2)</code> is called to log the retrieved holiday data to the console.</li></ol><p id="54cf9399-9863-4884-acd4-1027e82f16d6" class="" dir="auto">By using <code>value1</code> and <code>value2</code> as parameter names, we are simply assigning these names to the resolved values at each step in the Promise chain. You can think of them as placeholders that hold the actual values once they are available.</p><p id="4d9b5f08-7406-4177-aa68-8260ab6f01c7" class="" dir="auto">You could actually use any other valid parameter names instead of <code>value1</code> and <code>value2</code> if you prefer. The important thing is that the order of values passed to the arrow functions should match the order of the Promises returned by the previous <code>.then()</code> calls.</p><p id="fd2d3225-9272-4a49-8074-fcf9d43f48bf" class="" dir="auto">I hope this clarifies the usage of <code>value1</code> and <code>value2</code> in the code. Let me know if you have any further questions!</p><hr id="c9e887a0-5e41-4f47-bc75-3075320a7186" dir="auto"/><p id="d4242246-f0e0-454e-9c66-757ea9e98990" class="" dir="auto">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
